@@ -1,5 +1,5 @@
 ﻿module Emulator = 
-
+    
     /// type given to you: command to be applied to environment
     type Command = 
         | Read of string 
