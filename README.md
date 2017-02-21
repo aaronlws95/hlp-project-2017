@@ -1,13 +1,13 @@
 # hlp-project-2017
 A user-friendly ARM7TDMI assembler and simulator in F#
 
-The mutable state in the environment is passed by reference to the emulator using the technique shown below:
+The project is seperated in four modules for the backend of things:
 
-let assign (result:byref<'a>) (x:'a) =
-    result <- x
+Type: Has all the common types between the different modules
 
-let thisWorks() =
-    let mutable v = Unchecked.defaultof<int>
-    assign &v 5
-    printfn "%A" v
+Parser: Parses the strings into instructions
+
+Emulator: Has all the instruction definitions
+
+Environment: Makes the environment with the mutable state. Calls parse and emulate functions from the other modules
 

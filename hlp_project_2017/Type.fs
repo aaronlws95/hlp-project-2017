@@ -23,7 +23,6 @@ module Type =
         | ParseError // if command string is invalid
         | DataError // if the required data does not exist
         | State of State // for valid commads that return no data
-        | Instruction of Instruction
 
     
      
