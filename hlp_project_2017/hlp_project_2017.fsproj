@@ -48,10 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Program.fs" />
     <None Include="App.config" />
+    <None Include="Reference Emulator.fx" />
+    <Compile Include="Type.fs" />
     <Compile Include="Emulator.fs" />
-    <Compile Include="tmp.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="Environment.fs" />
+    <Compile Include="Program.fs" />
+    <None Include="tmp.fx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
