@@ -8,13 +8,16 @@ module Environment =
     open Emulator
 
     let makeEnvironment() = 
-        let mutable MachineState : MachineState = Map []
+        let mutable machineState : MachineState =
+            { RegMap = Map.empty;
+              MemMap = Map.empty; 
+              Flags = { N = false; Z = false; C = false; V = false; }; 
+              State = RunOK 
+            }
 
         /// Environment function, executes command
         let environment s= 
-            try
-                readAsm s |> executeInstruction MachineState
-            with _ -> ParseError
+                readAsm s |> executeInstruction machineState
         
         environment
 

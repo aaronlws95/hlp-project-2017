@@ -1,0 +1,1 @@
+/C "..\..\..\visualapp\visual\jre\bin\java -jar ..\..\..\visualapp\visual\content\visual_headless.jar --headless ..\..\..\VisualWork\source.s ..\..\..\VisualWork\visoutput.log --cycles --regs --syntax --runtime --mode:all "
