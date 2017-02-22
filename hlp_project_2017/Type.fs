@@ -6,14 +6,14 @@ module Type =
 
     type Memory = M of int 
 
-    type Op2 = 
+    type RegOrLit = 
         | Reg of Register
         | Lit of int
 
     type Instruction = 
-        | MOV of (Register * Op2)
-        | ADD of (Register * Op2 * Op2) 
-        | SUB of (Register * Op2 * Op2)
+        | MOV of (Register * RegOrLit)
+        | ADD of (Register * Register * RegOrLit) 
+        | SUB of (Register * Register * RegOrLit)
         | SYNTAXERR of string
 
     type RunState = 
