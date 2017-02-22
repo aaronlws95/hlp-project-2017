@@ -6,28 +6,28 @@ module Emulator =
 
     let executeInstruction (oldState:MachineState) instruction =
        //TO DO: move functions out into a diff module
-        let mov dest op1 = 
+        let mov state dest op1 = 
             let newRegMap = 
                 match op1 with 
-                | Reg (R r) -> Map.add dest oldState.RegMap.[R r] oldState.RegMap
-                | Lit i -> Map.add dest i oldState.RegMap
-            {oldState with RegMap = newRegMap}
+                | Reg (R r) -> Map.add dest state.RegMap.[R r] state.RegMap
+                | Lit i -> Map.add dest i state.RegMap
+            {state with RegMap = newRegMap}
 
         
-        let add dest op1 op2 = 
+        let add state dest op1 op2 = 
             let newRegMap = 
                 match op2 with 
-                | Reg (R r) -> Map.add dest (oldState.RegMap.[op1] + oldState.RegMap.[R r]) oldState.RegMap
-                | Lit i -> Map.add dest (oldState.RegMap.[op1] + i) oldState.RegMap
-            {oldState with RegMap = newRegMap}
+                | Reg (R r) -> Map.add dest (state.RegMap.[op1] + state.RegMap.[R r]) state.RegMap
+                | Lit i -> Map.add dest (state.RegMap.[op1] + i) state.RegMap
+            {state with RegMap = newRegMap}
  
 
-        let sub reg = 
+        let sub state dest op1 op2 = 
             let newRegMap = 
                 match op2 with 
-                | Reg (R r) -> Map.add dest (oldState.RegMap.[op1] - oldState.RegMap.[R r]) oldState.RegMap
-                | Lit i -> Map.add dest (oldState.RegMap.[op1] - i) oldState.RegMap
-            {oldState with RegMap = newRegMap}
+                | Reg (R r) -> Map.add dest (state.RegMap.[op1] - state.RegMap.[R r]) state.RegMap
+                | Lit i -> Map.add dest (state.RegMap.[op1] - i) state.RegMap
+            {state with RegMap = newRegMap}
 
         match instruction with
         |MOV(reg,op2) ->  mov reg op2
