@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>hlp_project_2017</name></assembly>
+<members>
+<member name="M:ARM7TDMI.Parser.|IsRegOrLit|_|(System.String)">
+<summary>
+ matches RegOrLit string returning the RegOrLit
+</summary>
+</member>
+<member name="M:ARM7TDMI.Parser.|IsReg|_|(System.String)">
+<summary>
+ matches string returning integer
+</summary>
+</member>
+<member name="M:ARM7TDMI.Parser.|IsLit|_|(System.String)">
+<summary>
+ matches string returning integer
+</summary>
+</member>
+</members>
+</doc>

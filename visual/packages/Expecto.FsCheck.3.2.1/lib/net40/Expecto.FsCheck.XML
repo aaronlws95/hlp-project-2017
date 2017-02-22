@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Expecto.FsCheck</name></assembly>
+<members>
+<member name="M:Expecto.ExpectoFsCheckModule.ftestProperty``1(System.Int32,System.Int32,System.String)">
+<summary>
+ Builds a test property that will make Expecto to ignore other unfocused tests.
+</summary>
+</member>
+<member name="M:Expecto.ExpectoFsCheckModule.ptestProperty``1(System.String)">
+<summary>
+ Builds a test property that will be ignored by Expecto.
+</summary>
+</member>
+<member name="M:Expecto.ExpectoFsCheckModule.testProperty``1(System.String)">
+<summary>
+ Builds a test property.
+</summary>
+</member>
+<member name="M:Expecto.ExpectoFsCheckModule.ftestPropertyWithConfig``1(System.Int32,System.Int32,FsCheck.Config,System.String)">
+<summary>
+ Builds a test property with config that will make Expecto to
+ ignore other unfocused tests.
+</summary>
+</member>
+<member name="M:Expecto.ExpectoFsCheckModule.ptestPropertyWithConfig``1(FsCheck.Config,System.String)">
+<summary>
+ Builds a test property with config that will be ignored by Expecto.
+</summary>
+</member>
+<member name="M:Expecto.ExpectoFsCheckModule.testPropertyWithConfig``1(FsCheck.Config,System.String)">
+<summary>
+ Builds a test property with config
+</summary>
+</member>
+</members>
+</doc>

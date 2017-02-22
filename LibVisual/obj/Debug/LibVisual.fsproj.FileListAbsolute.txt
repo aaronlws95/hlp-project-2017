@@ -1,0 +1,10 @@
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\LibVisual.dll
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FSharp.Core.dll
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FSharp.Data.dll
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FsPickler.dll
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FSharp.Data.pdb
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FSharp.Data.xml
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FsPickler.pdb
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FsPickler.xml
+c:\srcp\hlpcode\visual\LibVisual\bin\Debug\FSharp.Core.xml
+c:\srcp\hlpcode\visual\LibVisual\obj\Debug\LibVisual.fsprojResolveAssemblyReference.cache

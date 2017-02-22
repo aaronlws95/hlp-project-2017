@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>LibVisual</name></assembly>
+<members>
+<member name="T:VisualInterface.VisualInterface.Params">
+<summary>
+ configuration data for running VisUAL
+</summary>
+</member>
+</members>
+</doc>

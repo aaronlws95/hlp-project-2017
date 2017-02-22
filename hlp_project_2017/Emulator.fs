@@ -12,7 +12,7 @@ module Emulator =
                 | Reg (R r) -> Map.add dest state.RegMap.[R r] state.RegMap
                 | Lit i -> Map.add dest i state.RegMap
             {state with RegMap = newRegMap}
-    
+        
         let add state dest op1 op2 = 
             let newRegMap = 
                 match op2 with 

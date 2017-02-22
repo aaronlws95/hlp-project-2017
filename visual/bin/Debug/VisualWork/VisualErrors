@@ -1,0 +1,89 @@
+
+>>---SOURCE:
+SUB R0, #0\nMOV R12, #0
+          ADDMI R12, #8
+          ADDNE R12, #4
+          ADDCS R12, #2
+          ADDVS R12, #1\n
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">Invalid first operand.</syntax-error>
+  <syntax-error line="2">Missing second operand.</syntax-error>
+  <syntax-error line="3">Missing second operand.</syntax-error>
+  <syntax-error line="4">Missing second operand.</syntax-error>
+  <syntax-error line="5">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+SUB R0, #0\nMOV R12, #0
+          ADDMI R12, #8
+          ADDNE R12, #4
+          ADDCS R12, #2
+          ADDVS R12, #1\n
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">Invalid first operand.</syntax-error>
+  <syntax-error line="2">Missing second operand.</syntax-error>
+  <syntax-error line="3">Missing second operand.</syntax-error>
+  <syntax-error line="4">Missing second operand.</syntax-error>
+  <syntax-error line="5">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+SUB R0, #0\nMOV R12, #0
+          ADDMI R12, #8
+          ADDNE R12, #4
+          ADDCS R12, #2
+          ADDVS R12, #1\n
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">Invalid first operand.</syntax-error>
+  <syntax-error line="2">Missing second operand.</syntax-error>
+  <syntax-error line="3">Missing second operand.</syntax-error>
+  <syntax-error line="4">Missing second operand.</syntax-error>
+  <syntax-error line="5">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+SUB R0, R0, #0\nMOV R12, #0
+          ADDMI R12, R12, #8
+          ADDNE R12, R12, #4
+          ADDCS R12, R12, #2
+          ADDVS R12, R12, #1\n
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">Invalid first operand.</syntax-error>
+  <syntax-error line="5">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+SUB R0, R0, #0\n MOV R12, #0
+          ADDMI R12, R12, #8
+          ADDNE R12, R12, #4
+          ADDCS R12, R12, #2
+          ADDVS R12, R12, #1\n
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">Multiple opcodes on the same line.</syntax-error>
+  <syntax-error line="5">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------
