@@ -2,28 +2,41 @@
 
 module Type =
 
-    type Register = 
-        | R0
-        | R1
-        | R2
+    type Register = R of int
 
-    type RegOrLit = 
+    type Memory = M of int 
+
+    type Op2 = 
         | Reg of Register
         | Lit of int
 
     type Instruction = 
-        | MOV of (Register * RegOrLit)
-        | ADD of (Register * RegOrLit * RegOrLit) 
-        | SUB of (Register * RegOrLit * RegOrLit)
+        | MOV of (Register * Op2)
+        | ADD of (Register * Op2 * Op2) 
+        | SUB of (Register * Op2 * Op2)
+        | SYNTAXERR of string
 
-    type State = Map<Register, int>
+    type RunState = 
+        | RunOK
+        | RunTimeErr of string
+        | SyntaxErr of string
 
-    type Response =
-        | VarValue of int // for commands that return data
-        | ParseError // if command string is invalid
-        | DataError // if the required data does not exist
-        | State of State // for valid commads that return no data
+    type Flags = 
+        {
+            N: bool
+            Z: bool
+            C: bool
+            V: bool
+        }
+    
+    type MachineState = 
+        { RegMap : Map<Register, int>
+          MemMap : Map<Memory, int> 
+          Flags : Flags 
+          State : RunState 
+        }
 
+   
     
      
 

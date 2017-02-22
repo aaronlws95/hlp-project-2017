@@ -15,16 +15,16 @@
     | DataError // if the required data does not exist
     | OK // for valid commads that return no data
 
-    let mutable state : Map<Register, int> = Map []
+    let mutable MachineState : Map<Register, int> = Map []
 
-    state <- Map.add R0 0 state
-    state <- Map.add R1 0 state
+    MachineState <- Map.add R0 0 MachineState
+    MachineState <- Map.add R1 0 MachineState
  
 
     let mov reg = 
         function 
-        | Reg r -> state <- Map.add reg state.[r] state
-        | Lit i -> state <- Map.add reg i state
+        | Reg r -> MachineState <- Map.add reg MachineState.[r] MachineState
+        | Lit i -> MachineState <- Map.add reg i MachineState
     
     mov R1 (Lit 2)
     mov R0 (Lit 5)
@@ -34,9 +34,9 @@
 
     let add reg = 
         function 
-        | [Reg r1;Reg r2] -> state <- Map.add reg (state.[r1] + state.[r2])  state
+        | [Reg r1;Reg r2] -> MachineState <- Map.add reg (MachineState.[r1] + MachineState.[r2])  MachineState
                              OK
-        | [Reg r;Lit i] -> state <- Map.add reg (state.[r] + i)  state
+        | [Reg r;Lit i] -> MachineState <- Map.add reg (MachineState.[r] + i)  MachineState
                            OK
         | _ -> DataError
 
@@ -47,9 +47,9 @@
 
     let sub reg = 
         function 
-        | [Reg r1;Reg r2] -> state <- Map.add reg (state.[r1] - state.[r2])  state
+        | [Reg r1;Reg r2] -> MachineState <- Map.add reg (MachineState.[r1] - MachineState.[r2])  MachineState
                              OK
-        | [Reg r;Lit i] -> state <- Map.add reg (state.[r] - i)  state
+        | [Reg r;Lit i] -> MachineState <- Map.add reg (MachineState.[r] - i)  MachineState
                            OK
         | _ -> DataError
 
