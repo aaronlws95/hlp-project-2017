@@ -1,0 +1,35 @@
+
+>>---SOURCE:
+MOV, R0, #1
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="1">This instruction is not a valid ARM UAL instruction.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+SUB R0, R0, #1 
+ SUB R0, #0, #1
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="2">Invalid first operand.</syntax-error>
+</VisUAL>
+----------------------

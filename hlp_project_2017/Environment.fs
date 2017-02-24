@@ -7,9 +7,13 @@ module Environment =
     open Parser
     open Emulator
 
+
+
+
     let makeEnvironment() = 
         let mutable machineState : MachineState =
-            { RegMap = Map.empty;
+            { 
+              RegMap = initializeRegMap
               MemMap = Map.empty; 
               Flags = { N = false; Z = false; C = false; V = false; }; 
               State = RunOK 

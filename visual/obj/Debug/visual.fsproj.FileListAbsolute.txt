@@ -60,3 +60,4 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\hlp_project_20
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\hlp_project_2017.pdb
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\hlp_project_2017.xml
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsprojResolveAssemblyReference.cache
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FSharp.Data.TypeProviders.dll

@@ -36,6 +36,12 @@ module Type =
           State : RunState 
         }
 
+    let initializeRegMap = 
+        Map.empty.
+          Add(R 0, 0).
+          Add(R 1, 0).
+          Add(R 2, 0).
+          Add(R 3, 0)
    
     
      

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
     <line id="1">
-        <code>SUBS R0, R0, #0</code>
-        <register name="R0">0x0</register>
+        <code>ADD R0, R0, #8</code>
+        <register name="R0">0x8</register>
         <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
@@ -22,7 +22,7 @@
     </line>
     <line id="2">
         <code>MOV R1, #0</code>
-        <register name="R0">0x0</register>
+        <register name="R0">0x8</register>
         <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
@@ -42,7 +42,7 @@
     </line>
     <line id="3">
         <code>ADDMI R1, R1, #8</code>
-        <register name="R0">0x0</register>
+        <register name="R0">0x8</register>
         <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
@@ -62,8 +62,8 @@
     </line>
     <line id="4">
         <code>ADDEQ R1, R1, #4</code>
-        <register name="R0">0x0</register>
-        <register name="R1">0x4</register>
+        <register name="R0">0x8</register>
+        <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
         <register name="R4">0x0</register>
@@ -82,8 +82,8 @@
     </line>
     <line id="5">
         <code>ADDCS R1, R1, #2</code>
-        <register name="R0">0x0</register>
-        <register name="R1">0x6</register>
+        <register name="R0">0x8</register>
+        <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
         <register name="R4">0x0</register>
@@ -102,8 +102,8 @@
     </line>
     <line id="6">
         <code>ADDVS R1, R1, #1</code>
-        <register name="R0">0x0</register>
-        <register name="R1">0x6</register>
+        <register name="R0">0x8</register>
+        <register name="R1">0x0</register>
         <register name="R2">0x0</register>
         <register name="R3">0x0</register>
         <register name="R4">0x0</register>

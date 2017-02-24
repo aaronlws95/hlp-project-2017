@@ -1,9 +1,13 @@
 ﻿namespace VisualInterface
 
-module Program=
+module Program =
     open ARM7TDMI
+    open Type
+    open Emulator
+
     open VisualInterface
     open Expecto
+    open TestEnvt
 
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
@@ -86,15 +90,34 @@ module Program=
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
             Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected "Reg and Mem outputs don't match"
 
-    
     [<EntryPoint>]
     let main argv = 
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
+
+        let environment1 = makeTestEnvironment()
+        let mstate1 = environment1 ("mov",(TwoParam (Register.R 0,Lit 1)))
+        
+        let environment2 = makeTestEnvironment()
+        let mstate2 = environment2("add",(ThreeParam(Register.R 0,Register.R 0,Lit 8)))
+
+        let test3 =
+           "
+              MOV R0, #7
+              ADD R0, R0, #8  
+           " 
+        let environment2 = makeTestEnvironment()
+        let mstate3 = 
+            environment2("mov",(TwoParam(Register.R 0, Lit 7))) |> ignore
+            environment2("add",(ThreeParam(Register.R 0,Register.R 0,Lit 8)))
+
         let tests = 
             testList "Visual tests" [
-                VisualUnitTest "SUB test" "SUB R0, R0, #1" "0000" [R 0, -1]
-                VisualUnitTest "SUBS test" "SUBS R0, R0, #0" "0110" [R 0, 0]
-                VisualUnitTest "This ADDS test should fail" "ADDS R0, R0, #4" "0000" [R 0, 4; R 1, 0] // R1 should be 0 but is specified here as 1
+//                VisualUnitTest "SUB test" test "0000" [R 0, 3]
+//                VisualUnitTest "SUBS test" "SUBS R0, R0, #0" "0110" [R 0, 0]
+//                VisualUnitTest "This ADDS test should not fail" "ADDS R0, R0, #4" "0000" [R 0, 4; R 1, 0] // R1 should be 0 but is specified here as 1
+                VisualUnitTest "Test 1: MOV" "MOV R0, #1" (mstateToFlags mstate1) (mstateToRegList mstate1) 
+                VisualUnitTest "Test 2: ADD" "ADD R0, R0, #8" (mstateToFlags mstate2) (mstateToRegList mstate2) 
+                VisualUnitTest "Test 3: MOV then ADD" test3 (mstateToFlags mstate3) (mstateToRegList mstate3)
             ]
         let rc = runTests defaultConfig tests
         System.Console.ReadKey() |> ignore                
