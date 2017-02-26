@@ -1,4 +1,4 @@
-ADD R0, R0, #8
+SUB R0, R0, #8
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

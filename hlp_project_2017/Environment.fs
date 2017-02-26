@@ -7,9 +7,6 @@ module Environment =
     open Parser
     open Emulator
 
-
-
-
     let makeEnvironment() = 
         let mutable machineState : MachineState =
             { 

@@ -35,7 +35,7 @@ module Type =
           Flags : Flags 
           State : RunState 
         }
-
+ 
     let initializeRegMap = 
         Map.empty.
           Add(R 0, 0).
