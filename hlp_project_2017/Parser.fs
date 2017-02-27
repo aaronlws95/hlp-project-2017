@@ -2,7 +2,6 @@
 
 module Parser=
 
-    open Type
     open Emulator
 
     let whiteSpace = [| ' '; '\f'; '\t'; '\r' |]

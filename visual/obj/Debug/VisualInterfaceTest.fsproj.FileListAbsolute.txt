@@ -1,0 +1,5 @@
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\visual.XML
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\VisualInterfaceTest.fsprojResolveAssemblyReference.cache
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\VisualInterfaceTest.fsproj.visual.exe.config
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.exe
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.pdb

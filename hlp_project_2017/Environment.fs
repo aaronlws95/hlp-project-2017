@@ -3,9 +3,13 @@
 
 module Environment =
 
-    open Type
     open Parser
     open Emulator
+    open MachineState
+    open Instruction
+
+    let initializeRegMap = 
+        [1..13] |> Seq.map (fun x -> (Register.R x, 0)) |> Map.ofSeq
 
     let makeEnvironment() = 
         let mutable machineState : MachineState =
@@ -17,7 +21,7 @@ module Environment =
             }
 
         /// Environment function, executes command
-        let environment s= 
+        let environment s = 
                 readAsm s |> executeInstruction machineState
         
         environment

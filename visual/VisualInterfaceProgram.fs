@@ -1,9 +1,6 @@
 ﻿namespace VisualInterface
 
 module VisualInterfaceProgram =
-    open ARM7TDMI
-    open Type
-    open Emulator
 
     open VisualInterface
     open Expecto
@@ -94,31 +91,12 @@ module VisualInterfaceProgram =
     let main argv = 
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
 
-        let environment1 = makeTestEnvironment()
-        let mstate1 = environment1 ("mov",(MOV (Register.R 0,Lit 1)))
-        
-        let environment2 = makeTestEnvironment()
-        let mstate2 = environment2("add",(ADD (Register.R 0,Register.R 0,Lit 8)))
-
-        let test3 =
-           "
-              MOV R0, #7
-              ADD R0, R0, #8  
-           " 
-        let environment3 = makeTestEnvironment()
-        let mstate3 = 
-            environment3("mov",(MOV (Register.R 0, Lit 7))) |> ignore
-            environment3("add",(ADD (Register.R 0,Register.R 0,Lit 8)))
-        
-        let environment4 = makeTestEnvironment()
-        let mstate4 = environment4 ("sub",(SUB (Register.R 0,Register.R 0,Lit 8)))
+        //let environment1 = makeTestEnvironment()
+        //let mstate1 = environment1 ALUinst(MOV(Register.R 1, 1))
 
         let tests = 
             testList "Visual tests" [
                 VisualUnitTest "Test 1: MOV" "MOV R0, #1" (mstateToFlags mstate1) (mstateToRegList mstate1) 
-                VisualUnitTest "Test 2: ADD" "ADD R0, R0, #8" (mstateToFlags mstate2) (mstateToRegList mstate2) 
-                VisualUnitTest "Test 3: MOV then ADD" test3 (mstateToFlags mstate3) (mstateToRegList mstate3)
-                VisualUnitTest "Test 4: SUB" "SUB R0, R0, #8" (mstateToFlags mstate4) (mstateToRegList mstate4)
             ]
         let rc = runTests defaultConfig tests
         System.Console.ReadKey() |> ignore                
