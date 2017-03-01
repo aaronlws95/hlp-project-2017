@@ -3,6 +3,7 @@
 module Parser=
 
     open Emulator
+    open MachineState
 
     let whiteSpace = [| ' '; '\f'; '\t'; '\r' |]
         
@@ -11,6 +12,7 @@ module Parser=
         try 
             int s |> Some
         with _ -> None
+
     /// matches string returning integer
     let (|IsReg|_|) s =
         let ParseToReg =
@@ -38,9 +40,7 @@ module Parser=
         try
             parse s |> Some
         with _ -> None
-        
-        
-
+    
     let readAsm = 
             let splitIntoWords (s:string) = 
                 s.Split whiteSpace 
@@ -48,13 +48,10 @@ module Parser=
             let executeWordsAsCommand = function
                 | [ "MOV"; IsReg reg1; IsReg reg2 ] -> MOV(reg1,Reg(reg2))
                 | [ "MOV"; IsReg reg; IsLit n ] -> MOV(reg,Lit(n))
-//                | [ "ADD"; IsReg reg1; IsReg reg2; IsReg reg3 ] -> ADD(reg1,Reg(reg2),Reg(reg3))
-//                | [ "ADD"; IsReg reg1; IsReg reg2; IsLit n ] -> ADD(reg1,Reg(reg2),Lit(n))
-//                | [ "SUB"; IsReg reg1; IsReg reg2; IsReg reg3 ] -> SUB(reg1,Reg(reg2),Reg(reg3))
-//                | [ "SUB"; IsReg reg1; IsReg reg2; IsLit n ] -> SUB(reg1,Reg(reg2),Lit(n))
                 | _ -> SYNTAXERR("error")        
-                 
+                
             splitIntoWords
             >> Array.toList
             >> executeWordsAsCommand
+
 
