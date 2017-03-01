@@ -18,3 +18,4 @@ module InstructionType =
     type InstructionType =
         | ALU of ALUInst
         | MEM of MEMInst
+
