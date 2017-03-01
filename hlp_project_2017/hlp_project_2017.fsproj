@@ -57,17 +57,16 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="App.config" />
     <None Include="Reference Emulator.fx" />
+    <Compile Include="InstructionType.fs" />
     <Compile Include="MachineState.fs" />
     <Compile Include="Emulator.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Environment.fs" />
     <Compile Include="Program.fs" />
-    <None Include="tmp.fx" />
     <None Include="Scripts\load-references-debug.fsx" />
     <None Include="Scripts\load-project-debug.fsx" />
     <Compile Include="EmulatorTest.fs" />
     <Content Include="packages.config" />
-    <Compile Include="InstructionType.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FsCheck">

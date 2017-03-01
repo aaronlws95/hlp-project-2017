@@ -1,10 +1,10 @@
 ﻿namespace VisualInterface
 
 module VisualInterfaceProgram =
-
     open VisualInterface
     open Expecto
     open TestEnvt
+
 
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
@@ -73,7 +73,7 @@ module VisualInterfaceProgram =
     /// run an expecto test of VisUAL
     /// name - name of test
     ///
-    let VisualUnitTest name src (flagsExpected:string) (outExpected: (Out * int) list) =
+    let VisualUnitTest name (src,(flagsExpected:string),(outExpected: (Out * int) list)) =
         testCase name <| fun () ->
             let mems = outExpected |> List.collect (function | Mem n, x -> [n,x] | _ -> [])
             let memLocs = mems |> List.map fst
@@ -86,17 +86,20 @@ module VisualInterfaceProgram =
                 with
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
             Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected "Reg and Mem outputs don't match"
+    
+
 
     [<EntryPoint>]
     let main argv = 
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
 
-        //let environment1 = makeTestEnvironment()
-        //let mstate1 = environment1 ALUinst(MOV(Register.R 1, 1))
-
         let tests = 
             testList "Visual tests" [
-                VisualUnitTest "Test 1: MOV" "MOV R0, #1" (mstateToFlags mstate1) (mstateToRegList mstate1) 
+                VisualUnitTest "Test 1: MOV1" testMOV1
+                VisualUnitTest "Test 2: MOV2" testMOV2
+                VisualUnitTest "Test 3: ADD1" testADD1
+                VisualUnitTest "Test 4: SUB1" testSUB1
+                VisualUnitTest "Test 5: MOVS1" testMOVS1
             ]
         let rc = runTests defaultConfig tests
         System.Console.ReadKey() |> ignore                

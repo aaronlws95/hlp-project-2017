@@ -86,9 +86,9 @@ module Emulator =
     
     module Instruction = 
         type Instruction = 
-            | ALUInst of ALUInst * setCond: bool
-            | MEMInst of MEMInst * setCond: bool
-        
+            | ALUInst of ALUInst * bool
+            | MEMInst of MEMInst * bool
+            
         let executeInstruction state instruction = 
             match instruction with
             | ALUInst (ai,s) -> ALUInstruction.executeInstruction state ai s

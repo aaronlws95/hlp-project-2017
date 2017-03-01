@@ -2,8 +2,10 @@
 #I __SOURCE_DIRECTORY__
 #load "load-references-debug.fsx"
 #load "../AssemblyInfo.fs"
-      "../Type.fs"
+      "../InstructionType.fs"
+      "../MachineState.fs"
       "../Emulator.fs"
       "../Parser.fs"
       "../Environment.fs"
       "../Program.fs"
+      "../EmulatorTest.fs"

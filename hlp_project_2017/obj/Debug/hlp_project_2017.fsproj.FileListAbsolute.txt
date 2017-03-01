@@ -6,3 +6,12 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FSha
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FSharp.Core.xml
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.exe
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.pdb
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.fsproj.hlp_project_2017.exe.config
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.NUnit.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\nunit.framework.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.pdb
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.NUnit.pdb
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.NUnit.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\nunit.framework.xml
