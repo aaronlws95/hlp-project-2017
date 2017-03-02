@@ -15,12 +15,18 @@ ARMadillo is built using the following technologies:
 
 ## Project Architecture
 
+![pic](https://raw.githubusercontent.com/aaronlws95/hlp-project-2017/master/project_architecture.png)
+
 The assembler is separated into several modules:
 
-Type: Has all the common types between the different modules
+Program.fs : 
 
-Parser: Parses the strings into instructions
+Parser.fs : Parses the strings into instructions
 
-Emulator: Has all the instruction definitions
+Emulator.fs : Has all the instruction definitions
 
-Environment: Makes the environment with the mutable state. Calls parse and emulate functions from the other modules
+GUI.fs : Handles the GUI code
+
+MachineType.fs : 
+
+InstructionType.fs : Has all the common types between the different modules
