@@ -19,14 +19,14 @@ ARMadillo is built using the following technologies:
 
 The assembler is separated into several modules:
 
-Program.fs : 
+`Program.fs` : TO-DO
 
-Parser.fs : Parses the strings into instructions
+`Parser.fs` : Parses the text from the GUI text editor into a list of `InstructionType`s and returns a `MachineState` containing the instructions.
 
-Emulator.fs : Has all the instruction definitions
+`Emulator.fs` : Executes instructions and returns a new `MachineState`.
 
-GUI.fs : Handles the GUI code
+`GUI.fs` : TO-DO
 
-MachineType.fs : 
+`MachineType.fs` : Contains data structure for register maps, memory maps, list of instructions, etc.
 
-InstructionType.fs : Has all the common types between the different modules
+`InstructionType.fs` : Holds all the implemented ARM instructions as `InstructionType` data types.
