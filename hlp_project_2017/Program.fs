@@ -2,9 +2,9 @@
 // See the 'F# Tutorial' project for more help.
 namespace ARM7TDMI
 
-module Program = 
-    let y = 1
+//module Program = 
 //    [<EntryPoint>]
 //    let main argv = 
 //        printfn "%A" argv
 //        0 // return an integer exit code
+//            

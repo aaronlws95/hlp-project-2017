@@ -1,11 +1,10 @@
 ﻿namespace VisualInterface
 
-module VisualInterfaceProgram =
+module Program=
+
     open VisualInterface
     open Expecto
-    open TestEnvt
-
-
+    open VITest.TestEnvt
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """
@@ -15,9 +14,9 @@ module VisualInterfaceProgram =
           ADDCS R1, R1, #2
           ADDVS R1, R1, #1
        """ 
-    
+
     let defaultParas = {
-            Cached = true                   // true if results are stored in a cache on disk and reused to speed 
+            Cached = false                  // true if results are stored in a cache on disk and reused to speed 
                                             // up future repeat simulations
             VisualPath =  @"..\..\..\visualapp\visual\" // the directory in which the downloaded VisUAL.exe can be found
             WorkFileDir = @"..\..\..\VisualWork\"      // the directory in which both temporary files and the persistent cache file are put
@@ -86,7 +85,10 @@ module VisualInterfaceProgram =
                 with
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
             Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected "Reg and Mem outputs don't match"
+
     
+          
+    let seqConfig = { Expecto.Tests.defaultConfig with parallel = false}
 
 
     [<EntryPoint>]
@@ -101,6 +103,6 @@ module VisualInterfaceProgram =
                 VisualUnitTest "Test 4: SUB1" testSUB1
                 VisualUnitTest "Test 5: MOVS1" testMOVS1
             ]
-        let rc = runTests defaultConfig tests
+        let rc = runTests seqConfig tests
         System.Console.ReadKey() |> ignore                
         rc // return an integer exit code - 0 if all tests pass

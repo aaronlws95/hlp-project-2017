@@ -1,4 +1,4 @@
-﻿namespace visual_interface_test.AssemblyInfo
+﻿namespace visual.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices
@@ -7,11 +7,11 @@ open System.Runtime.InteropServices
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[<assembly: AssemblyTitle("visual_interface_test")>]
+[<assembly: AssemblyTitle("visual")>]
 [<assembly: AssemblyDescription("")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("")>]
-[<assembly: AssemblyProduct("visual_interface_test")>]
+[<assembly: AssemblyProduct("visual")>]
 [<assembly: AssemblyCopyright("Copyright ©  2017")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
@@ -22,7 +22,7 @@ open System.Runtime.InteropServices
 [<assembly: ComVisible(false)>]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[<assembly: Guid("58b27fc2-e080-4689-b5b3-346bdb143e2d")>]
+[<assembly: Guid("1538c2fc-6669-42b4-a93c-2ff791c1867a")>]
 
 // Version information for an assembly consists of the following four values:
 // 

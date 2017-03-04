@@ -15,3 +15,14 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCh
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.NUnit.pdb
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.NUnit.xml
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\nunit.framework.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expecto.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Argu.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.Rocks.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expecto.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Argu.pdb
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Argu.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expecto.FsCheck.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.Mdb.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.Pdb.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expecto.FsCheck.xml

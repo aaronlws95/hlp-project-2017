@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "hlp_project_2017", "hlp_project_2017.fsproj", "{568E8E08-2136-4988-8F86-34468D809A82}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "VisualInterfaceTest", "..\visual\VisualInterfaceTest.fsproj", "{1538C2FC-6669-42B4-A93C-2FF791C1867A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "visual", "..\visual\visual.fsproj", "{1538C2FC-6669-42B4-A93C-2FF791C1867A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

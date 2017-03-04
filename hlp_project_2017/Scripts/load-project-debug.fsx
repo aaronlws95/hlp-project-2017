@@ -8,4 +8,3 @@
       "../Parser.fs"
       "../Environment.fs"
       "../Program.fs"
-      "../EmulatorTest.fs"

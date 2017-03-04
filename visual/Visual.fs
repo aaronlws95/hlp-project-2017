@@ -1,5 +1,7 @@
 ﻿namespace VisualInterface
 
+    
+
 module VisualInterface = 
 
     open System.IO
@@ -102,8 +104,10 @@ module VisualInterface =
             (visualJarExec paras.VisualPath) + paras.VisualPath + @"content\visual_headless.jar --headless " + srcFile + " " + outputFile 
             + " " + opts
         let addQuotes s = sprintf "\"%s\"" s
+        printfn "Paths are: %s" visDir
         let srcF = Path.Combine(visDir, "source.s")
         File.WriteAllText(srcF, src)
+        printfn "srcF=%s" srcF
         let outputF = Path.Combine(visDir, "visoutput.log")
         let cmdArgs = "/C " + (addQuotes <| visualHeadlessExec srcF outputF runOpts)
         //printfn "%s" cmdArgs
