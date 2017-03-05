@@ -1,10 +1,10 @@
 ﻿namespace VisualInterface
 
-module Program=
+module VIProgram=
 
     open VisualInterface
     open Expecto
-    open VITest.TestEnvt
+    open CreateTest
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """
@@ -72,19 +72,19 @@ module Program=
     /// run an expecto test of VisUAL
     /// name - name of test
     ///
-    let VisualUnitTest name (src,(flagsExpected:string),(outExpected: (Out * int) list)) =
+    let VisualUnitTest (name,src,(flagsExpected:string),(outExpected: (Out * int) list)) =
         testCase name <| fun () ->
             let mems = outExpected |> List.collect (function | Mem n, x -> [n,x] | _ -> [])
             let memLocs = mems |> List.map fst
             let flags, outs = RunVisualWithFlagsOutLocs memLocs src
-            Expecto.Expect.equal flags (flagsExpected |> strToFlags) "Status flags don't match"
+            Expecto.Expect.equal flags (flagsExpected |> strToFlags) ("Status flags don't match " + name)
             let regs = outExpected |> List.filter (function | R _,_ -> true | _ -> false)
             let getOut (out, v) = 
                 try
                     out, outs.[out]
                 with
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
-            Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected "Reg and Mem outputs don't match"
+            Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected ("Reg and Mem outputs don't match " + name)
 
     
           
@@ -96,13 +96,7 @@ module Program=
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
 
         let tests = 
-            testList "Visual tests" [
-                VisualUnitTest "Test 1: MOV1" testMOV1
-                VisualUnitTest "Test 2: MOV2" testMOV2
-                VisualUnitTest "Test 3: ADD1" testADD1
-                VisualUnitTest "Test 4: SUB1" testSUB1
-                VisualUnitTest "Test 5: MOVS1" testMOVS1
-            ]
+            testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
         let rc = runTests seqConfig tests
         System.Console.ReadKey() |> ignore                
         rc // return an integer exit code - 0 if all tests pass

@@ -2,32 +2,32 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
-<member name="M:VisualInterface.Program.VisualUnitTest(System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{VisualInterface.VisualInterface.Out,System.Int32}})">
+<member name="M:VisualInterface.VIProgram.VisualUnitTest(System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{VisualInterface.VisualInterface.Out,System.Int32}})">
 <summary>
  run an expecto test of VisUAL
  name - name of test
 
 </summary>
 </member>
-<member name="M:VisualInterface.Program.strToFlags(System.String)">
+<member name="M:VisualInterface.VIProgram.strToFlags(System.String)">
 <summary>
  convenience function, convert 4 char string to NZCV status flag record
 </summary>
 </member>
-<member name="M:VisualInterface.Program.RunVisualWithFlagsOutLocs(Microsoft.FSharp.Collections.FSharpList{System.Int32},System.String)">
+<member name="M:VisualInterface.VIProgram.RunVisualWithFlagsOutLocs(Microsoft.FSharp.Collections.FSharpList{System.Int32},System.String)">
 <summary>
  Run Visual with specified source code and list of memory locations to trace
  src - source code
  memLocs - list of memory locations to trace
 </summary>
 </member>
-<member name="M:VisualInterface.Program.RunVisualWithFlagsOut``1(``0,System.String)">
+<member name="M:VisualInterface.VIProgram.RunVisualWithFlagsOut``1(``0,System.String)">
 <summary>
  Adds postlude to assembly code to detect flags values.
  Returns registers (before flag detection code) * flags
 </summary>
 </member>
-<member name="P:VisualInterface.Program.NZCVToR12">
+<member name="P:VisualInterface.VIProgram.NZCVToR12">
 <summary>
  postlude which sets R1 bits to status bit values
 </summary>

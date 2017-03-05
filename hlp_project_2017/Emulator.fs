@@ -20,7 +20,9 @@ module Emulator =
                 | ADD(op1,op2,res) ->  { 
                                             N = N res 
                                             Z = Z res
-                                            C = if (res<0 && res >= 0) || (res>0 && res<=0) then true else false 
+                                            C = if ((((sign(op1) <> sign(op2)) && ((sign(op1) = 1) && (op1 > op2) ||  (sign(op2) = 1) && (op2 > op1))) && res >= 0) 
+                                                    || ((op1 <0 && op2 <0 && res >= 0))) then true
+                                                else false 
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
                                         }
                 | SUB(op1,op2,res) ->  { 
@@ -94,4 +96,6 @@ module Emulator =
             | ALUInst (ai,s) -> ALUInstruction.executeInstruction state ai s
             | MEMInst (mi,s) -> MEMInstruction.executeInstruction state mi s
 
+           
 
+           

@@ -57,7 +57,8 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Visual.fs" />
     <Compile Include="VITest.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="CreateTest.fs" />
+    <Compile Include="VIProgram.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
   </ItemGroup>

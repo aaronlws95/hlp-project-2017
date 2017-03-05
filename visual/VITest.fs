@@ -24,7 +24,7 @@ module VITest =
         open InstructionType
         open Converter
     
-        let createTest text instructionList  = 
+        let createTest name text instructionList  = 
             let mstate:MachineState =     
                 { 
                     RegMap = [0..12] |> Seq.map (fun x -> (R x, 0)) |> Map.ofSeq
@@ -51,28 +51,4 @@ module VITest =
                 MOV R12, #0
                 " 
             let mstate = instructionList |> List.fold (fun acc elem -> executeInstruction acc elem) mstate 
-            (initializeAllReg+text,mstateToFlags mstate,mstateToRegList mstate)
-        
-    
-        let testMOV1 = createTest "MOV R0, #2" [(ALUInst(MOV(R 0,Lit 2),false))] 
-
-        let testMOV2 = 
-            let testText = 
-                "
-                MOV R0, #3
-                MOV R2, R5
-                " 
-            let testInstruction = 
-                [(ALUInst(MOV(R 0,Lit 3),false));
-                (ALUInst(MOV(R 2,Reg (R 5)),false))]
-            createTest testText  testInstruction
-
-        let testADD1 = createTest "ADD R0, R1, #2" [(ALUInst(ADD(R 0,Reg (R 1),Lit 2),false))] 
-
-        let testSUB1 = createTest "SUB R0, R1, #1" [(ALUInst(SUB(R 0,Reg (R 1),Lit 1),false))] 
-
-        let testMOVS1 = createTest "MOVS R0, #-1" [(ALUInst(MOV(R 0,Lit -1),true))] 
-
-        let test1 = ("SUB R0, R0, #1","0000",[VisualInterface.Out.R 0, -1])
-        let test2 = ("SUBS R0, R0, #0","0110",[VisualInterface.Out.R 0, 0])
-        let test3 = ("ADDS R0, R0, #4","0000",[VisualInterface.Out.R 0, 4; VisualInterface.Out.R 1, 0]) 
+            (name,initializeAllReg+text,mstateToFlags mstate,mstateToRegList mstate)
