@@ -104,6 +104,14 @@ module Emulator =
             | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
             | None -> failwithf "run time error: no instruction found at address %A" state.PC
             | x -> failwithf "run time error: instruction not defined %A" x
+
+        let rec executeInstructions (state:MachineState) = 
+            
+            let newState = executeInstruction state (state.MemMap.TryFind(state.PC))
+
+            if newState.PC = newState.End 
+            then    newState
+            else    executeInstructions newState
             
 
            
