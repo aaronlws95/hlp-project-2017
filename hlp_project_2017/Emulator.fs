@@ -88,17 +88,18 @@ module Emulator =
             {state with RegMap = newRegMap;Flags = newFlags}
         // LDR FUNCTION
         let private ldr state dest exp s =  
-            let newRegMap = Map.add dest state.RegMap.[exp] state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(state.RegMap.[exp])) else state.Flags
+            let newRegMap = Map.add dest exp state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         // TODO: MORE FUNCTIONS
         let executeInstruction state instruction s = 
             let em = Extractor.extractMemory state
+            let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
             let gr = Extractor.getRegisterValue
             match instruction with
             | ADR(r,i) -> adr state r (ga i) s
-            | LDR(r1,r2) -> ldr state r1 r2 s
+            | LDR(r1,r2) -> ldr state r1 (em (Addr (er (Reg r2)))) s
     
     module Instruction = 
         let executeInstruction state instruction = 
@@ -107,16 +108,6 @@ module Emulator =
             | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
-<<<<<<< HEAD
-=======
-
-        let rec executeInstructions (state:MachineState) =
-            let newState = executeInstruction state (state.MemMap.TryFind(state.PC))
-            if newState.PC = newState.End 
-            then    newState
-            else    executeInstructions newState
-
->>>>>>> 2dab50381ba694955180a81708c665e4850422a1
             
 
            

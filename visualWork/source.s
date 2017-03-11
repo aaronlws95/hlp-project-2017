@@ -12,10 +12,7 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                
-            MOV R0, #3
-            MOV R2, R0
-            
+                ADR R0, 0x100
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

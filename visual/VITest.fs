@@ -28,8 +28,7 @@ module VITest =
                     MemMap = [100..4..1000] |> Seq.map (fun x -> (Addr x, Val 0)) |> Map.ofSeq
                     Flags = { N = false; Z = false; C = false; V = false; }
                     State = MachineState.RunState.RunOK 
-                    PC = Addr 0
-                    End = Addr 0
+                    END = Addr 0
                 } 
 
             let initializeAllReg = 

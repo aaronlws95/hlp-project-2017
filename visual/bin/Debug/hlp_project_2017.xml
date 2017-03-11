@@ -2,22 +2,22 @@
 <doc>
 <assembly><name>hlp_project_2017</name></assembly>
 <members>
-<member name="M:ARM7TDMI.Parser.|IsRegOrLit|_|(System.String)">
+<member name="M:ARM7TDMI.Cast.|IsRegOrLit|_|(System.String)">
 <summary>
  matches RegOrLit string returning the RegOrLit
 </summary>
 </member>
-<member name="M:ARM7TDMI.Parser.|IsReg|_|(System.String)">
+<member name="M:ARM7TDMI.Cast.|IsReg|_|(System.String)">
 <summary>
  matches string returning integer
 </summary>
 </member>
-<member name="M:ARM7TDMI.Parser.|IsLabel|_|(System.String)">
+<member name="M:ARM7TDMI.Cast.|IsLabel|_|(System.String)">
 <summary>
  matches string returning integer
 </summary>
 </member>
-<member name="M:ARM7TDMI.Parser.|IsLit|_|(System.String)">
+<member name="M:ARM7TDMI.Cast.|IsLit|_|(System.String)">
 <summary>
  matches string returning integer
 </summary>
