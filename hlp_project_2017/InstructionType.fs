@@ -16,7 +16,7 @@ module InstructionType =
 
     type MEMInst = 
         | ADR of dest:Register*exp:Address
-        | LDR of dest:Register*eqExp:Address
+        | LDR of dest:Register*eqExp:Register
 
     type InstructionType =
         | ALU of ALUInst*bool  

@@ -13,8 +13,8 @@
                 MOV R11, #0
                 MOV R12, #0
                 
-            MOV R0, #3
-            SUBS R1, R0, #3
+            ADR R0, 0x100
+            LDR R1, [R0]
             
           MOV R1, #0
           ADDMI R1, R1, #8

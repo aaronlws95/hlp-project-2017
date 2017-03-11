@@ -58,16 +58,21 @@ module CreateTest =
             Some (Inst(ALU(SUB(R 1,R 0,Lit 3),true)))]
         createTest "SUBS Test 1" testText testInstruction
 
-    //TEST ADR & LDR
-//    let testADRLDR = 
-//        let testText = 
-//                "
-//                ADR R0, 0x100
-//                LDR R1, [R0]L
-//                " 
-//        let testInstruction = 
-//            [(MEMInst(ADR(R 0,Lit 100),false));
-//            (MEMInst(LDR(R 1,),true))]
+    //TEST ADR
+    let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [Some(Inst((MEM(ADR(R 0,Addr 0x100),false))))] 
+    
+    //TEST LDR
+        //TEST SUBS 1
+    let testLDR1 = 
+        let testText = 
+            "
+            ADR R0, 0x100
+            LDR R1, [R0]
+            " 
+        let testInstruction = 
+            [Some (Inst(MEM(ADR(R 0,Addr 0x100),false)));
+            Some (Inst(MEM(LDR(R 1,R 0),false)))]
+        createTest "LDR Test" testText testInstruction
 
     let createdTestList = [
         testMOV1
@@ -78,5 +83,6 @@ module CreateTest =
         testADDS1
         testADDS2
         testSUBS1
-        //testADRLDR
+        testADR1
+        testLDR1
     ]
