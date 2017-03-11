@@ -1,4 +1,4 @@
-﻿namespace ARM7TDMI
+namespace ARM7TDMI
 
 
 module Emulator = 
@@ -38,6 +38,7 @@ module Emulator =
                                             C = false
                                             V = false
                                         }
+    
     module Extractor = 
         // extract value from register
         let extractRegister (state:MachineState) (rol:RegOrLit) = 
@@ -52,7 +53,9 @@ module Emulator =
                     | Inst i -> invalidOp "address is not valid" 
                 state.MemMap.[addr]
                 |> checkValidAddr
-    
+        let getAddressValue (Addr a:Address) = a
+        let getRegisterValue (R r:Register) = r
+
     module ALUInstruction = 
         //MOV FUNCTION
         let private mov state dest op1 s = 
@@ -70,7 +73,6 @@ module Emulator =
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.SUB(op1,op2,(op1-op2))) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         //TODO: MORE FUNCTIONS
-
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
             match instruction with
@@ -85,26 +87,36 @@ module Emulator =
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         // LDR FUNCTION
-//        let private ldr state dest exp s =  
-//            let newRegMap = Map.add dest state.MemMap.[exp] state.RegMap
-//            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(state.MemMap.[exp])) else state.Flags
-//            {state with RegMap = newRegMap;Flags = newFlags}
+        let private ldr state dest exp s =  
+            let newRegMap = Map.add dest state.RegMap.[exp] state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(state.RegMap.[exp])) else state.Flags
+            {state with RegMap = newRegMap;Flags = newFlags}
         // TODO: MORE FUNCTIONS
-
         let executeInstruction state instruction s = 
             let em = Extractor.extractMemory state
+            let ga = Extractor.getAddressValue
+            let gr = Extractor.getRegisterValue
             match instruction with
-            | ADR(r,i) -> adr state r (em i) s
-            //| LDR(r,i) -> ldr state r 
+            | ADR(r,i) -> adr state r (ga i) s
+            | LDR(r1,r2) -> ldr state r1 r2 s
     
     module Instruction = 
-            
         let executeInstruction state instruction = 
             match instruction with
             | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
             | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
+<<<<<<< HEAD
+=======
+
+        let rec executeInstructions (state:MachineState) =
+            let newState = executeInstruction state (state.MemMap.TryFind(state.PC))
+            if newState.PC = newState.End 
+            then    newState
+            else    executeInstructions newState
+
+>>>>>>> 2dab50381ba694955180a81708c665e4850422a1
             
 
            

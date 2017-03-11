@@ -60,12 +60,12 @@
     <None Include="App.config" />
     <Compile Include="InstructionType.fs" />
     <Compile Include="MachineState.fs" />
+    <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Environment.fs" />
     <Compile Include="Program.fs" />
     <Content Include="packages.config" />
-    <Compile Include="Cast.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Argu">

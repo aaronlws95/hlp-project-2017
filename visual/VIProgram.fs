@@ -85,9 +85,7 @@ module VIProgram=
                 with
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
             Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected ("Reg and Mem outputs don't match " + name)
-
-    
-          
+      
     let seqConfig = { Expecto.Tests.defaultConfig with parallel = false}
 
 
