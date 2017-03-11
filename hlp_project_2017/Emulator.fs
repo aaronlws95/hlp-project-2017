@@ -4,6 +4,7 @@
 module Emulator = 
     open InstructionType 
     open MachineState
+    open Cast
 
     module ProcessFlag = 
             type ProcessFlagType = 
@@ -102,16 +103,8 @@ module Emulator =
             match instruction with
             | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
             | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
-            | None -> failwithf "run time error: no instruction found at address %A" state.PC
+            | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
-
-        let rec executeInstructions (state:MachineState) = 
-            
-            let newState = executeInstruction state (state.MemMap.TryFind(state.PC))
-
-            if newState.PC = newState.End 
-            then    newState
-            else    executeInstructions newState
             
 
            

@@ -26,3 +26,7 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expe
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.Mdb.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Mono.Cecil.Pdb.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Expecto.FsCheck.xml
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\hlp_project_2017\bin\Debug\hlp_project_2017.XML
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.fsproj.hlp_project_2017.exe.config
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.exe
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.pdb

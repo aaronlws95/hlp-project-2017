@@ -6,6 +6,7 @@ module MachineState =
     | RunOK
     | RunTimeErr of string
     | SyntaxErr of string
+    | RunEND
         
     type Flags = 
         {
@@ -16,10 +17,9 @@ module MachineState =
         }
 
     type MachineState = 
-        { 
-        PC: Address
-        End: Address
-        RegMap : Map<Register, Value>
+        {
+        END: Address    //if user tries to use any memory below this address throw error
+        RegMap : Map<Register, Value>   //PC is R15
         MemMap : Map<Address, Memory>   //instruction list and label for pointers are stored here
         Flags : Flags 
         State : RunState 

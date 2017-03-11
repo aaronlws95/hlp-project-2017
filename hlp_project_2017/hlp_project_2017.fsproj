@@ -65,6 +65,7 @@
     <Compile Include="Environment.fs" />
     <Compile Include="Program.fs" />
     <Content Include="packages.config" />
+    <Compile Include="Cast.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Argu">
