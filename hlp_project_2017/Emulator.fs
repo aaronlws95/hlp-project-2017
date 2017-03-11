@@ -20,7 +20,7 @@ module Emulator =
                 | ADD(op1,op2,res) ->  { 
                                             N = N res 
                                             Z = Z res
-                                            C = if ((((sign(op1) <> sign(op2)) && ((sign(op1) = 1) && (op1 > op2) ||  (sign(op2) = 1) && (op2 > op1))) && res >= 0) 
+                                            C = if (((((sign(op1) <> sign(op2)) && ((sign(op1) = 1) && (op1 > op2) ||  (sign(op2) = 1) && (op2 > op1))) && res >=0) && op1 <> 0 && op2 <> 0)  
                                                     || ((op1 <0 && op2 <0 && res >= 0))) then true
                                                 else false 
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
@@ -61,26 +61,51 @@ module Emulator =
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(op1)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         //ADD FUNCTION
-        let private add state dest op1 op2 s = 
-            let newRegMap = Map.add dest (op1+op2) state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.ADD(op1,op2,(op1+op2))) else state.Flags
+        let private add state dest op1 op2 res s = 
+            let newRegMap = Map.add dest res state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.ADD(op1,op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         //SUB FUNCTION
-        let private sub state dest op1 op2 s = 
-            let newRegMap = Map.add dest (op1-op2) state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.SUB(op1,op2,(op1-op2))) else state.Flags
+        let private sub state dest op1 op2 res s = 
+            let newRegMap = Map.add dest res state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.SUB(op1,op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        
         //TODO: MORE FUNCTIONS
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
             match instruction with
-            | MOV(r,i) -> mov state r (er i) s
-            | ADD(r,i1,i2) -> add state r state.RegMap.[i1] (er i2) s
-            | SUB(r,i1,i2) -> sub state r state.RegMap.[i1] (er i2) s
+            | MOV(r,rol) -> mov state r (er rol) s
+            | ADD(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol))  s
+            | SUB(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)) s
+            | MVN(r, rol) -> mov state r ~~~(er rol) s
+            | EOR(r1, r2, rol) -> mov state r1 (state.RegMap.[r2]^^^(er rol)) s
+            | RSB(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) ((er rol)-state.RegMap.[r2]) s
+            | ADC(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol)+System.Convert.ToInt32(state.Flags.C)) s
+            | SBC(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)+System.Convert.ToInt32(state.Flags.C)-1) s
+            | BIC(r1, r2, rol) -> mov state r1 (state.RegMap.[r2]&&&(~~~(er rol))) s
+            | ORR(r1, r2, rol) -> mov state r1 (state.RegMap.[r2]|||(er rol)) s
 
+    module SFInstruction = 
+        let private setFlag state name op1 op2 = 
+            let newFlags = 
+                match name with
+                | "tst" -> ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(op1&&&op2)) 
+                | "teq" -> ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(op1^^^op2)) 
+                | "cmp" -> ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.SUB(op1,op2,op1-op2))
+                | "cmn" -> ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.ADD(op1,op2,op1+op2))
+                | _ -> failwithf "invalid setFlag function"
+            {state with Flags = newFlags}
+
+        let executeInstruction state instruction = 
+            let er = Extractor.extractRegister state
+            match instruction with
+                | TST(r,rol) -> setFlag state "tst" state.RegMap.[r] (er rol)
+                | TEQ(r, rol) -> setFlag state "teq" state.RegMap.[r] (er rol)
+                | CMP(r,rol) -> setFlag state "cmp" state.RegMap.[r] (er rol)
+                | CMN(r, rol) -> setFlag state "cmn" state.RegMap.[r] (er rol)    
+    
     module MEMInstruction = 
-        // ADR Address Load
+        // Update register functions: ADR, LDR
         let private updateRegister state dest exp s =  
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
@@ -92,9 +117,9 @@ module Emulator =
             let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
             match instruction with
-            | ADR(r,i) -> updateRegister state r (ga i) s
-            | LDRREG(r1,r2) -> updateRegister state r1 (em (Addr (er (Reg r2)))) s
-            | LDRPI(r,i) -> updateRegister state r (ga i) s
+                | ADR(r,i) -> updateRegister state r (ga i) s //Address load
+                | LDRREG(r1,r2) -> updateRegister state r1 (em (Addr (er (Reg r2)))) s //Load register
+                | LDRPI(r,i) -> updateRegister state r (ga i) s //LDR pseudo-instruction
             
 
     module Instruction = 
@@ -102,6 +127,7 @@ module Emulator =
             match instruction with
             | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
             | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
+            | Some (Inst(SF(sfi))) -> SFInstruction.executeInstruction state sfi
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
             

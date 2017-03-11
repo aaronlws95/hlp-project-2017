@@ -76,6 +76,18 @@ module CreateTest =
             Some (Inst(ALU(ADD(R 0,R 0,Lit 4),false)));
             Some (Inst(MEM(LDRREG(R 1,R 0),false)))]
         createTest "LDR Test" testText testInstruction
+    
+    let testMVN1 = createTest "MVN Test" "MVN R0, #2" [Some (Inst(ALU(MVN(R 0,Lit 2),false)))]  
+    let testEOR1 = createTest "EOR Test" "EOR R0, R1, #2" [Some (Inst(ALU(EOR(R 0, R 1, Lit 2),false)))]  
+    let testRSB1 = createTest "RSB Test" "RSB R0, R1, #2" [Some (Inst(ALU(RSB(R 0, R 1, Lit 2),false)))]  
+    let testADC1 = createTest "ADC Test" "ADC R0, R1, #2" [Some (Inst(ALU(ADC(R 0, R 1, Lit 2),false)))]  
+    let testSBC1 = createTest "SBC Test" "SBC R0, R1, #2" [Some (Inst(ALU(SBC(R 0, R 1, Lit 2),false)))]  
+    let testBIC1 = createTest "BIC Test" "BIC R0, R1, #2" [Some (Inst(ALU(BIC(R 0, R 1, Lit 2),false)))]  
+    let testORR1 = createTest "ORR Test" "ORR R0, R1, #2" [Some (Inst(ALU(ORR(R 0, R 1, Lit 2),false)))]     
+    let testTST1 = createTest "TST Test" "TST R0, #2" [Some (Inst(SF(TST(R 0, Lit 2))))]  
+    let testTEQ1 = createTest "TEQ Test" "TEQ R0, #2" [Some (Inst(SF(TEQ(R 0, Lit 2))))]
+    let testCMP1 = createTest "CMP Test" "CMP R0, #2" [Some (Inst(SF(CMP(R 0, Lit 2))))]
+    let testCMN1 = createTest "CMN Test" "CMN R0, #2" [Some (Inst(SF(CMN(R 0, Lit 2))))]
 
     let createdTestList = [
         testMOV1
@@ -88,4 +100,15 @@ module CreateTest =
         testSUBS1
         testADR1
         testLDR1
+        testMVN1
+        testEOR1
+        testRSB1
+        testADC1
+        testSBC1
+        testBIC1
+        testORR1
+        testTST1
+        testTEQ1
+        testCMP1
+        testCMN1
     ]

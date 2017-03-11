@@ -12,12 +12,7 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                
-            TEST DCD 65537,65541
-            LDR R0, =TEST
-            ADD R0, R0, #4
-            LDR R1, [R0]
-            
+                CMN R0, #2
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4
