@@ -98,7 +98,6 @@ module Emulator =
             match instruction with
             | ADR(r,i) -> adr state r (ga i) s
             | LDR(r1,r2) -> ldr state r1 r2 s
-            //| LDR(r,i) -> ldr state r 
     
     module Instruction = 
         let executeInstruction state instruction = 
