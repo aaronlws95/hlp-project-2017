@@ -16,8 +16,6 @@ module VisualInterface =
         MemLocs: int list // memory locations to be traced and data returned
     }
 
-
-
     type Out = 
         | R of int
         | Mem of int

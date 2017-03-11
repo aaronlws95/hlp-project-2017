@@ -7,14 +7,14 @@ module Emulator =
 
     module ProcessFlag = 
             type ProcessFlagType = 
-                | ADD of int*int*int //op1 op2 result
-                | SUB of int*int*int //op1 op2 result
-                | OTHER of int // result
+                | ADD of Value*Value*Value //op1 op2 result
+                | SUB of Value*Value*Value //op1 op2 result
+                | OTHER of Value // result
 
             //get flags given instruction, input, and ouput
             let processFlags instruction =
-                let N res = if res < 0 then true else false
-                let Z res = if res = 0 then true else false
+                let N (res:Value) = if res < 0 then true else false
+                let Z (res:Value) = if res = 0 then true else false
 
                 match instruction with
                 | ADD(op1,op2,res) ->  { 
@@ -37,7 +37,6 @@ module Emulator =
                                             C = false
                                             V = false
                                         }
-    
     module Extractor = 
         // extract value from register
         let extractRegister (state:MachineState) (rol:RegOrLit) = 
@@ -45,8 +44,13 @@ module Emulator =
                 | Reg r -> state.RegMap.[r]
                 | Lit l -> l
         // extract value from memory
-        let extractMemory (state:MachineState) (mem:Memory) = 
-                state.MemMap.[mem]
+        let extractMemory (state:MachineState) (addr:Address) =
+                let checkValidAddr =
+                    function
+                    | Val v -> v
+                    | Inst i -> invalidOp "address is not valid" 
+                state.MemMap.[addr]
+                |> checkValidAddr
     
     module ALUInstruction = 
         //MOV FUNCTION
@@ -70,32 +74,36 @@ module Emulator =
             let er = Extractor.extractRegister state
             match instruction with
             | MOV(r,i) -> mov state r (er i) s
-            | ADD(r,i1,i2) -> add state r (er i1) (er i2) s
-            | SUB(r,i1,i2) -> sub state r (er i1) (er i2) s
+            | ADD(r,i1,i2) -> add state r state.RegMap.[i1] (er i2) s
+            | SUB(r,i1,i2) -> sub state r state.RegMap.[i1] (er i2) s
 
     module MEMInstruction = 
         // ADR FUNCTION
-        let private adr state dest exp s =
+        let private adr state dest exp s =  
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
+        // LDR FUNCTION
+//        let private ldr state dest exp s =  
+//            let newRegMap = Map.add dest state.MemMap.[exp] state.RegMap
+//            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(state.MemMap.[exp])) else state.Flags
+//            {state with RegMap = newRegMap;Flags = newFlags}
         // TODO: MORE FUNCTIONS
 
         let executeInstruction state instruction s = 
             let em = Extractor.extractMemory state
             match instruction with
             | ADR(r,i) -> adr state r (em i) s
+            //| LDR(r,i) -> ldr state r 
     
     module Instruction = 
-        type Instruction = 
-            | ALUInst of ALUInst * bool
-            | MEMInst of MEMInst * bool
             
         let executeInstruction state instruction = 
             match instruction with
-            | ALUInst (ai,s) -> ALUInstruction.executeInstruction state ai s
-            | MEMInst (mi,s) -> MEMInstruction.executeInstruction state mi s
-
-           
+            | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
+            | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
+            | None -> failwithf "run time error: no instruction found at address %A" state.PC
+            | x -> failwithf "run time error: instruction not defined %A" x
+            
 
            

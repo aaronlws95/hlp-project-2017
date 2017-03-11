@@ -17,9 +17,10 @@ module MachineState =
 
     type MachineState = 
         { 
-            RegMap : Map<Register, int>
-            MemMap : Map<Memory, int> 
-            InstrList : InstructionType list
-            Flags : Flags 
-            State : RunState 
+        PC: Address
+        End: Address
+        RegMap : Map<Register, Value>
+        MemMap : Map<Address, Memory>   //instruction list and label for pointers are stored here
+        Flags : Flags 
+        State : RunState 
         }

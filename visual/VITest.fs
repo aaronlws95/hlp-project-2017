@@ -1,10 +1,10 @@
 ﻿namespace VisualInterface
 
 module VITest =
+    open ARM7TDMI
+    open MachineState
+    open InstructionType
     module Converter = 
-        open ARM7TDMI
-        open MachineState
-        open InstructionType
         open VisualInterface
 
         let mstateToRegList mstate = mstate.RegMap |> Map.toList |> (List.map (fun ((Register.R v),i) -> (R v,i)))
@@ -18,20 +18,18 @@ module VITest =
             N+Z+C+V    
 
     module TestEnvt =
-        open ARM7TDMI
         open Emulator.Instruction
-        open MachineState
-        open InstructionType
         open Converter
-    
+                
         let createTest name text instructionList  = 
             let mstate:MachineState =     
                 { 
                     RegMap = [0..12] |> Seq.map (fun x -> (R x, 0)) |> Map.ofSeq
                     MemMap = Map.empty
-                    InstrList = List.empty
                     Flags = { N = false; Z = false; C = false; V = false; }
                     State = MachineState.RunState.RunOK 
+                    PC = Addr 0
+                    End = Addr 0
                 } 
 
             let initializeAllReg = 
@@ -50,5 +48,6 @@ module VITest =
                 MOV R11, #0
                 MOV R12, #0
                 " 
+
             let mstate = instructionList |> List.fold (fun acc elem -> executeInstruction acc elem) mstate 
             (name,initializeAllReg+text,mstateToFlags mstate,mstateToRegList mstate)

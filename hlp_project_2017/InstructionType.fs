@@ -2,20 +2,27 @@
 
 module InstructionType = 
     type Register = R of int
-    type Memory = M of int 
+    type Address = Addr of int
+    type Value = int
+
     type RegOrLit = 
         | Reg of Register 
-        | Lit of int
+        | Lit of Value
 
     type ALUInst = 
-        | MOV of (Register*RegOrLit)
-        | ADD of (Register*RegOrLit*RegOrLit)
-        | SUB of (Register*RegOrLit*RegOrLit)
+        | MOV of dest:Register*op1:RegOrLit
+        | ADD of dest:Register*op1:Register*op2:RegOrLit
+        | SUB of dest:Register*op1:Register*op2:RegOrLit
 
     type MEMInst = 
-        | ADR of (Register*Memory)
+        | ADR of dest:Register*exp:Address
+        | LDR of dest:Register*eqExp:Address
 
     type InstructionType =
-        | ALU of ALUInst
-        | MEM of MEMInst
+        | ALU of ALUInst*bool  
+        | MEM of MEMInst*bool
+
+    type Memory = 
+        | Inst of InstructionType
+        | Val of Value
 
