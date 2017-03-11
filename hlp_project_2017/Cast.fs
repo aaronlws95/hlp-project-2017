@@ -68,3 +68,15 @@ module Cast=
         match addr with
         | Addr (x:int) -> (x:Value)
 
+    //check if one branch label returns bool for filter
+    let IsBranch =
+        function
+        | [IsLabel x] -> true
+        //| Inst (BRA x) -> true
+        | _ -> false
+    //check if one branch label returns bool for filter
+    let IsNotBranch =
+        function
+        | [IsLabel x] -> false
+        | _ -> true
+
