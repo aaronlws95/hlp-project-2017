@@ -25,7 +25,7 @@ module VITest =
             let mstate:MachineState =     
                 { 
                     RegMap = [0..12] |> Seq.map (fun x -> (R x, 0)) |> Map.ofSeq
-                    MemMap = [100..4..1000] |> Seq.map (fun x -> (Addr x, Val 0)) |> Map.ofSeq
+                    MemMap = [0x10000..4..0x10160] |> Seq.map (fun x -> (Addr x, Val (x+1))) |> Map.ofSeq
                     Flags = { N = false; Z = false; C = false; V = false; }
                     State = MachineState.RunState.RunOK 
                     END = Addr 0

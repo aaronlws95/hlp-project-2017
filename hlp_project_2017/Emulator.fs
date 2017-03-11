@@ -4,7 +4,6 @@ namespace ARM7TDMI
 module Emulator = 
     open InstructionType 
     open MachineState
-    open Cast
 
     module ProcessFlag = 
             type ProcessFlagType = 
@@ -54,7 +53,6 @@ module Emulator =
                 state.MemMap.[addr]
                 |> checkValidAddr
         let getAddressValue (Addr a:Address) = a
-        let getRegisterValue (R r:Register) = r
 
     module ALUInstruction = 
         //MOV FUNCTION
@@ -72,6 +70,7 @@ module Emulator =
             let newRegMap = Map.add dest (op1-op2) state.RegMap
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.SUB(op1,op2,(op1-op2))) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
+        
         //TODO: MORE FUNCTIONS
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
@@ -81,26 +80,23 @@ module Emulator =
             | SUB(r,i1,i2) -> sub state r state.RegMap.[i1] (er i2) s
 
     module MEMInstruction = 
-        // ADR FUNCTION
-        let private adr state dest exp s =  
+        // ADR Address Load
+        let private updateRegister state dest exp s =  
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        // LDR FUNCTION
-        let private ldr state dest exp s =  
-            let newRegMap = Map.add dest exp state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
-            {state with RegMap = newRegMap;Flags = newFlags}
+  
         // TODO: MORE FUNCTIONS
         let executeInstruction state instruction s = 
             let em = Extractor.extractMemory state
             let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
-            let gr = Extractor.getRegisterValue
             match instruction with
-            | ADR(r,i) -> adr state r (ga i) s
-            | LDR(r1,r2) -> ldr state r1 (em (Addr (er (Reg r2)))) s
-    
+            | ADR(r,i) -> updateRegister state r (ga i) s
+            | LDRREG(r1,r2) -> updateRegister state r1 (em (Addr (er (Reg r2)))) s
+            | LDRPI(r,i) -> updateRegister state r (ga i) s
+            
+
     module Instruction = 
         let executeInstruction state instruction = 
             match instruction with

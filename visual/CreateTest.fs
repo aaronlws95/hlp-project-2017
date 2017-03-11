@@ -66,12 +66,15 @@ module CreateTest =
     let testLDR1 = 
         let testText = 
             "
-            ADR R0, 0x100
+            TEST DCD 65537,65541
+            LDR R0, =TEST
+            ADD R0, R0, #4
             LDR R1, [R0]
             " 
         let testInstruction = 
-            [Some (Inst(MEM(ADR(R 0,Addr 0x100),false)));
-            Some (Inst(MEM(LDR(R 1,R 0),false)))]
+            [Some (Inst(MEM(LDRPI(R 0,Addr 0x10000),false)));
+            Some (Inst(ALU(ADD(R 0,R 0,Lit 4),false)));
+            Some (Inst(MEM(LDRREG(R 1,R 0),false)))]
         createTest "LDR Test" testText testInstruction
 
     let createdTestList = [
@@ -84,5 +87,5 @@ module CreateTest =
         testADDS2
         testSUBS1
         testADR1
-        //testLDR1
+        testLDR1
     ]

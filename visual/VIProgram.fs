@@ -92,7 +92,7 @@ module VIProgram=
     [<EntryPoint>]
     let main argv = 
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
-
+            
         let tests = 
             testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
         let rc = runTests seqConfig tests
