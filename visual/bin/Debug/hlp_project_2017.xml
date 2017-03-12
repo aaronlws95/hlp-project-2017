@@ -22,5 +22,30 @@
  matches string returning integer
 </summary>
 </member>
+<member name="T:ARM7TDMI.Emulator.Instruction">
+<summary>
+INSTRUCTION
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.SHIFTInstruction">
+<summary>
+SHIFT INSTRUCTIONS
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.MEMInstruction">
+<summary>
+ MEMORY INSTRUCTIONS
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.SFInstruction">
+<summary>
+SET FLAG INSTRUCTIONS
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.ALUInstruction">
+<summary>
+ARITHMETIC LOGIC UNIT INSTRUCTIONS
+</summary>
+</member>
 </members>
 </doc>

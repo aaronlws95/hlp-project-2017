@@ -20,8 +20,9 @@ module VITest =
     module TestEnvt =
         open Emulator.Instruction
         open Converter
-                
+        //create tuple to send for testing        
         let createTest name text instructionList  = 
+            //initial machine state
             let mstate:MachineState =     
                 { 
                     RegMap = [0..12] |> Seq.map (fun x -> (R x, 0)) |> Map.ofSeq
@@ -30,7 +31,7 @@ module VITest =
                     State = MachineState.RunState.RunOK 
                     END = Addr 0
                 } 
-
+            //initialise all registers to 0
             let initializeAllReg = 
                 "
                 MOV R0, #0
@@ -47,6 +48,6 @@ module VITest =
                 MOV R11, #0
                 MOV R12, #0
                 " 
-
+            // run instructions in order and return new machine state
             let mstate = instructionList |> List.fold (fun acc elem -> executeInstruction acc elem) mstate 
             (name,initializeAllReg+text,mstateToFlags mstate,mstateToRegList mstate)

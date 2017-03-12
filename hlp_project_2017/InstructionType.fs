@@ -32,10 +32,19 @@ module InstructionType =
         | LDRREG of dest:Register*source:Register
         | LDRPI of dest:Register*eqExp:Address
 
+    type SHIFTInst = 
+        | LSL of dest:Register*op1:Register*op2:RegOrLit
+        | LSR of dest:Register*op1:Register*op2:RegOrLit
+        | ASR of dest:Register*op1:Register*op2:RegOrLit
+        | ROR of dest:Register*op1:Register*op2:RegOrLit
+        | RRX of op1:Register*op2:Register
+
     type InstructionType =
         | ALU of ALUInst*bool  
         | MEM of MEMInst*bool
+        | SHIFT of SHIFTInst*bool
         | SF of SFInst
+
 
     type Memory = 
         | Inst of InstructionType
