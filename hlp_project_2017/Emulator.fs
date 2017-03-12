@@ -10,12 +10,10 @@ module Emulator =
                 | ADD of Value*Value*Value //op1 op2 result
                 | SUB of Value*Value*Value //op1 op2 result
                 | OTHER of Value // result
-
             //get flags given state, instruction with input, and ouput
             let processFlags state instruction =
                 let N (res:Value) = if res < 0 then true else false
                 let Z (res:Value) = if res = 0 then true else false
-
                 match instruction with
                 | ADD(op1,op2,res) ->  { 
                                             N = N res 
@@ -49,29 +47,28 @@ module Emulator =
                 let checkValidAddr =
                     function
                     | Val v -> v
-                    | Inst i -> invalidOp "address is not valid" 
+                    | Inst i -> invalidOp "invalid address" 
                 state.MemMap.[addr]
                 |> checkValidAddr
         let getAddressValue (Addr a:Address) = a
 
     ///ARITHMETIC LOGIC UNIT INSTRUCTIONS
     module ALUInstruction = 
-        //MOV FUNCTION (Updates register with value)
         let private mov state dest op2 s = 
             let newRegMap = Map.add dest op2 state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(op2)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        //ADD FUNCTION
+
         let private add state dest op1 op2 res s = 
             let newRegMap = Map.add dest res state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.ADD(op1,op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        //SUB FUNCTION
+
         let private sub state dest op1 op2 res s = 
             let newRegMap = Map.add dest res state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUB(op1,op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        //EXECUTE
+        
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
             match instruction with
@@ -95,9 +92,9 @@ module Emulator =
                 | "teq" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(op1^^^op2)) 
                 | "cmp" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUB(op1,op2,op1-op2))
                 | "cmn" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.ADD(op1,op2,op1+op2))
-                | _ -> failwithf "invalid setFlag function"
+                | _ -> invalidOp "invalid setFlag function"
             {state with Flags = newFlags}
-        //EXECUTE
+        
         let executeInstruction state instruction = 
             let er = Extractor.extractRegister state
             match instruction with
@@ -108,27 +105,32 @@ module Emulator =
 
     /// MEMORY INSTRUCTIONS
     module MEMInstruction = 
-        // Update register functions: ADR, LDR
-        let private mov state dest exp s =  
+        let private adr state dest exp s =  
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        //EXECUTE
+        let private ldr state dest exp s  = 
+            let newRegMap = Map.add dest exp state.RegMap
+            {state with RegMap = newRegMap}
+        let private str state value addr s =  
+            let newMemMap = Map.add (Addr addr) (Val value)  state.MemMap
+            {state with MemMap = newMemMap}
+
+
+        
         let executeInstruction state instruction s = 
             let em = Extractor.extractMemory state
             let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
             match instruction with
-                //Address load 
-                | ADR(r,addr) -> mov state r (ga addr) s //R:=ADDR
-                //Load register
-                | LDRREG(r1,r2) -> mov state r1 (em (Addr (er (Reg r2)))) s //R1:=[R2]
-                //LDR pseudo-instruction
-                | LDRPI(r,addr) -> mov state r (ga addr) s //R:=ADDR
+                | ADR(r,addr) -> adr state r (ga addr) s //Address load  R:=ADDR
+                | LDRPI(r,addr) -> ldr state r (ga addr) s //LDR pseudo-instruction R:=ADDR
+                | LDRREG(r1,r2) -> ldr state r1 (em (Addr (er (Reg r2)))) s //Load register R1:=[R2]             
+                | STR(r1,r2) -> str state state.RegMap.[r1] state.RegMap.[r2] s   //Store register
+
 
     ///SHIFT INSTRUCTIONS
     module SHIFTInstruction = 
-        // Update register functions: ADR, LDR
         let private updateRegister state dest exp s =  
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
@@ -140,15 +142,14 @@ module Emulator =
             let newFlags = if s then {ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(newExp)) with C = newC} else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
             
-        //EXECUTE
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
             match instruction with
-                | LSL(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] <<< (er rol)) s
-                | LSR(r1,r2,rol) -> updateRegister state r1 ((int32)((uint32)state.RegMap.[r2] >>> (er rol))) s
-                | ASR(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] >>> (er rol)) s
-                | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s
-                | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s
+                | LSL(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] <<< (er rol)) s //logical shift left
+                | LSR(r1,r2,rol) -> updateRegister state r1 ((int32)((uint32)state.RegMap.[r2] >>> (er rol))) s //logical shift right
+                | ASR(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] >>> (er rol)) s //arithmetic shift right
+                | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
+                | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s //rotate right and extend
 
     ///INSTRUCTION
     module Instruction = 

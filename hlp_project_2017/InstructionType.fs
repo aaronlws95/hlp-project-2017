@@ -29,8 +29,9 @@ module InstructionType =
 
     type MEMInst = 
         | ADR of dest:Register*exp:Address
-        | LDRREG of dest:Register*source:Register
         | LDRPI of dest:Register*eqExp:Address
+        | LDRREG of dest:Register*source:Register
+        | STR of dest:Register*source:Register
 
     type SHIFTInst = 
         | LSL of dest:Register*op1:Register*op2:RegOrLit
