@@ -50,23 +50,16 @@ module InstructionType =
     type ConditionCode = | EQ | NE | CS | HS | CC | LO | MI | PL | VS | VC | HI | LS | GE | LT | GT | LE | AL 
 
     type InstructionType =
-<<<<<<< HEAD
-        | ALU of ALUInst*setflag:bool  
-        | MEM of MEMInst*setflag:bool
+        | ALU of ALUInst*setFlag:bool  
+        | MEM of MEMInst*setFlag:bool
+        | SHIFT of SHIFTInst*setFlag:bool
         | SF of SFInst
 
-    type ShiftType = Shift of ShiftInst*setflag:bool option
+    type ShiftType = Shift of ShiftInst*setFlag:bool option
 
     type ConditionType = Condition of ConditionCode option
 
     type InstructionLine = Line of InstructionType * ShiftType * ConditionType
-=======
-        | ALU of ALUInst*bool  
-        | MEM of MEMInst*bool
-        | SHIFT of SHIFTInst*bool
-        | SF of SFInst
-
->>>>>>> refs/remotes/origin/master
 
     type Memory = 
         | Inst of InstructionType
