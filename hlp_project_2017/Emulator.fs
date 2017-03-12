@@ -160,4 +160,10 @@ module Emulator =
             | Some (Inst(SF(sfi))) -> SFInstruction.executeInstruction state sfi
             | Some(Inst(SHIFT(shifti,s))) -> SHIFTInstruction.executeInstruction state shifti s  
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
+<<<<<<< HEAD
             | x -> failwithf "run time error: instruction not defined %A" x
+
+        let nextInstruction 
+=======
+            | x -> failwithf "run time error: instruction not defined %A" x
+>>>>>>> refs/remotes/origin/master
