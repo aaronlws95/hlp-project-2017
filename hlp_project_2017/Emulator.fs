@@ -130,6 +130,5 @@ module Emulator =
             | Some (Inst(SF(sfi))) -> SFInstruction.executeInstruction state sfi
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
-            
 
-           
+        let nextInstruction 
