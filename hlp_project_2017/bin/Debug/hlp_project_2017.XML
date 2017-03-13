@@ -27,6 +27,16 @@ matches string (#X-&gt;X) returning integer
  matches string (X -&gt; X) returning integer
 </summary>
 </member>
+<member name="M:ARM7TDMI.Emulator.Instruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.InstructionType)">
+<summary>
+ main execute instruction function
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.Instruction">
+<summary>
+Instruction
+</summary>
+</member>
 <member name="M:ARM7TDMI.Emulator.SHIFTInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SHIFTInst,System.Boolean)">
 <summary>
 execute shift function
