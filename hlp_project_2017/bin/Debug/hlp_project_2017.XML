@@ -2,6 +2,11 @@
 <doc>
 <assembly><name>hlp_project_2017</name></assembly>
 <members>
+<member name="M:ARM7TDMI.Cast.|IsLabel|_|(System.String)">
+<summary>
+ matches string returning string
+</summary>
+</member>
 <member name="M:ARM7TDMI.Cast.|IsRegOrLit|_|(System.String)">
 <summary>
  matches RegOrLit string returning the RegOrLit
@@ -9,42 +14,127 @@
 </member>
 <member name="M:ARM7TDMI.Cast.|IsReg|_|(System.String)">
 <summary>
- matches string returning integer
-</summary>
-</member>
-<member name="M:ARM7TDMI.Cast.|IsLabel|_|(System.String)">
-<summary>
- matches string returning integer
+ matches string returning register
 </summary>
 </member>
 <member name="M:ARM7TDMI.Cast.|IsLit|_|(System.String)">
 <summary>
- matches string returning integer
+matches string (#X-&gt;X) returning integer
 </summary>
 </member>
-<member name="T:ARM7TDMI.Emulator.Instruction">
+<member name="M:ARM7TDMI.Cast.|IsInt|_|(System.String)">
 <summary>
-INSTRUCTION
+ matches string (X -&gt; X) returning integer
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SHIFTInst,System.Boolean)">
+<summary>
+execute shift function
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.rrx(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ rotate right with extend
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.updateRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZ based on new result 
 </summary>
 </member>
 <member name="T:ARM7TDMI.Emulator.SHIFTInstruction">
 <summary>
-SHIFT INSTRUCTIONS
+shift instructions
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst,System.Boolean)">
+<summary>
+ execute memory instruction 
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,System.Int32,``0)">
+<summary>
+ store register contents into memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldr``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,``0)">
+<summary>
+ load register with address value or memory content
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.adr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ update register with address value
 </summary>
 </member>
 <member name="T:ARM7TDMI.Emulator.MEMInstruction">
 <summary>
- MEMORY INSTRUCTIONS
+ memory instructions
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SFInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SFInst)">
+<summary>
+ execute set flag instruction
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SFInstruction.setFlag(ARM7TDMI.MachineState.MachineState,System.String,System.Int32,System.Int32)">
+<summary>
+ set new flags
 </summary>
 </member>
 <member name="T:ARM7TDMI.Emulator.SFInstruction">
 <summary>
-SET FLAG INSTRUCTIONS
+set flag instructions
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.ALUInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.ALUInst,System.Boolean)">
+<summary>
+ execute ALU instruction 
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.ALUInstruction.sub(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with subtraction
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.ALUInstruction.add(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with addition
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.ALUInstruction.updateRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZ based on new result   
 </summary>
 </member>
 <member name="T:ARM7TDMI.Emulator.ALUInstruction">
 <summary>
-ARITHMETIC LOGIC UNIT INSTRUCTIONS
+arithmetic logic unit instructions
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.Extractor.getAddressValue(ARM7TDMI.InstructionType.Address)">
+<summary>
+ get value of address
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.Extractor.extractMemory(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Address)">
+<summary>
+ extract value from memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.Extractor.extractRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.RegOrLit)">
+<summary>
+ extract value from register
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType">
+<summary>
+ types for processing flags 
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.ProcessFlag.processFlags(ARM7TDMI.MachineState.MachineState,ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType)">
+<summary>
+process and return new flags
 </summary>
 </member>
 </members>

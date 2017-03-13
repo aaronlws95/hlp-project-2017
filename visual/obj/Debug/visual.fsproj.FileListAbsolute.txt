@@ -31,3 +31,8 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsprojR
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsproj.visual.exe.config
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.exe
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.pdb
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\bin\Debug\visual.XML
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.fsprojResolveAssemblyReference.cache
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.fsproj.visual.exe.config
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.exe
+C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.pdb

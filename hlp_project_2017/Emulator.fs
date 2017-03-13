@@ -157,7 +157,7 @@ module Emulator =
                 | ASR(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] >>> (er rol)) s //arithmetic shift right
                 | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
                 | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s //rotate right and extend
-
+(*
     ///Instruction
     module Instruction = 
         /// main execute instruction function
@@ -170,3 +170,4 @@ module Emulator =
             | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
             | x -> failwithf "run time error: instruction not defined %A" x
 
+*)

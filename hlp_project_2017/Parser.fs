@@ -26,21 +26,39 @@ module Parser=
         let branch_map =
             let chooseAddr (b:Map<string,Address>) i =
                 match lineList.[i] with
-                | [IsLabel x] -> b.Add(x,(Addr ((i+1)*4)))
+                | IsLabel x::IsLabel _::IsReg _::_ -> b.Add(x,(Addr (i*4)))
                 | _ -> b   
-            seq { 0 .. lineList.Length } 
+            seq { 0 .. lineList.Length - 1 } 
             |> Seq.fold chooseAddr Map.empty
 
-        let executeWordsAsCommand = 
-            function
-            | [ "MOV"; Cast.IsReg reg1; Cast.IsRegOrLit reg2 ] -> ALU(MOV(reg1,reg2),false)
-            | [ "ADD"; Cast.IsReg reg1; Cast.IsReg reg2; Cast.IsRegOrLit reg3 ] -> ALU(ADD(reg1,reg2,reg3),false)
-            //| [IsLabel x ] -> ignore 
-            | x -> failwithf "Unexpected match in parser: %s" x.[0]
+        let remove_branch_label line=
+            match line with
+            | IsLabel _::IsLabel _::IsReg _::_ -> line.Tail
+            | x -> x   
+
+        let executeWordsAsCommand (strlist:string list)= //: InstructionLine
+            let instruction = strlist.[0]
+            let basicinstruction = instruction.[0..2]
+            let setflag = 
+                if instruction.Length = 4 then (string)instruction.[3]
+                elif instruction.Length = 6 then (string)instruction.[3]
+                else ""
+            let condition = 
+                if instruction.Length = 5 then instruction.[3..4]
+                elif instruction.Length = 6 then instruction.[4..5]
+                else ""
+            let instrline = basicinstruction::setflag::condition::(strlist.Tail)
+            match instrline with
+            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsRegOrLit op1 ] -> Line(ALU(inst(dest,op1),sf),None,cond)
+            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsRegOrLit op2 ] -> Line(ALU(inst(dest,op1,op2),sf),None,cond)
+            | [ IsShiftInst inst;  IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1; IsRegOrLit op2] -> Line(SHIFT(inst(dest,op1,op2),sf),None,cond)
+            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsRegOrLit op1] -> Line(SF(inst(dest,op1)),None,cond)
+            //| [ IsBranchInst inst; IsCondition cond; IsLabel lab] -> 
+            | x -> failwithf "Unexpected match in parser: %A" x
 
         let instList = //: InstructionType list = 
             lineList
-            //|> List.filter (IsNotBranch)  //The branch_map addresses is not aligned if this is on 
+            |> List.map remove_branch_label   
             |> List.map executeWordsAsCommand
 
         let init_reg = 
@@ -48,7 +66,7 @@ module Parser=
         
         let init_memory =
             let chooseAddr (m:Map<Address,Memory>) i = m.Add(Addr(i*4),Inst(instList.[i]))
-            seq { 0 .. instList.Length } 
+            seq { 0 .. instList.Length - 1 } 
             |> Seq.fold chooseAddr Map.empty
 
         { 
