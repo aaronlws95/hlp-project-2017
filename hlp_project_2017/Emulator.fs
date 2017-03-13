@@ -157,17 +157,48 @@ module Emulator =
                 | ASR(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] >>> (er rol)) s //arithmetic shift right
                 | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
                 | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s //rotate right and extend
-(*
+
+
     ///Instruction
     module Instruction = 
         /// main execute instruction function
         let executeInstruction state instruction = 
-            match instruction with
-            | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
-            | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
-            | Some (Inst(SF(sfi))) -> SFInstruction.executeInstruction state sfi
-            | Some(Inst(SHIFT(shifti,s))) -> SHIFTInstruction.executeInstruction state shifti s  
-            | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
-            | x -> failwithf "run time error: instruction not defined %A" x
-
-*)
+            match instruction with 
+            | ALU(ai,s) -> ALUInstruction.executeInstruction state ai s 
+            | MEM(mi,s) -> MEMInstruction.executeInstruction state mi s 
+            | SF(sfi) -> SFInstruction.executeInstruction state sfi  
+            | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s  
+        let executeLine state = 
+            let pc = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
+            let checkCondition cond = 
+                match cond with
+                | EQ -> state.Flags.Z = true
+                | NE -> state.Flags.Z = false
+                | CS | HS -> state.Flags.C = true
+                | CC | LO -> state.Flags.C = false
+                | MI -> state.Flags.N = true
+                | PL -> state.Flags.N = false
+                | VS -> state.Flags.V = true
+                | VC -> state.Flags.V = false
+                | HI -> state.Flags.C = true && state.Flags.Z = false
+                | LS -> state.Flags.C = false && state.Flags.Z = true
+                | GE -> state.Flags.N = state.Flags.V
+                | LT -> not (state.Flags.N = state.Flags.V)
+                | GT -> state.Flags.Z = false && state.Flags.N = state.Flags.V
+                | LE -> state.Flags.Z = true && not (state.Flags.N = state.Flags.V)
+                | AL -> true
+            let instLine = state.MemMap.TryFind( Addr(pc) )
+            match instLine with
+            // Shift:None, Condition:None
+            | Some (Inst(Line(inst, None, None))) -> executeInstruction state inst
+            // Shift:Some, Condition:None
+            | Some (Inst(Line(inst, Some(sInst), None))) -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
+            // Shift:None, Condition:True
+            | Some (Inst(Line(inst, None, Some(c) ))) when checkCondition c = true -> executeInstruction state inst 
+            // Shift:Some, Condition:True
+            | Some (Inst(Line(inst, Some(sInst), Some(c) ))) when checkCondition c = true -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
+            // Shift:None/Some, Condition:False
+            | Some (Inst(Line(inst, _, Some(c) ))) when checkCondition c = false -> state 
+            // Error cases
+            | None -> failwithf "run time error: no instruction line found at address %A" (state.RegMap.TryFind(R 15)) 
+            | x -> failwithf "run time error: instruction line not defined %A" x 

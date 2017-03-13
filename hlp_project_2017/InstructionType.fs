@@ -27,13 +27,6 @@ module InstructionType =
         | CMP of dest:Register*op1:RegOrLit
         | CMN of dest:Register*op1:RegOrLit
 
-    type ShiftInst = 
-        | LSL of dest:Register*op1:Register*op2:RegOrLit
-        | LSR of dest:Register*op1:Register*op2:RegOrLit
-        | ASR of dest:Register*op1:Register*op2:RegOrLit
-        | ROR of dest:Register*op1:Register*op2:RegOrLit
-        | RRX of dest:Register*op1:Register*op2:RegOrLit
-
     type MEMInst = 
         | ADR of dest:Register*exp:Address
         | LDRPI of dest:Register*eqExp:Address
@@ -50,12 +43,11 @@ module InstructionType =
     type ConditionCode = | EQ | NE | CS | HS | CC | LO | MI | PL | VS | VC | HI | LS | GE | LT | GT | LE | AL 
 
     type InstructionType =
-        | ALU of ALUInst*setFlag:bool  
-        | MEM of MEMInst*setFlag:bool
-        | SHIFT of SHIFTInst*setFlag:bool
+        | ALU of ALUInst*setflag:bool  
+        | MEM of MEMInst*setflag:bool
         | SF of SFInst
+        | SHIFT of SHIFTInst*setflag:bool
 
-    //type ShiftType = Shift of ShiftInst*setFlag:bool
 
     //type ConditionType = Condition of ConditionCode
 
