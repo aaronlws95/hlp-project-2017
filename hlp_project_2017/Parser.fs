@@ -52,7 +52,7 @@ module Parser=
             |> Seq.fold chooseAddr Map.empty
 
         { 
-            //PC = Addr 0
+            //PC = Addr 0 // PC is now Reg 15
             END = Addr (4*instList.Length)
             RegMap = init_reg
             MemMap = init_memory

@@ -29,14 +29,29 @@ module InstructionType =
 
     type MEMInst = 
         | ADR of dest:Register*exp:Address
-        | LDRREG of dest:Register*source:Register
         | LDRPI of dest:Register*eqExp:Address
+        | LDRREG of dest:Register*source:Register
+        | STR of dest:Register*source:Register
+
+    type SHIFTInst = 
+        | LSL of dest:Register*op1:Register*op2:RegOrLit
+        | LSR of dest:Register*op1:Register*op2:RegOrLit
+        | ASR of dest:Register*op1:Register*op2:RegOrLit
+        | ROR of dest:Register*op1:Register*op2:RegOrLit
+        | RRX of op1:Register*op2:Register
+
+    type ConditionCode = | EQ | NE | CS | HS | CC | LO | MI | PL | VS | VC | HI | LS | GE | LT | GT | LE | AL 
 
     type InstructionType =
-        | ALU of ALUInst*bool  
-        | MEM of MEMInst*bool
+        | ALU of ALUInst*setflag:bool  
+        | MEM of MEMInst*setflag:bool
         | SF of SFInst
+        | SHIFT of SHIFTInst*setflag:bool
+
+    type ConditionType = Condition of ConditionCode 
+
+    type InstructionLine = Line of InstructionType * SHIFTInst option * ConditionType option
 
     type Memory = 
-        | Inst of InstructionType
+        | Inst of InstructionLine
         | Val of Value
