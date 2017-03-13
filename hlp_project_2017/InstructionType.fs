@@ -45,12 +45,11 @@ module InstructionType =
         | ALU of ALUInst*setflag:bool  
         | MEM of MEMInst*setflag:bool
         | SF of SFInst
-
-    type ShiftType = Shift of ShiftInst*setflag:bool 
+        | Shift of ShiftInst*setflag:bool
 
     type ConditionType = Condition of ConditionCode 
 
-    type InstructionLine = Line of InstructionType * ShiftType option * ConditionType option
+    type InstructionLine = Line of InstructionType * ShiftInst option * ConditionType option
 
     type Memory = 
         | Inst of InstructionLine
