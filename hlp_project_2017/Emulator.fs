@@ -154,12 +154,11 @@ module Emulator =
     ///INSTRUCTION
     module Instruction = 
         let executeInstruction state instruction = 
-<<<<<<< HEAD
             match instruction with 
             | ALU(ai,s) -> ALUInstruction.executeInstruction state ai s 
             | MEM(mi,s) -> MEMInstruction.executeInstruction state mi s 
             | SF(sfi) -> SFInstruction.executeInstruction state sfi  
-            | Shift(si,s) -> failwithf "AARON GET YO SHIFT TOGETHER"
+            | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s  
         let executeLine state = 
             let pc = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
             let checkCondition cond = 
@@ -194,18 +193,3 @@ module Emulator =
             // Error cases
             | None -> failwithf "run time error: no instruction line found at address %A" (state.RegMap.TryFind(R 15)) 
             | x -> failwithf "run time error: instruction line not defined %A" x 
-=======
-            match instruction with
-            | Some (Inst(ALU (ai,s))) -> ALUInstruction.executeInstruction state ai s
-            | Some (Inst(MEM(mi,s))) -> MEMInstruction.executeInstruction state mi s
-            | Some (Inst(SF(sfi))) -> SFInstruction.executeInstruction state sfi
-            | Some(Inst(SHIFT(shifti,s))) -> SHIFTInstruction.executeInstruction state shifti s  
-            | None -> failwithf "run time error: no instruction found at address %A" (state.RegMap.TryFind(R 15))
-<<<<<<< HEAD
-            | x -> failwithf "run time error: instruction not defined %A" x
-
-        let nextInstruction 
-=======
-            | x -> failwithf "run time error: instruction not defined %A" x
->>>>>>> refs/remotes/origin/master
->>>>>>> 0ff9d772f3165f6463e7dfdebc5945fbf1eea142
