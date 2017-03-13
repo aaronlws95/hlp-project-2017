@@ -183,7 +183,7 @@ module Emulator =
             // Shift:None, Condition:None
             | Some (Inst(Line(inst, None, None))) -> executeInstruction state inst
             // Shift:Some, Condition:None
-            | Some (Inst(Line(inst, Some(sInst), None))) -> executeInstruction (executeInstruction state (Shift(sInst,false))) inst
+            | Some (Inst(Line(inst, Some(sInst), None))) -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
             // Shift:None, Condition:True
             | Some (Inst(Line(inst, None, Some(Condition(c)) ))) when checkCondition c = true -> executeInstruction state inst 
             // Shift:Some, Condition:True
