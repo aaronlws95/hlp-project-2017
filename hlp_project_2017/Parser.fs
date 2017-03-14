@@ -5,7 +5,7 @@ module Parser=
     open MachineState
     open Cast
    
-    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n'; ',' |]
+    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n' |]
 
     let readAsm textInput = 
         let splitIntoLines (text:string) = 
@@ -37,23 +37,28 @@ module Parser=
             | x -> x   
 
         let executeWordsAsCommand (strlist:string list)= //: InstructionLine
-            let instruction = strlist.[0]
-            let basicinstruction = instruction.[0..2]
-            let setflag = 
-                if instruction.Length = 4 then (string)instruction.[3]
+            let instruction = TokenizeInst strlist.[0]
+            let basicinstruction = instruction.[0]//instruction.[0..2]
+            let setflag = instruction.[1]
+                (*if instruction.Length = 4 then (string)instruction.[3]
                 elif instruction.Length = 6 then (string)instruction.[3]
-                else ""
-            let condition = 
-                if instruction.Length = 5 then instruction.[3..4]
+                else ""*)
+            let condition = instruction.[2]
+                (*if instruction.Length = 5 then instruction.[3..4]
                 elif instruction.Length = 6 then instruction.[4..5]
-                else ""
+                else ""*)
             let instrline = basicinstruction::setflag::condition::(strlist.Tail)
             match instrline with
+            //normal with S or Cond or neither
             | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsRegOrLit op1 ] -> Line(ALU(inst(dest,op1),sf),None,cond)
             | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsRegOrLit op2 ] -> Line(ALU(inst(dest,op1,op2),sf),None,cond)
             | [ IsShiftInst inst;  IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1; IsRegOrLit op2] -> Line(SHIFT(inst(dest,op1,op2),sf),None,cond)
             | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsRegOrLit op1] -> Line(SF(inst(dest,op1)),None,cond)
-            //| [ IsBranchInst inst; IsCondition cond; IsLabel lab] -> 
+            //| [ IsBranchInst inst; IsCondition cond; IsLabel lab] ->
+            // with shifts
+            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,Reg(op1)),sf),shiftinst(op1,op1,exp)|> Some,cond)
+            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsReg op2 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,op1,Reg(op2)),sf),shiftinst(op2,op2,exp)|> Some,cond)
+            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(SF(inst(dest,Reg(op1))),shiftinst(op1,op1,exp)|> Some,cond)
             | x -> failwithf "Unexpected match in parser: %A" x
 
         let instList = //: InstructionType list = 
