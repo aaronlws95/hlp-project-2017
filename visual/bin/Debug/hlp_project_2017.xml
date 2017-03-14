@@ -57,19 +57,24 @@ execute shift function
 shift instructions
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst,System.Boolean)">
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst)">
 <summary>
  execute memory instruction 
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,System.Int32,``0)">
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
 <summary>
  store register contents into memory
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldr``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,``0)">
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldrreg``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
 <summary>
- load register with address value or memory content
+ load register with memory content
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldrpi(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32)">
+<summary>
+ load register with address value given by label
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.MEMInstruction.adr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">

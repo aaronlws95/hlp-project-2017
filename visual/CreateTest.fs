@@ -37,6 +37,7 @@ module CreateTest =
     let testSBC1 = createTest "SBC Test" "SBC R0, R1, #2" [ ALU(SBC(R 0, R 1, Lit 2), false) ] // TEST SBC 1 
     let testBIC1 = createTest "BIC Test" "BIC R0, R1, #2" [ ALU(BIC(R 0, R 1, Lit 2), false) ] // TEST BIC 1 
     let testORR1 = createTest "ORR Test" "ORR R0, R1, #2" [ ALU(ORR(R 0, R 1, Lit 2), false) ] // TEST ORR 1   
+    
     //SET FLAG INSTRUCTION TESTS 
     let testTST1 = createTest "TST Test" "TST R0, #2" [ SF(TST(R 0, Lit 2))] // TEST TST 1
     let testTEQ1 = createTest "TEQ Test" "TEQ R0, #2" [ SF(TEQ(R 0, Lit 2))] // TEST TEQ 1
@@ -65,10 +66,10 @@ module CreateTest =
                                                           SHIFT(RRX(R 1, R 0), true) ]
     
     //MEMORY INSTRUCTION TESTS
-    //TEST ADR
-    let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [ MEM(ADR(R 0, Addr 0x100), false) ]
+    //TEST ADR 1
+    let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [ MEM(ADR(R 0, Addr 0x100,false)) ]
     
-    //TEST LDR
+    //TEST LDR 1
     let testLDR1 = 
         let testText = "
             TEST DCD 65537,65541
@@ -78,12 +79,55 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000), false)
-              ALU(ADD(R 0, R 0, Lit 4), false)
-              MEM(LDRREG(R 1, R 0), false) ]
-        createTest "LDR Test" testText testInstruction
-    
-    //TEST STR
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(ADD(R 0, R 0, Lit 4),false)
+              MEM(LDRREG(R 1, R 0,Lit 0,Lit 0,false)) ]
+        createTest "LDR Test 1" testText testInstruction
+
+     //TEST LDR 2
+    let testLDR2 = 
+        let testText = "
+            TEST DCD 65537,65541
+            LDR R0, =TEST
+            LDR R1, [R0, #4]
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              MEM(LDRREG(R 1, R 0,Lit 4,Lit 0,false)) ]
+        createTest "LDR Test 2" testText testInstruction
+     
+     //TEST LDR 3
+    let testLDR3 = 
+        let testText = "
+            TEST DCD 65537,65541
+            LDR R0, =TEST
+            LDR R1, [R0, #4]!
+            LDR R2, [R0], #4
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              MEM(LDRREG(R 1, R 0,Lit 4,Lit 4,false))
+              MEM(LDRREG(R 2, R 0, Lit 0,Lit 4,false)) ]
+        createTest "LDR Test 3" testText testInstruction
+
+     //TEST LDR 4
+    let testLDR4 = 
+        let testText = "
+            TEST DCD 65537,65541
+            LDR R0, =TEST
+            MOV R1, #4
+            LDR R2, [R0,R1]!
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1, Lit 4), false)
+              MEM(LDRREG(R 2, R 0, Reg (R 1),Reg (R 1),false)) ]
+        createTest "LDR Test 3" testText testInstruction
+          
+    //TEST STR 1
     let testSTR1 = 
         let testText = "
             TEST DCD 65537,65541
@@ -94,23 +138,41 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000), false)
+            [ MEM(LDRPI(R 0, Addr 0x10000))
               ALU(MOV(R 1, Lit 476), false)
-              MEM(STR(R 1, R 0), false)
-              MEM(LDRREG(R 2, R 0), false) ]
+              MEM(STR(R 1, R 0,Lit 0,Lit 0, false))
+              MEM(LDRREG(R 2, R 0,Lit 0,Lit 0,false)) ]
         createTest "LDR Test" testText testInstruction
-    
+
+    //TEST STR 2
+    let testSTR2 = 
+        let testText = "
+            TEST DCD 65537,65541,65545
+            LDR R0, =TEST
+            MOV R1, #476
+            STR R1, [R0,#4]!
+            LDR R2, [R0,#4]
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1, Lit 476), false)
+              MEM(STR(R 1, R 0,Lit 4,Lit 4, false))
+              MEM(LDRREG(R 2, R 0,Lit 4,Lit 0,false)) ]
+        createTest "LDR Test" testText testInstruction
+
     let createdTestList = 
         [ 
             //ALU
-            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
-            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
-            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
+//            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
+//            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
+//            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
             //SET FLAG
-            testTST1; testTEQ1; testCMP1; testCMN1; 
+//            testTST1; testTEQ1; testCMP1; testCMN1; 
             //SHIFT
-            testLSL1; testLSR1; testASR1; testROR1; testRRX1; 
+//            testLSL1; testLSR1; testASR1; testROR1; testRRX1; 
             //MEM
-            testADR1; testLDR1; testSTR1 
+            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+            testSTR2;
         ]
 

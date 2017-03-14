@@ -114,25 +114,31 @@ module Emulator =
             let newRegMap = Map.add dest exp state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
-        /// load register with address value or memory content
-        let private ldr state dest exp s  = 
+        /// load register with address value given by label
+        let private ldrpi state dest exp = 
             let newRegMap = Map.add dest exp state.RegMap
             {state with RegMap = newRegMap}
-        /// store register contents into memory
-        let private str state value addr s =  
-            let newMemMap = Map.add (Addr addr) (Val value)  state.MemMap
-            {state with MemMap = newMemMap}
-        /// execute memory instruction 
-        let executeInstruction state instruction s = 
+        /// load register with memory content
+        let private ldrreg state dest source offset autoIndex s  = 
             let em = Extractor.extractMemory state
+            let newRegMap = 
+                let loadRegMap = Map.add dest (em (Addr (state.RegMap.[source] + offset))) state.RegMap
+                Map.add source (state.RegMap.[source] + autoIndex) loadRegMap
+            {state with RegMap = newRegMap}
+        /// store register contents into memory
+        let private str state source dest offset autoIndex  s =  
+            let newMemMap = Map.add (Addr (state.RegMap.[dest]+offset)) (Val source) state.MemMap
+            let newRegMap = Map.add dest (state.RegMap.[dest]+autoIndex) state.RegMap 
+            {state with MemMap = newMemMap;RegMap = newRegMap}
+        /// execute memory instruction 
+        let executeInstruction state instruction =      
             let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
             match instruction with
-                | ADR(r,addr) -> adr state r (ga addr) s //Address load  R:=ADDR
-                | LDRPI(r,addr) -> ldr state r (ga addr) s //LDR pseudo-instruction R:=ADDR
-                | LDRREG(r1,r2) -> ldr state r1 (em (Addr (er (Reg r2)))) s //Load register R1:=[R2]             
-                | STR(r1,r2) -> str state state.RegMap.[r1] state.RegMap.[r2] s   //Store register
-
+                | ADR(r,addr,s) -> adr state r (ga addr) s //Address load  R:=ADDR
+                | LDRPI(r,addr) -> ldrpi state r (ga addr) //LDR pseudo-instruction R:=ADDR
+                | LDRREG(r1,r2,offset,autoIndex,b) -> ldrreg state r1 r2 (er offset) (er autoIndex) b //Load register R1:=[R2]             
+                | STR(r1,r2,offset,autoIndex,b) -> str state state.RegMap.[r1] r2 (er offset) (er autoIndex) b //Store register [R2]:=R1
 
     ///shift instructions
     module SHIFTInstruction =
@@ -158,16 +164,16 @@ module Emulator =
                 | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
                 | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s //rotate right and extend
 
-
     ///Instruction
     module Instruction = 
         /// main execute instruction function
         let executeInstruction state instruction = 
             match instruction with 
             | ALU(ai,s) -> ALUInstruction.executeInstruction state ai s 
-            | MEM(mi,s) -> MEMInstruction.executeInstruction state mi s 
+            | MEM(mi) -> MEMInstruction.executeInstruction state mi
             | SF(sfi) -> SFInstruction.executeInstruction state sfi  
             | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s  
+
         let executeLine state = 
             let pc = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
             let checkCondition cond = 

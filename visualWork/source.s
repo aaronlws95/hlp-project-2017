@@ -13,11 +13,11 @@
                 MOV R11, #0
                 MOV R12, #0
                 
-            TEST DCD 65537,65541
+            TEST DCD 65537,65541,65545
             LDR R0, =TEST
             MOV R1, #476
-            STR R1, [R0]
-            LDR R2, [R0]
+            STR R1, [R0,#4]!
+            LDR R2, [R0,#4]
             
           MOV R1, #0
           ADDMI R1, R1, #8
