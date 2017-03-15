@@ -62,9 +62,19 @@ shift instructions
  execute memory instruction 
 </summary>
 </member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.stm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
+<summary>
+ load multiple register with memory content
+</summary>
+</member>
 <member name="M:ARM7TDMI.Emulator.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
 <summary>
  store register contents into memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
+<summary>
+ load multiple register with memory content
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.MEMInstruction.ldrreg``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">

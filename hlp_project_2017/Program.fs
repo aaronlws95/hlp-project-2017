@@ -2,7 +2,7 @@
 // See the 'F# Tutorial' project for more help.
 namespace ARM7TDMI
 
-module program = 
+module Program = 
     open Parser
     open Emulator
     open MachineState
@@ -20,11 +20,11 @@ module program =
     ADDS R3 R13 #15
     ADDSEQ R3 R13 #15
     ADDLO R3 R13 #15" 
-    printfn "%A" (readAsm s)
+    
 
-//module program = 
-//    [<entrypoint>]
-//    let main argv = 
-//        printfn "%a" argv
-//        0 // return an integer exit code
-//            
+    [<EntryPoint>]
+    let main argv = 
+        printfn "%A" (readAsm s)
+        System.Console.ReadKey() |> ignore
+        0 // return an integer exit code
+     

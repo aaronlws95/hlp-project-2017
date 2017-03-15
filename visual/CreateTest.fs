@@ -161,18 +161,154 @@ module CreateTest =
               MEM(LDRREG(R 2, R 0,Lit 4,Lit 0,false)) ]
         createTest "LDR Test" testText testInstruction
 
+    //TEST LDMFD 1
+    let testLDMFD1 = 
+        let testText = "
+            TEST DCD 65537,65541,65545,65549,65553
+            LDR R0, =TEST
+            LDMFD R0!, {R1,R2,R3}
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              MEM(LDM(FD,R 0,[R 1;R 2;R 3],true)) ]
+        createTest "LDMFD Test" testText testInstruction
+
+    //TEST LDMED 1
+    let testLDMED1 = 
+        let testText = "
+            TEST DCD 65537,65541,65545,65549,65553
+            LDR R0, =TEST
+            LDMED R0!, {R1,R2,R3}
+            "
+        
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              MEM(LDM(ED,R 0,[R 1;R 2;R 3],true)) ]
+        createTest "LDMED Test" testText testInstruction
+
+    //TEST LDMEA 1
+    let testLDMEA1 = 
+        let testText = "
+            TEST DCD 65537,65541,65545,65549,65553
+            LDR R0, =TEST
+            ADD R0, R0, #12
+            LDMEA R0!, {R1,R2,R3}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(ADD(R 0,R 0,Lit 12),false)
+              MEM(LDM(EA,R 0,[R 1;R 2;R 3],true)) ]
+        createTest "LDMEA Test" testText testInstruction
+
+    //TEST LDMFA 1
+    let testLDMFA1 = 
+        let testText = "
+            TEST DCD 65537,65541,65545,65549,65553
+            LDR R0, =TEST
+            ADD R0, R0, #12
+            LDMFA R0!, {R1,R2,R3}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(ADD(R 0,R 0,Lit 12),false)
+              MEM(LDM(FA,R 0,[R 1;R 2;R 3],true)) ]
+        createTest "LDMFA Test" testText testInstruction
+
+    //TEST STMEA 1
+    let testSTMEA1 = 
+        let testText = "
+        TEST		DCD		65537,65541,65545,65549,65553,65557
+		LDR		R0, =TEST
+		MOV		R1, #1
+		MOV		R2, #2
+		MOV		R3, #3
+		STMEA	R0!, {R1,R2,R3}
+		LDMFD	R0, {R4,R5,R6}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1,Lit 1),false)
+              ALU(MOV(R 2,Lit 2),false)
+              ALU(MOV(R 3,Lit 3),false)
+              MEM(STM(EA,R 0,[R 1;R 2;R 3],true)) 
+              MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
+        createTest "STMEA Test" testText testInstruction
+
+    let testSTMFA1 = 
+        let testText = "
+        TEST		DCD		65537,65541,65545,65549,65553,65557
+		LDR		R0, =TEST
+		MOV		R1, #1
+		MOV		R2, #2
+		MOV		R3, #3
+		STMFA	R0!, {R1,R2,R3}
+		LDMFD	R0, {R4,R5,R6}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1,Lit 1),false)
+              ALU(MOV(R 2,Lit 2),false)
+              ALU(MOV(R 3,Lit 3),false)
+              MEM(STM(FA,R 0,[R 1;R 2;R 3],true)) 
+              MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
+        createTest "STMFA Test" testText testInstruction
+
+    let testSTMED1 = 
+        let testText = "
+        TEST		DCD		65537,65541,65545,65549,65553,65557
+		LDR		R0, =TEST
+		MOV		R1, #1
+		MOV		R2, #2
+		MOV		R3, #3
+        ADD     R0, R0, #12
+		STMED	R0!, {R1,R2,R3}
+		LDMFD	R0, {R4,R5,R6}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1,Lit 1),false)
+              ALU(MOV(R 2,Lit 2),false)
+              ALU(MOV(R 3,Lit 3),false)
+              ALU(ADD(R 0, R 0, Lit 12),false)
+              MEM(STM(ED,R 0,[R 1;R 2;R 3],true)) 
+              MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
+        createTest "STMED Test" testText testInstruction
+
+    let testSTMFD1 = 
+        let testText = "
+        TEST		DCD		65537,65541,65545,65549,65553,65557
+		LDR		R0, =TEST
+		MOV		R1, #1
+		MOV		R2, #2
+		MOV		R3, #3
+        ADD     R0, R0, #12
+		STMFD	R0!, {R1,R2,R3}
+		LDMFD	R0, {R4,R5,R6}
+            "
+        let testInstruction = 
+            [ MEM(LDRPI(R 0, Addr 0x10000))
+              ALU(MOV(R 1,Lit 1),false)
+              ALU(MOV(R 2,Lit 2),false)
+              ALU(MOV(R 3,Lit 3),false)
+              ALU(ADD(R 0, R 0, Lit 12),false)
+              MEM(STM(FD,R 0,[R 1;R 2;R 3],true)) 
+              MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
+        createTest "STMFD Test" testText testInstruction
+
     let createdTestList = 
         [ 
             //ALU
-//            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
-//            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
-//            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
+            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
+            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
+            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
             //SET FLAG
-//            testTST1; testTEQ1; testCMP1; testCMN1; 
+            testTST1; testTEQ1; testCMP1; testCMN1; 
             //SHIFT
-//            testLSL1; testLSR1; testASR1; testROR1; testRRX1; 
+            testLSL1; testLSR1; testASR1; testROR1; testRRX1; 
             //MEM
             testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-            testSTR2;
+            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
         ]
 
