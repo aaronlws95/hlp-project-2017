@@ -5,31 +5,51 @@ module Emulator =
     open InstructionType 
     open MachineState
 
+    /// ===========================================
+    /// Processing flag functions
+    /// ===========================================
     module ProcessFlag =
             /// types for processing flags 
             type ProcessFlagType = 
                 | ADD of Value*Value*Value //op1 op2 result
                 | SUB of Value*Value*Value //op1 op2 result
+                | LEFTSHIFT of Value*Value*Value // op1 op2 result
+                | RIGHTSHIFT of Value*Value*Value // op1 op2 result
                 | OTHER of Value // result
             ///process and return new flags
-            let processFlags state instruction =
-                let N (res:Value) = if res < 0 then true else false
-                let Z (res:Value) = if res = 0 then true else false
+            let processFlags (state:MachineState) (instruction:ProcessFlagType) =
+                let N (res:Value) = if res < 0 then true else false //set if negative
+                let Z (res:Value) = if res = 0 then true else false //set if zero
                 match instruction with
                 | ADD(op1,op2,res) ->  { 
                                             N = N res 
                                             Z = Z res
-                                            C = if (((((sign(op1) <> sign(op2)) && ((sign(op1) = 1) && (op1 > op2) ||  (sign(op2) = 1) && (op2 > op1))) && res >=0) && op1 <> 0 && op2 <> 0)  
-                                                    || ((op1 <0 && op2 <0 && res >= 0))) then true
-                                                else false 
+                                            //set carry if result is greater than or equal to 2^32
+                                            C = if uint64(uint32(op1)) + uint64(uint32(op2)) >= 4294967296UL then true else false 
+                                            //set overflow if adding two same signed values results in a result of a different sign
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
                                         }
                 | SUB(op1,op2,res) ->  { 
                                             N = N res 
                                             Z = Z res
+                                            //set carry if result is >=0
                                             C = if res >= 0 then true else false
+                                            //set overflow if subtracting +ve from -ve generates a +ve or subtracting -ve from +ve generates a -ve
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
                                         }
+                | LEFTSHIFT(op1,op2,res) -> {   
+                                                N = N res
+                                                Z = Z res
+                                                C = if ((op1 &&& (0x80000000 >>> (op2-1))) = op1) then true else false
+                                                V = state.Flags.V
+                                            }
+                | RIGHTSHIFT(op1,op2,res) -> {
+                                                N = N res
+                                                Z = Z res
+                                                //set carry if 1 is shifted out
+                                                C = if ((op1 &&& (1 <<< (op2-1))) = op1) then true else false
+                                                V = state.Flags.V
+                                             }
                 | OTHER(res) ->        {
                                             N = N res
                                             Z = Z res
@@ -37,6 +57,9 @@ module Emulator =
                                             V = state.Flags.V
                                         }
     
+    /// ===========================================
+    /// Extracting functions
+    /// ===========================================
     module Extractor = 
         /// extract value from register
         let extractRegister (state:MachineState) (rol:RegOrLit) = 
@@ -48,13 +71,15 @@ module Emulator =
                 let checkValidAddr =
                     function
                     | Val v -> v
-                    | Inst i -> invalidOp "invalid address" 
+                    | Inst i -> failwithf "invalid address" 
                 state.MemMap.[addr]
                 |> checkValidAddr
         /// get value of address
         let getAddressValue (Addr a:Address) = a
 
-    ///arithmetic logic unit instructions
+    /// ===========================================
+    /// ALU functions
+    /// ===========================================
     module ALUInstruction = 
         /// update register and set NZ based on new result   
         let private updateRegister state dest op2 s = 
@@ -86,28 +111,24 @@ module Emulator =
             | BIC(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]&&&(~~~(er rol))) s //R1:=R2 AND NOT(ROL)
             | ORR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]|||(er rol)) s //R1:= R2 OR ROL
 
-    ///set flag instructions
-    module SFInstruction = 
-        /// set new flags
-        let private setFlag state name op1 op2 = 
-            let newFlags = 
-                match name with
-                | "tst" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(op1&&&op2)) 
-                | "teq" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(op1^^^op2)) 
-                | "cmp" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUB(op1,op2,op1-op2))
-                | "cmn" -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.ADD(op1,op2,op1+op2))
-                | _ -> invalidOp "invalid setFlag function"
-            {state with Flags = newFlags}
+    /// ===========================================
+    /// Set flag functions
+    /// ===========================================
+    module SFInstruction =         
         /// execute set flag instruction
         let executeInstruction state instruction = 
             let er = Extractor.extractRegister state
-            match instruction with
-                | TST(r,rol) -> setFlag state "tst" state.RegMap.[r] (er rol) //R AND ROL
-                | TEQ(r, rol) -> setFlag state "teq" state.RegMap.[r] (er rol) // R EOR ROL
-                | CMP(r,rol) -> setFlag state "cmp" state.RegMap.[r] (er rol) // R-ROL
-                | CMN(r, rol) -> setFlag state "cmn" state.RegMap.[r] (er rol) // R+ROL
+            let newFlags = 
+                match instruction with
+                | TST(r,rol) -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(state.RegMap.[r]&&&(er rol)))  //R AND ROL
+                | TEQ(r, rol) -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(state.RegMap.[r]^^^(er rol))) // R EOR ROL
+                | CMP(r,rol) -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUB(state.RegMap.[r],(er rol),state.RegMap.[r]-(er rol))) // R-ROL
+                | CMN(r, rol) -> ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.ADD(state.RegMap.[r],(er rol),state.RegMap.[r]+(er rol))) // R+ROL
+            {state with Flags = newFlags}
 
-    /// memory instructions
+    /// ===========================================
+    /// Memory functions
+    /// ===========================================
     module MEMInstruction = 
         /// update register with address value
         let private adr state dest exp s =  
@@ -159,15 +180,22 @@ module Emulator =
                 | LDRPI(r,addr) -> ldrpi state r (ga addr) //LDR pseudo-instruction R:=ADDR
                 | LDRREG(r1,r2,offset,autoIndex,b) -> ldrreg state r1 r2 (er offset) (er autoIndex) b //Load register R1:=[R2]             
                 | STR(r1,r2,offset,autoIndex,b) -> str state state.RegMap.[r1] r2 (er offset) (er autoIndex) b //Store register [R2]:=R1
-                | LDM(dir,r,regList,wb) -> ldm state dir r regList wb
-                | STM(dir,r,regList,wb) -> stm state dir r regList wb
+                | LDM(dir,r,regList,wb) -> ldm state dir r regList wb // Load multiple registers 
+                | STM(dir,r,regList,wb) -> stm state dir r regList wb // Store multiple registers 
 
-    ///shift instructions
+    /// ===========================================
+    /// Shift functions
+    /// ===========================================
     module SHIFTInstruction =
-        /// update register and set NZ based on new result 
-        let private updateRegister state dest exp s =  
-            let newRegMap = Map.add dest exp state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
+        /// move bits to the right and set NZC based on new result 
+        let private shiftRight state dest op1 op2 res s =  
+            let newRegMap = Map.add dest res state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.RIGHTSHIFT(state.RegMap.[op1],op2,res)) else state.Flags
+            {state with RegMap = newRegMap;Flags = newFlags}
+        /// move bits to the left and set NZC based on new result 
+        let private shiftLeft state dest op1 op2 res s =  
+            let newRegMap = Map.add dest res state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.LEFTSHIFT(state.RegMap.[op1],op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         /// rotate right with extend
         let private rrx state dest exp s = 
@@ -180,20 +208,22 @@ module Emulator =
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
             match instruction with
-                | LSL(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] <<< (er rol)) s //logical shift left
-                | LSR(r1,r2,rol) -> updateRegister state r1 ((int32)((uint32)state.RegMap.[r2] >>> (er rol))) s //logical shift right
-                | ASR(r1,r2,rol) -> updateRegister state r1 (state.RegMap.[r2] >>> (er rol)) s //arithmetic shift right
-                | ROR(r1,r2,rol) -> updateRegister state r1  ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
+                | LSL(r1,r2,rol) -> shiftLeft state r1 r2 (er rol) (state.RegMap.[r2] <<< (er rol)) s //logical shift left
+                | LSR(r1,r2,rol) -> shiftRight state r1 r2 (er rol) ((int32)((uint32)state.RegMap.[r2] >>> (er rol))) s //logical shift right
+                | ASR(r1,r2,rol) -> shiftRight state r1 r2 (er rol) (state.RegMap.[r2] >>> (er rol)) s //arithmetic shift right
+                | ROR(r1,r2,rol) -> shiftRight state r1 r2 (er rol) ((state.RegMap.[r2]>>>(er rol)) ||| (state.RegMap.[r2]<<<(32-(er rol)))) s //rotate right
                 | RRX(r1,r2) -> rrx state r1 state.RegMap.[r2] s //rotate right and extend
 
-    ///Instruction
+    /// ===========================================
+    /// Instruction functions
+    /// ===========================================
     module Instruction = 
         /// main execute instruction function
         let executeInstruction state instruction = 
             match instruction with 
             | ALU(ai,s) -> ALUInstruction.executeInstruction state ai s 
-            | MEM(mi) -> MEMInstruction.executeInstruction state mi
             | SF(sfi) -> SFInstruction.executeInstruction state sfi  
+            | MEM(mi) -> MEMInstruction.executeInstruction state mi
             | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s  
 
         let executeLine state = 

@@ -10,25 +10,21 @@ module CreateTest =
     let testMOV1 = createTest "MOV Test" "MOV R0, #2" [ ALU(MOV(R 0, Lit 2), false) ] //TEST MOV 1
     
     let testMOV2 = 
-        createTest "MOV Test 2" "MOV R0, #3\nMOV R2, R0" [ ALU(MOV(R 0, Lit 3), false)
-                                                           ALU(MOV(R 2, Reg(R 0)), false) ] //TEST MOV 2
+        createTest "MOV Test 2" "MOV R0, #3\nMOV R2, R0" [ ALU(MOV(R 0, Lit 3), false);ALU(MOV(R 2, Reg(R 0)), false) ] //TEST MOV 2
     
     let testADD1 = createTest "ADD Test 1" "ADD R0, R1, #2" [ ALU(ADD(R 0, R 1, Lit 2), false) ] //TEST ADD 1
     let testSUB1 = createTest "SUB Test 1" "SUB R0, R1, #1" [ ALU(SUB(R 0, R 1, Lit 1), false) ] //TEST SUB 1
     let testMOVS1 = createTest "MOVS Test 1" "MOVS R0, #-1" [ ALU(MOV(R 0, Lit -1), true) ] //TEST MOVS 1
     
     let testADDS1 = 
-        createTest "ADDS Test 1" "MOV R0, #1\nADDS R1, R0, #0xFFFFFFFF" [ ALU(MOV(R 0, Lit 1), false)
-                                                                          ALU(ADD(R 1, R 0, Lit 0xFFFFFFFF), true) ] //TEST ADDS 1
+        createTest "ADDS Test 1" "MOV R0, #1\nADDS R1, R0, #0xFFFFFFFF" [ ALU(MOV(R 0, Lit 1), false);ALU(ADD(R 1, R 0, Lit 0xFFFFFFFF), true) ] //TEST ADDS 1
     
     let testADDS2 = 
         createTest "ADDS Test 2" "MOV R0, #0x80000000\nADDS R1, R0, #0x80000000" 
-            [ ALU(MOV(R 0, Lit 0x80000000), false)
-              ALU(ADD(R 1, R 0, Lit 0x80000000), true) ] //TEST ADDS 1
+            [ ALU(MOV(R 0, Lit 0x80000000), false);ALU(ADD(R 1, R 0, Lit 0x80000000), true) ] //TEST ADDS 1
     
     let testSUBS1 = 
-        createTest "SUBS Test 1" "MOV R0, #3\nSUBS R1, R0, #3" [ ALU(MOV(R 0, Lit 3), false)
-                                                                 ALU(SUB(R 1, R 0, Lit 3), true) ] //TEST SUBS 1
+        createTest "SUBS Test 1" "MOV R0, #3\nSUBS R1, R0, #3" [ ALU(MOV(R 0, Lit 3), false);ALU(SUB(R 1, R 0, Lit 3), true) ] //TEST SUBS 1
     
     let testMVN1 = createTest "MVN Test" "MVN R0, #2" [ ALU(MVN(R 0, Lit 2), false) ] // TEST MVN 1
     let testEOR1 = createTest "EOR Test" "EOR R0, R1, #2" [ ALU(EOR(R 0, R 1, Lit 2), false) ] // TEST EOR 1
@@ -46,25 +42,27 @@ module CreateTest =
     
     //SHIFT INSTRUCTION TESTS
     let testLSL1 = 
-        createTest "LSL Test" "MOV R0, #1\nLSL R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false)
-                                                              SHIFT(LSL(R 1, R 0, Lit 27), false) ]
+        createTest "LSL Test" "MOV R0, #1\nLSL R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false);SHIFT(LSL(R 1, R 0, Lit 27), false) ]
     
+    let testLSLS1 = 
+        createTest "LSLS Test" "MOV R0, #0x20000000\nLSLS R1, R0, #3" [ ALU(MOV(R 0, Lit 0x20000000), false);SHIFT(LSL(R 1, R 0, Lit 3), true) ]
+
     let testLSR1 = 
-        createTest "LSR Test" "MOV R0, #1\nLSR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false)
-                                                              SHIFT(LSR(R 1, R 0, Lit 27), false) ]
+        createTest "LSR Test" "MOV R0, #1\nLSR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false);SHIFT(LSR(R 1, R 0, Lit 27), false) ]
     
+    let testLSRS1 = 
+        createTest "LSRS Test" "MOV R0, #4\nLSRS R1, R0, #3" [ ALU(MOV(R 0, Lit 4), false);SHIFT(LSR(R 1, R 0, Lit 3), true) ]
+
     let testASR1 = 
-        createTest "ASR Test" "MOV R0, #1\nASR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false)
-                                                              SHIFT(ASR(R 1, R 0, Lit 27), false) ]
+        createTest "ASR Test" "MOV R0, #1\nASR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false);SHIFT(ASR(R 1, R 0, Lit 27), false) ]
     
     let testROR1 = 
-        createTest "ROR Test" "MOV R0, #1\nROR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false)
-                                                              SHIFT(ROR(R 1, R 0, Lit 27), false) ]
+        createTest "ROR Test" "MOV R0, #1\nROR R1, R0, #27" [ ALU(MOV(R 0, Lit 1), false);SHIFT(ROR(R 1, R 0, Lit 27), false) ]
     
     let testRRX1 = 
-        createTest "RRX Test" "MOV R0, #3\nRRXS R1, R0" [ ALU(MOV(R 0, Lit 3), false)
-                                                          SHIFT(RRX(R 1, R 0), true) ]
+        createTest "RRX Test" "MOV R0, #3\nRRXS R1, R0" [ ALU(MOV(R 0, Lit 3), false);SHIFT(RRX(R 1, R 0), true) ]
     
+
     //MEMORY INSTRUCTION TESTS
     //TEST ADR 1
     let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [ MEM(ADR(R 0, Addr 0x100,false)) ]
@@ -305,7 +303,7 @@ module CreateTest =
             //SET FLAG
             testTST1; testTEQ1; testCMP1; testCMN1; 
             //SHIFT
-            testLSL1; testLSR1; testASR1; testROR1; testRRX1; 
+            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
             //MEM
             testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
             testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;

@@ -34,7 +34,9 @@ matches string (#X-&gt;X) returning integer
 </member>
 <member name="T:ARM7TDMI.Emulator.Instruction">
 <summary>
-Instruction
+ ===========================================
+ Instruction functions
+ ===========================================
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.SHIFTInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SHIFTInst,System.Boolean)">
@@ -47,14 +49,21 @@ execute shift function
  rotate right with extend
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.updateRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.shiftLeft(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
 <summary>
- update register and set NZ based on new result 
+ move bits to the left and set NZC based on new result 
+</summary>
+</member>
+<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.shiftRight(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ move bits to the right and set NZC based on new result 
 </summary>
 </member>
 <member name="T:ARM7TDMI.Emulator.SHIFTInstruction">
 <summary>
-shift instructions
+ ===========================================
+ Shift functions
+ ===========================================
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst)">
@@ -94,7 +103,9 @@ shift instructions
 </member>
 <member name="T:ARM7TDMI.Emulator.MEMInstruction">
 <summary>
- memory instructions
+ ===========================================
+ Memory functions
+ ===========================================
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.SFInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SFInst)">
@@ -102,14 +113,11 @@ shift instructions
  execute set flag instruction
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.SFInstruction.setFlag(ARM7TDMI.MachineState.MachineState,System.String,System.Int32,System.Int32)">
-<summary>
- set new flags
-</summary>
-</member>
 <member name="T:ARM7TDMI.Emulator.SFInstruction">
 <summary>
-set flag instructions
+ ===========================================
+ Set flag functions
+ ===========================================
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.ALUInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.ALUInst,System.Boolean)">
@@ -134,7 +142,9 @@ set flag instructions
 </member>
 <member name="T:ARM7TDMI.Emulator.ALUInstruction">
 <summary>
-arithmetic logic unit instructions
+ ===========================================
+ ALU functions
+ ===========================================
 </summary>
 </member>
 <member name="M:ARM7TDMI.Emulator.Extractor.getAddressValue(ARM7TDMI.InstructionType.Address)">
@@ -152,6 +162,13 @@ arithmetic logic unit instructions
  extract value from register
 </summary>
 </member>
+<member name="T:ARM7TDMI.Emulator.Extractor">
+<summary>
+ ===========================================
+ Extracting functions
+ ===========================================
+</summary>
+</member>
 <member name="T:ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType">
 <summary>
  types for processing flags 
@@ -160,6 +177,13 @@ arithmetic logic unit instructions
 <member name="M:ARM7TDMI.Emulator.ProcessFlag.processFlags(ARM7TDMI.MachineState.MachineState,ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType)">
 <summary>
 process and return new flags
+</summary>
+</member>
+<member name="T:ARM7TDMI.Emulator.ProcessFlag">
+<summary>
+ ===========================================
+ Processing flag functions
+ ===========================================
 </summary>
 </member>
 </members>
