@@ -4,7 +4,8 @@ module VITest =
     open ARM7TDMI
     open MachineState
     open InstructionType
-    module Converter = 
+    
+    module TestMStateConverter = 
         open VisualInterface
 
         let mstateToRegList mstate = mstate.RegMap |> Map.toList |> (List.map (fun ((Register.R v),i) -> (R v,i)))
@@ -19,7 +20,7 @@ module VITest =
 
     module TestEnvt =
         open Emulator.Instruction
-        open Converter
+        open TestMStateConverter
         //create tuple to send for testing        
         let createTest name text instructionList  = 
             //initial machine state
@@ -51,3 +52,10 @@ module VITest =
             // run instructions in order and return new machine state
             let mstate = instructionList |> List.fold (fun acc elem -> executeInstruction acc elem) mstate 
             (name,initializeAllReg+text,mstateToFlags mstate,mstateToRegList mstate)
+
+
+            
+
+          
+
+            

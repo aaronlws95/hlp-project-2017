@@ -5,6 +5,7 @@ module VIProgram=
     open VisualInterface
     open Expecto
     open CreateTest
+    open CreateRandomTest
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """
@@ -77,14 +78,14 @@ module VIProgram=
             let mems = outExpected |> List.collect (function | Mem n, x -> [n,x] | _ -> [])
             let memLocs = mems |> List.map fst
             let flags, outs = RunVisualWithFlagsOutLocs memLocs src
-            Expecto.Expect.equal flags (flagsExpected |> strToFlags) ("Status flags don't match " + name)
+            Expecto.Expect.equal flags (flagsExpected |> strToFlags) ("Status flags don't match " + name + " " + src)
             let regs = outExpected |> List.filter (function | R _,_ -> true | _ -> false)
             let getOut (out, v) = 
                 try
                     out, outs.[out]
                 with
                 | _ -> failwithf "Can't find output %A in outs %A" out outs
-            Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected ("Reg and Mem outputs don't match " + name)
+            Expecto.Expect.sequenceEqual (outExpected |> List.map getOut) outExpected ("Reg and Mem outputs don't match " + name + " " + src)
       
     let seqConfig = { Expecto.Tests.defaultConfig with parallel = false}
 
@@ -93,8 +94,8 @@ module VIProgram=
     let main argv = 
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
             
-        let tests = 
-            testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
+        //let tests =  testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
+        let tests = testList "Visual tests" (randTestList1 |> List.map VisualUnitTest)
         let rc = runTests seqConfig tests
         System.Console.ReadKey() |> ignore                
         rc // return an integer exit code - 0 if all tests pass

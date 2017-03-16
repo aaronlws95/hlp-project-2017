@@ -36,8 +36,6 @@ module InstructionType =
         | STR of dest:Register*source:Register*offset:RegOrLit*autoIndex:RegOrLit*byte:bool 
         | LDM of dir:LDMdir*source:Register*regList:(Register list)*writeBack:bool
         | STM of dir:LDMdir*dest:Register*regList:(Register list)*writeBack:bool
-    
-    
 
     type SHIFTInst = 
         | LSL of dest:Register*op1:Register*op2:RegOrLit
