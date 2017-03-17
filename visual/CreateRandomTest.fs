@@ -12,7 +12,7 @@ module CreateRandomTest =
     let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
                     "ORR";"TST";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|]
     ///create random test string for Visual and Instruction for Emulator
-    let createRandomTest (instName:string) (setFlagRand:bool) (regLitSet:string) =       
+    let createRandomTest (instName:string) (setFlagRand:string) (regLitSet:string) =       
             let reg = rand.Next(0,13)
             let reg2 = rand.Next(0,13)
             let strop2,op2 = 
@@ -33,8 +33,10 @@ module CreateRandomTest =
                
             let strsf,sf =                
                 match setFlagRand with
-                | true -> (instName + "S R",true)
-                | false -> if rand.Next(0,2) = 0 then (instName + " R",false) else (instName + "S R",true)
+                | "SET" -> (instName + "S R",true)
+                | "NOSET" -> (instName + " R",false)
+                | "RAND" -> if rand.Next(0,2) = 0 then (instName + " R",false) else (instName + "S R",true)
+                | _ -> failwithf "invalid setting"
 
             match instName.ToUpper() with 
                 | "MOV" -> ((strsf + string(reg) + strop2), ALU(MOV(R reg,op2),sf))
@@ -63,7 +65,7 @@ module CreateRandomTest =
     let getRandInstName = instNameArr.[rand.Next(0,Array.length instNameArr)]
     /// create test list given length of list and instruction name.
     /// Use RAND for random instructions
-    let createdRandTestList n (instName:string) (setFlag:bool) = 
+    let createdRandTestList n (instName:string) (setFlag:string) = 
         let getTestParam num = 
             match instName.ToUpper() with 
             | "RAND" -> let instName = getRandInstName
@@ -73,5 +75,5 @@ module CreateRandomTest =
         [1..n] |> List.map getTestParam  |> List.map (fun (n,(t,il)) -> createTest n t [il])
 
    ///create 10 random test for each valid instruction list 
-    let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 10 x false)) |> List.concat
-    //let randTestList1 = createdRandTestList 50 "SBC" true
+    //let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 10 x false)) |> List.concat
+    let randTestList1 = createdRandTestList 10 "RSC" "SET"

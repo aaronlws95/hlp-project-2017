@@ -7,7 +7,7 @@
 create 10 random test for each valid instruction list 
 </summary>
 </member>
-<member name="M:VisualInterface.CreateRandomTest.createdRandTestList(System.Int32,System.String,System.Boolean)">
+<member name="M:VisualInterface.CreateRandomTest.createdRandTestList(System.Int32,System.String,System.String)">
 <summary>
  create test list given length of list and instruction name.
  Use RAND for random instructions
@@ -18,7 +18,7 @@ create 10 random test for each valid instruction list
  get random instruction name 
 </summary>
 </member>
-<member name="M:VisualInterface.CreateRandomTest.createRandomTest(System.String,System.Boolean,System.String)">
+<member name="M:VisualInterface.CreateRandomTest.createRandomTest(System.String,System.String,System.String)">
 <summary>
 create random test string for Visual and Instruction for Emulator
 </summary>

@@ -12,7 +12,7 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                SBCS R12, R12, R11
+                RSCS R0, R10, R5
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

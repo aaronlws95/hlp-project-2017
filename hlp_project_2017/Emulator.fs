@@ -13,6 +13,7 @@ module Emulator =
             type ProcessFlagType = 
                 | ADD of Value*Value*Value //op1 op2 result
                 | SUB of Value*Value*Value //op1 op2 result
+                | SUBWC of Value*Value*Value //op1 op2 result
                 | LEFTSHIFT of Value*Value*Value // op1 op2 result
                 | RIGHTSHIFT of Value*Value*Value // op1 op2 result
                 | OTHER of Value // result
@@ -21,22 +22,26 @@ module Emulator =
                 let N (res:Value) = if res < 0 then true else false //set if negative
                 let Z (res:Value) = if res = 0 then true else false //set if zero
                 match instruction with
-                | ADD(op1,op2,res) ->  { 
-                                            N = N res 
+                | ADD(op1,op2,res) ->  {    N = N res 
                                             Z = Z res
                                             //set carry if result is greater than or equal to 2^32
                                             C = if uint64(uint32(op1)) + uint64(uint32(op2)) >= 4294967296UL then true else false 
                                             //set overflow if adding two same signed values results in a result of a different sign
-                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
-                                        }
+                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false }
                 | SUB(op1,op2,res) ->  { 
                                             N = N res 
                                             Z = Z res
                                             //set carry if result is >=0   
-                                            C = if uint64(uint32(op1)) + uint64(~~~uint32(op2)) + 1UL >= 4294967296UL then true else false 
+                                            C = if (uint64(uint32(op1)) + uint64(~~~uint32(op2)) + 1UL >= 4294967296UL) then true else false 
                                             //set overflow if subtracting +ve from -ve generates a +ve or subtracting -ve from +ve generates a -ve
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
                                         }
+                | SUBWC(op1,op2,res) -> {   N = N res 
+                                            Z = Z res
+                                            //set carry if result is greater than or equal to 2^32
+                                            C = if res>=0 then true else false 
+                                            //set overflow if adding two same signed values results in a result of a different sign
+                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false }
                 | LEFTSHIFT(op1,op2,res) -> {   
                                                 N = N res
                                                 Z = Z res
@@ -96,6 +101,11 @@ module Emulator =
             let newRegMap = Map.add dest res state.RegMap
             let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUB(op1,op2,res)) else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
+        /// update register and set NZCV based on result with subtraction with carry
+        let private subwc state dest op1 op2 res s = 
+            let newRegMap = Map.add dest res state.RegMap
+            let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.SUBWC(op1,op2,res)) else state.Flags
+            {state with RegMap = newRegMap;Flags = newFlags}
         /// execute ALU instruction 
         let executeInstruction state instruction s = 
             let er = Extractor.extractRegister state
@@ -105,10 +115,10 @@ module Emulator =
             | SUB(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)) s // R1:=R2-ROL
             | MVN(r, rol) -> updateRegister state r ~~~(er rol) s //R:=NOT(ROL)
             | EOR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]^^^(er rol)) s // R1:=R2 EOR ROL
-            | RSB(r1,r2,rol) -> sub state r1 (er rol) state.RegMap.[r2] ((er rol)-state.RegMap.[r2]) s //R1:=ROL-R2
-            | RSC(r1,r2,rol) -> sub state r1 ((er rol)-state.RegMap.[r2]) -1 ((er rol)-state.RegMap.[r2]+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=R2-ROL+C-1
+            | RSB(r1,r2,rol) -> sub state r1 (er rol) state.RegMap.[r2] ((er rol)-state.RegMap.[r2]) s //R1:=ROL-R2 
+            | RSC(r1,r2,rol) -> subwc state r1 (er rol) state.RegMap.[r2] ((er rol)-state.RegMap.[r2]+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=ROL-R2+C-1
             | ADC(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol)+System.Convert.ToInt32(state.Flags.C)) s //R1:=R2+ROl+C
-            | SBC(r1,r2,rol) -> sub state r1 (state.RegMap.[r2]-(er rol)) -1 (state.RegMap.[r2]-(er rol)+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=R2-ROL+C-1
+            | SBC(r1,r2,rol) -> subwc state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=R2-ROL+C-1
             | BIC(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]&&&(~~~(er rol))) s //R1:=R2 AND NOT(ROL)
             | ORR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]|||(er rol)) s //R1:= R2 OR ROL
 

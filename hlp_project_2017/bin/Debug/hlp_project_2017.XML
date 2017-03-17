@@ -125,6 +125,11 @@ execute shift function
  execute ALU instruction 
 </summary>
 </member>
+<member name="M:ARM7TDMI.Emulator.ALUInstruction.subwc(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with subtraction with carry
+</summary>
+</member>
 <member name="M:ARM7TDMI.Emulator.ALUInstruction.sub(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
 <summary>
  update register and set NZCV based on result with subtraction
