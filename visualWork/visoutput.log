@@ -261,7 +261,7 @@
         <cycles>1</cycles>
     </line>
     <line id="15">
-        <code>RRXS R7, R3</code>
+        <code>RRXS R6, R4</code>
         <register name="R0">0x0</register>
         <register name="R1">0x0</register>
         <register name="R2">0x0</register>

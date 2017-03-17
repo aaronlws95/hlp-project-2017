@@ -72,15 +72,15 @@ module CreateRandomTest =
     let getRandInstName = instNameArr.[rand.Next(0,Array.length instNameArr)]
     /// create test list given length of list and instruction name.
     /// Use RAND for random instructions
-    let createdRandTestList n (instName:string) (setFlag:string) = 
+    let createdRandTestList n (instName:string) (setFlag:string) (regLitSet:string) = 
         let getTestParam num = 
             match instName.ToUpper() with 
             | "RAND" -> let instName = getRandInstName
-                        ("Test " + instName + string(num),(createRandomTest getRandInstName setFlag "rand"))
-            | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag "rand"))
+                        ("Test " + instName + string(num),(createRandomTest getRandInstName setFlag regLitSet))
+            | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag regLitSet))
 
         [1..n] |> List.map getTestParam  |> List.map (fun (n,(t,il)) -> createTest n t [il])
-
+   
    ///create 10 random test for each valid instruction list 
-    let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 10 x "RAND")) |> List.concat
+    let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 100 x "RAND" "RAND")) |> List.concat
     //let randTestList1 = createdRandTestList 10 "ORR" "SET"
