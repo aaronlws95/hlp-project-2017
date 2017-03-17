@@ -79,8 +79,14 @@ module CreateRandomTest =
                         ("Test " + instName + string(num),(createRandomTest getRandInstName setFlag regLitSet))
             | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag regLitSet))
 
-        [1..n] |> List.map getTestParam  |> List.map (fun (n,(t,il)) -> createTest n t [il])
-   
+        [1..n] |> List.map getTestParam |> List.map (fun (n,(t,il)) -> createTest n t [il])
+
+    let createRandomTestLong length = 
+        let addInst (strOld,instOld)  = 
+            let strNew,instNew = (createRandomTest getRandInstName "rand" "rand")
+            ((strOld + "\n" + strNew),(List.append instOld [instNew]))
+       
+
    ///create 10 random test for each valid instruction list 
     let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 100 x "RAND" "RAND")) |> List.concat
     //let randTestList1 = createdRandTestList 10 "ORR" "SET"

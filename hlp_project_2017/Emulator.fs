@@ -213,7 +213,7 @@ module Emulator =
         let private rrx state dest exp s = 
             let newExp = (exp >>> 1) + (System.Convert.ToInt32(state.Flags.C) <<< 31)
             let newRegMap = Map.add dest newExp state.RegMap
-            let newC = System.Convert.ToBoolean(exp &&& 1)
+            let newC = if (exp &&& 1) = 1 then true else false
             let newFlags = if s then {ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(newExp)) with C = newC} else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         ///execute shift function
