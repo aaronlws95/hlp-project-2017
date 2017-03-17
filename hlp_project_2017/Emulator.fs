@@ -39,20 +39,20 @@ module Emulator =
                 | SUBWC(op1,op2,res) -> {   N = N res 
                                             Z = Z res
                                             //set carry if result is greater than or equal to 2^32
-                                            C = if res>=0 then true else false 
+                                            C = if (uint64(uint32(op1)) + uint64(~~~uint32(op2)) + 1UL + uint64(System.Convert.ToInt32(state.Flags.C)) - 1UL >= 4294967296UL) && res>=0 then true else false  
                                             //set overflow if adding two same signed values results in a result of a different sign
                                             V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false }
                 | LEFTSHIFT(op1,op2,res) -> {   
                                                 N = N res
                                                 Z = Z res
-                                                C = if ((op1 &&& (0x80000000 >>> (op2-1))) = op1) then true else false
+                                                C = if ((op1 &&& (0x80000000 >>> (op2-1))) = op1) && (op1 <> 0 && op2 <> 0) then true else false
                                                 V = state.Flags.V
                                             }
                 | RIGHTSHIFT(op1,op2,res) -> {
                                                 N = N res
                                                 Z = Z res
                                                 //set carry if 1 is shifted out
-                                                C = if ((op1 &&& (1 <<< (op2-1))) = op1) then true else false
+                                                C = if ((op1 &&& (1 <<< (op2-1))) = op1) && (op1 <> 0 && op2 <> 0) then true else false
                                                 V = state.Flags.V
                                              }
                 | OTHER(res) ->        {
