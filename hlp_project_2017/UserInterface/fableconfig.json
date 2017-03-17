@@ -1,6 +1,7 @@
 {   
     "ecma": "es2015",
     "module": "amd",
+    "outDir": "./",
     "projFile": "../hlp_project_2017.fsproj",
     "sourceMaps": true,
     "scripts": {

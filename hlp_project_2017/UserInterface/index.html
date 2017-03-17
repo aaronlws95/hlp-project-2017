@@ -17,14 +17,14 @@
             <h1 class="title">ARM SIMULATOR - HLP 2017 Project</h1>
 
             <div class="toolbar-actions">
-                <button class="btn btn-positive">Execute</button>
+                <button class="btn btn-positive" id="execute">Execute</button>
                 <button class="btn btn-negative">Quit</button>
             </div>
         </header>
         <div class="window-content">
             <div class="pane-group">
                 <div class="pane">
-                    <textarea id="codeEditor" class="form-control inputBox" rows="3" placeholder="Enter your ARM code here."></textarea>
+                    <textarea id="sourceCode" class="form-control inputBox" rows="3" placeholder="Enter your ARM code here.">MOV R3 #20</textarea>
                 </div>
 
                 <div class="pane">
@@ -65,6 +65,7 @@
         </div>
         <footer class="toolbar toolbar-footer">
             <h1 class="title">Status Bar</h1>
+            <p id="output"></p>
         </footer>
     </div>
 

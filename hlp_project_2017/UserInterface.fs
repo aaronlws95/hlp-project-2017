@@ -22,7 +22,13 @@ module UserInterfaceController =
         let toBit (remainder: int) = 
             match remainder with
                 | remainder when remainder <= 9 -> string remainder
-                | remainder when remainder <= 15 -> remainder |> (+) 55 |> System.Convert.ToByte |> toArray |> Encoding.ASCII.GetString 
+                //| remainder when remainder <= 15 -> remainder |> (+) 55 |> System.Convert.ToByte |> toArray |> Encoding.ASCII.GetString 
+                | 10 -> "A"
+                | 11 -> "B"
+                | 12 -> "C"
+                | 13 -> "D"
+                | 14 -> "E"
+                | 15 -> "F"
                 | _ -> "ErrorBit"
 
         let rec convert dec = 
@@ -41,23 +47,32 @@ module UserInterface =
     open Fable.Import.Browser
     open Parser
     open UserInterfaceController
+    open MachineState
+    open InstructionType
 
     Browser.console.log("Initialising Application...")
 
     //get input elements
     let sourceDOMElement = document.getElementById "sourceCode" :?>HTMLTextAreaElement
-    let outputDOMElement = document.getElementById "output" :?>HTMLTextAreaElement
+    let outputDOMElement = document.getElementById "output" :?>HTMLParagraphElement
     
     //get button elements
     let executeButton = document.getElementById "execute" :?>HTMLButtonElement
-
-    //get values from input elements
-    let sourceCode = sourceDOMElement.value
+        
+    let splitIntoWords = 
+        "MOV R3 #10".Split whiteSpace
+        |> Array.toList
+        |> List.filter ((<>) "")
 
     //controller functions
     let execute() =
+        //get values from input elements
+        let sourceCode = sourceDOMElement.value
+        Browser.console.log(sourceCode)
+
+        Browser.console.log(splitIntoWords)
         let state = readAsm sourceCode
-        outputDOMElement.value <- state |> toJSON
+        Browser.console.log(state.MemMap)
     
     let openFile() = null
     let saveFile() = null
