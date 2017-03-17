@@ -2,6 +2,37 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
+<member name="P:VisualInterface.CreateRandomTest.randTestList1">
+<summary>
+create 10 random test for each valid instruction list 
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTest.createdRandTestList(System.Int32,System.String,System.Boolean)">
+<summary>
+ create test list given length of list and instruction name.
+ Use RAND for random instructions
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomTest.getRandInstName">
+<summary>
+ get random instruction name 
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTest.createRandomTest(System.String,System.Boolean,System.String)">
+<summary>
+create random test string for Visual and Instruction for Emulator
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomTest.instNameArr">
+<summary>
+array of all valid instruction names
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomTest.rand">
+<summary>
+random seed
+</summary>
+</member>
 <member name="M:VisualInterface.VIProgram.VisualUnitTest(System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{VisualInterface.VisualInterface.Out,System.Int32}})">
 <summary>
  run an expecto test of VisUAL

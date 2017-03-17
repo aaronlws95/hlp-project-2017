@@ -9,10 +9,10 @@ module CreateRandomTest =
     ///random seed
     let rand = System.Random()
     ///array of all valid instruction names
-    let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"ADC";"SBC";"BIC";
+    let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
                     "ORR";"TST";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|]
     ///create random test string for Visual and Instruction for Emulator
-    let createRandomTest (instName:string) (setFlag:bool) (regLitSet:string) =       
+    let createRandomTest (instName:string) (setFlagRand:bool) (regLitSet:string) =       
             let reg = rand.Next(0,13)
             let reg2 = rand.Next(0,13)
             let strop2,op2 = 
@@ -32,7 +32,7 @@ module CreateRandomTest =
                 | _ -> failwithf "invalid setting"
                
             let strsf,sf =                
-                match setFlag with
+                match setFlagRand with
                 | true -> (instName + "S R",true)
                 | false -> if rand.Next(0,2) = 0 then (instName + " R",false) else (instName + "S R",true)
 
@@ -45,8 +45,9 @@ module CreateRandomTest =
                 | "CMN" -> ((strsf + string(reg) + strop2), SF(CMN(R reg,op2)))
                 | "ADD" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(ADD(R reg,R reg2, op2),sf))
                 | "SUB" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(SUB(R reg,R reg2, op2),sf))
-                | "EOR" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(EOR(R reg,R reg2, op2),false)) //Visual error with EORS
+                | "EOR" -> (("EOR R" + string(reg) + ", R" + string(reg2) + strop2), ALU(EOR(R reg,R reg2, op2),false)) //Visual error with EORS so set to false
                 | "RSB" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(RSB(R reg,R reg2, op2),sf))
+                | "RSC" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(RSC(R reg,R reg2, op2),sf))
                 | "ADC" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(ADC(R reg,R reg2, op2),sf))
                 | "SBC" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(SBC(R reg,R reg2, op2),sf))
                 | "BIC" -> ((strsf + string(reg) + ", R" + string(reg2) + strop2), ALU(BIC(R reg,R reg2, op2),sf))
@@ -62,14 +63,15 @@ module CreateRandomTest =
     let getRandInstName = instNameArr.[rand.Next(0,Array.length instNameArr)]
     /// create test list given length of list and instruction name.
     /// Use RAND for random instructions
-    let createdRandTestList n (instName:string) = 
+    let createdRandTestList n (instName:string) (setFlag:bool) = 
         let getTestParam num = 
             match instName.ToUpper() with 
             | "RAND" -> let instName = getRandInstName
-                        ("Test " + instName + string(num),(createRandomTest getRandInstName true "rand"))
-            | x ->  ("Test " + instName + string(num),(createRandomTest x true "rand"))
+                        ("Test " + instName + string(num),(createRandomTest getRandInstName setFlag "rand"))
+            | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag "rand"))
 
         [1..n] |> List.map getTestParam  |> List.map (fun (n,(t,il)) -> createTest n t [il])
 
-    let randTestList1 = instNameArr |> Array.toList |> List.map (createdRandTestList 10) |> List.concat
-    //let randTestList1 = createdRandTestList 50 "SUB"
+   ///create 10 random test for each valid instruction list 
+    let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 10 x false)) |> List.concat
+    //let randTestList1 = createdRandTestList 50 "SBC" true

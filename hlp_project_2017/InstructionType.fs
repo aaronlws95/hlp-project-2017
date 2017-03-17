@@ -16,6 +16,7 @@ module InstructionType =
         | MVN of dest:Register*op1:RegOrLit
         | EOR of dest:Register*op1:Register*op2:RegOrLit
         | RSB of dest:Register*op1:Register*op2:RegOrLit
+        | RSC of dest:Register*op1:Register*op2:RegOrLit
         | ADC of dest:Register*op1:Register*op2:RegOrLit
         | SBC of dest:Register*op1:Register*op2:RegOrLit
         | BIC of dest:Register*op1:Register*op2:RegOrLit
