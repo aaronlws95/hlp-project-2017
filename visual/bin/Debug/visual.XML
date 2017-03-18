@@ -2,35 +2,46 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
+<member name="M:VisualInterface.CreateRandomMemTest.createdRandMemTestList(System.Int32,System.String,System.String,System.String)">
+<summary>
+ create list of tests, each a random memory instruction
+ Use RAND for random instructions
+</summary>
+</member>
 <member name="P:VisualInterface.CreateRandomMemTest.getRandInstName">
 <summary>
  get random instruction name 
 </summary>
 </member>
+<member name="M:VisualInterface.CreateRandomMemTest.createRandomMemTest(System.String,System.String,System.String)">
+<summary>
+create random test string for Visual and Instruction for Emulator for memory instructions
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomMemTest.rand">
+<summary>
+random seed
+</summary>
+</member>
 <member name="M:VisualInterface.CreateRandomTest.createdRandTestListAll(System.Int32)">
 <summary>
-create 10 random test for each valid instruction list 
+create n random tests for each valid instruction
 </summary>
 </member>
 <member name="M:VisualInterface.CreateRandomTest.createdRandTestList(System.Int32,System.String,System.String,System.String)">
 <summary>
- create test list given length of list and instruction name.
+ create list of tests, each a random instruction
  Use RAND for random instructions
-</summary>
-</member>
-<member name="M:VisualInterface.CreateRandomTest.getRandInstName">
-<summary>
- get random instruction name 
-</summary>
-</member>
-<member name="M:VisualInterface.CreateRandomTest.createRandomTest(System.String,System.String,System.String)">
-<summary>
-create random test string for Visual and Instruction for Emulator
 </summary>
 </member>
 <member name="P:VisualInterface.CreateRandomTest.instNameArr">
 <summary>
 array of all valid instruction names
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTest.createRandomTest(System.String,System.String,System.String)">
+<summary>
+create random test string for Visual and Instruction for Emulator
 </summary>
 </member>
 <member name="P:VisualInterface.CreateRandomTest.rand">
@@ -40,17 +51,38 @@ random seed
 </member>
 <member name="T:VisualInterface.CreateRandomTest">
 <summary>
- Create random tests on individual instructions
+ Create random tests on individual instructions EXCEPT MEM
 </summary>
 </member>
-<member name="M:VisualInterface.CreateRandomTestLong.getRandInstName">
+<member name="M:VisualInterface.CreateRandomTestLong.createdRandTestListLong(System.Int32,System.Int32)">
 <summary>
- get random instruction name 
+ create list of tests with multiple random instructions
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTestLong.createRandomTestLong(System.Int32,System.String,System.String)">
+<summary>
+ create one test with multiple random instructions
+ Use RAND for random instructions
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomTestLong.instNameArr">
+<summary>
+array of all valid instruction names
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTestLong.createRandomTestRestrictReg(System.Int32,System.String,System.String,System.String)">
+<summary>
+create random test string for Visual and Instruction for Emulator with restricted registers
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomTestLong.rand">
+<summary>
+ random seed
 </summary>
 </member>
 <member name="T:VisualInterface.CreateRandomTestLong">
 <summary>
-Create random tests on multiple instructions
+Create random tests on multiple instructions EXCEPT MEM
 </summary>
 </member>
 <member name="T:VisualInterface.CreateTest">

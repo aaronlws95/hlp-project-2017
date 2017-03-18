@@ -13,10 +13,11 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                MOV R0, #0
-RSBS R0, R0, R1
-ROR R1, R0, #127
-TST R0, #4079616
+                LDR R9, =TEST
+
+                            MOV R2, #931135488
+STR R2, [R9, #8]!
+LDR R8, [R9]
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

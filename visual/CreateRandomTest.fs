@@ -1,6 +1,6 @@
 ﻿namespace VisualInterface
 
-/// Create random tests on individual instructions
+/// Create random tests on individual instructions EXCEPT MEM
 module CreateRandomTest = 
 
     open VITest.TestEnvt
@@ -9,14 +9,13 @@ module CreateRandomTest =
     open InstructionType
     ///random seed
     let rand = System.Random()
-    ///array of all valid instruction names
-    let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
-                "ORR";"TST";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|]
+
     ///create random test string for Visual and Instruction for Emulator
     let createRandomTest (instName:string) (setFlagRand:string) (regLitSet:string) =       
-            let reg = rand.Next(0,13)
-            let reg2 = rand.Next(0,13)
-            let op2shift = rand.Next(0,256)
+            let reg = rand.Next(0,13) // destination register
+            let reg2 = rand.Next(0,13) // op1 register
+            let op2shift = rand.Next(0,256) //get random shift value
+            //get details for set flag
             let strop2,op2 = 
                 match regLitSet.ToUpper() with
                 | "RAND" -> 
@@ -38,7 +37,7 @@ module CreateRandomTest =
                 | "REG" ->  let out = rand.Next(0,13)
                             (", R" + string(out),Reg (R out))
                 | _ -> failwithf "invalid setting"
-               
+            //get details for op2
             let strsf,sf =                
                 match setFlagRand.ToUpper() with
                 | "SET" -> (instName + "S R",true)
@@ -69,23 +68,21 @@ module CreateRandomTest =
                 | "RRX" -> ((strsf + string(reg) + ", R" + string(reg2)), SHIFT(RRX(R reg,R reg2),sf))
                 | _ -> failwithf "instruction name not valid"
 
-    /// get random instruction name 
-    let getRandInstName = fun() -> instNameArr.[rand.Next(0,Array.length instNameArr)]
-    /// create test list given length of list and instruction name.
+    ///array of all valid instruction names
+    let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
+                "ORR";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|] //Visual error with TST so remove
+
+    /// create list of tests, each a random instruction
     /// Use RAND for random instructions
     let createdRandTestList n (instName:string) (setFlag:string) (regLitSet:string) = 
         let getTestParam num = 
+            let getRandInstName = fun() -> instNameArr.[rand.Next(0,Array.length instNameArr)] //get random instruction name
             match instName.ToUpper() with 
             | "RAND" -> let instName = getRandInstName()
                         ("Test " + instName + string(num),(createRandomTest instName setFlag regLitSet))
             | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag regLitSet))
-
         [1..n] |> List.map getTestParam |> List.map (fun (n,(t,il)) -> createTest n t [il])
 
-   ///create 10 random test for each valid instruction list 
+   ///create n random tests for each valid instruction
     let createdRandTestListAll n = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList n x "RAND" "RAND")) |> List.concat
-
-    let randTestList1 = createdRandTestList 1 "sub" "SET" "reg"
-//    let instNameArrSub = [|"SBC";"RSC"|]
-//    let randTestList1 = instNameArrSub |> Array.toList |> List.map (fun x -> (createdRandTestList 50 x "RAND" "RAND")) |> List.concat
 
