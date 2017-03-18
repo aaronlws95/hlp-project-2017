@@ -4,7 +4,7 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "fable-core/u
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.Memory = exports.InstructionLine = exports.InstructionType = exports.ConditionCode = exports.SHIFTInst = exports.MEMInst = exports.LDMdir = exports.SFInst = exports.ALUInst = exports.RegOrLit = exports.Address = exports.Register = undefined;
+    exports.Memory = exports.InstructionLine = exports.InstructionType = exports.ConditionCode = exports.BRANCHInst = exports.SHIFTInst = exports.MEMInst = exports.LDMdir = exports.SFInst = exports.ALUInst = exports.RegOrLit = exports.Address = exports.Register = undefined;
 
     var _Symbol3 = _interopRequireDefault(_Symbol2);
 
@@ -222,12 +222,11 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "fable-core/u
                 type: "ARM7TDMI.InstructionType.MEMInst",
                 interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
                 cases: {
-                    ADR: [Register, Address, "boolean"],
+                    ADR: [Register, Address],
                     LDM: [LDMdir, Register, (0, _Util.makeGeneric)(_List2.default, {
                         T: Register
                     }), "boolean"],
-                    LDRPI: [Register, Address],
-                    LDRREG: [Register, Register, RegOrLit, RegOrLit, "boolean"],
+                    LDR: [Register, Register, RegOrLit, RegOrLit, "boolean"],
                     STM: [LDMdir, Register, (0, _Util.makeGeneric)(_List2.default, {
                         T: Register
                     }), "boolean"],
@@ -282,6 +281,36 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "fable-core/u
     exports.SHIFTInst = SHIFTInst;
     (0, _Symbol2.setType)("ARM7TDMI.InstructionType.SHIFTInst", SHIFTInst);
 
+    class BRANCHInst {
+        constructor(caseName, fields) {
+            this.Case = caseName;
+            this.Fields = fields;
+        }
+
+        [_Symbol3.default.reflection]() {
+            return {
+                type: "ARM7TDMI.InstructionType.BRANCHInst",
+                interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+                cases: {
+                    B: [Address],
+                    BL: [Address]
+                }
+            };
+        }
+
+        Equals(other) {
+            return (0, _Util.equalsUnions)(this, other);
+        }
+
+        CompareTo(other) {
+            return (0, _Util.compareUnions)(this, other);
+        }
+
+    }
+
+    exports.BRANCHInst = BRANCHInst;
+    (0, _Symbol2.setType)("ARM7TDMI.InstructionType.BRANCHInst", BRANCHInst);
+
     class ConditionCode {
         constructor(caseName, fields) {
             this.Case = caseName;
@@ -307,6 +336,7 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "fable-core/u
                     LT: [],
                     MI: [],
                     NE: [],
+                    NoCond: [],
                     PL: [],
                     VC: [],
                     VS: []
@@ -339,6 +369,7 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "fable-core/u
                 interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
                 cases: {
                     ALU: [ALUInst, "boolean"],
+                    BRANCH: [BRANCHInst],
                     MEM: [MEMInst],
                     SF: [SFInst],
                     SHIFT: [SHIFTInst, "boolean"]

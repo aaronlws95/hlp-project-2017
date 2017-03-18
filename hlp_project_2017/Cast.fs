@@ -130,8 +130,8 @@ module Cast=
 
     let (|IsBranchInst|_|) =
         function
-        //| "B" -> B |> Some
-        //| "BL" -> BL |> Some
+        | "B" -> B |> Some
+        | "BL" -> BL |> Some
         | _ -> None
 
     let (|IsSetFlag|_|) =
@@ -142,25 +142,31 @@ module Cast=
 
     let (|IsCondition|_|) =
         function
-        | "EQ" -> EQ |> Some |> Some
-        | "NE" -> NE |> Some |> Some
-        | "CS" -> CS |> Some |> Some
-        | "HS" -> HS |> Some |> Some
-        | "CC" -> CC |> Some |> Some
-        | "LO" -> LO |> Some |> Some
-        | "MI" -> MI |> Some |> Some
-        | "PL" -> PL |> Some |> Some
-        | "VS" -> VS |> Some |> Some
-        | "VC" -> VC |> Some |> Some
-        | "HI" -> HI |> Some |> Some
-        | "LS" -> LS |> Some |> Some
-        | "GE" -> GE |> Some |> Some
-        | "LT" -> LT |> Some |> Some
-        | "GT" -> GT |> Some |> Some
-        | "LE" -> LE |> Some |> Some
-        | "AL" -> AL |> Some |> Some
-        | "" -> None |> Some
+        | "EQ" -> EQ |> Some
+        | "NE" -> NE |> Some 
+        | "CS" -> CS |> Some 
+        | "HS" -> HS |> Some 
+        | "CC" -> CC |> Some 
+        | "LO" -> LO |> Some 
+        | "MI" -> MI |> Some 
+        | "PL" -> PL |> Some 
+        | "VS" -> VS |> Some 
+        | "VC" -> VC |> Some 
+        | "HI" -> HI |> Some 
+        | "LS" -> LS |> Some 
+        | "GE" -> GE |> Some 
+        | "LT" -> LT |> Some 
+        | "GT" -> GT |> Some 
+        | "LE" -> LE |> Some 
+        | "AL" -> AL |> Some 
+        | "" -> NoCond |> Some
         | _ -> None
+
+    //because of fable we have to do this
+    let CondCast =
+        function
+        | NoCond -> None
+        | cond -> cond |> Some
     //No forget DCD, EQU, FILL and END
 
     let (|Prefix|_|) (p:string) (s:string) =
@@ -212,31 +218,4 @@ module Cast=
         | Prefix "B" rest -> toTuple "B" rest
         | Prefix "B" rest -> toTuple "BL" rest
         | x -> [x; ""; ""]
-      
-
-    
-
-    let ParseInstruction (strlist:string list)=
-        let instruction = TokenizeInst strlist.[0]
-        let basicinstruction = instruction.[0]//instruction.[0..2]
-        let setflag = instruction.[1]
-            (*if instruction.Length = 4 then (string)instruction.[3]
-            elif instruction.Length = 6 then (string)instruction.[3]
-            else ""*)
-        let condition = instruction.[2]
-            (*if instruction.Length = 5 then instruction.[3..4]
-            elif instruction.Length = 6 then instruction.[4..5]
-            else ""*)
-        let instrline = basicinstruction::setflag::condition::(strlist.Tail)
-        match instrline with
-        //normal with S or Cond or neither
-        | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsRegOrLit op1 ] -> Line(ALU(inst(dest,op1),sf),None,cond)
-        | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsRegOrLit op2 ] -> Line(ALU(inst(dest,op1,op2),sf),None,cond)
-        | [ IsShiftInst inst;  IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1; IsRegOrLit op2] -> Line(SHIFT(inst(dest,op1,op2),sf),None,cond)
-        | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsRegOrLit op1] -> Line(SF(inst(dest,op1)),None,cond)
-        //| [ IsBranchInst inst; IsCondition cond; IsLabel lab] ->
-        // with shifts
-        | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,Reg(op1)),sf),shiftinst(op1,op1,exp)|> Some,cond)
-        | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsReg op2 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,op1,Reg(op2)),sf),shiftinst(op2,op2,exp)|> Some,cond)
-        | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(SF(inst(dest,Reg(op1))),shiftinst(op1,op1,exp)|> Some,cond)
-        | x -> failwithf "Unexpected match in parser: %A" x
+   

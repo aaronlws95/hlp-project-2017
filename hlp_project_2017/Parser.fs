@@ -5,7 +5,7 @@ module Parser=
     open MachineState
     open Cast
    
-    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n' |]
+    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n'; ',' |]
 
     let readAsm textInput = 
         let splitIntoLines (text:string) = 
@@ -50,15 +50,16 @@ module Parser=
             let instrline = basicinstruction::setflag::condition::(strlist.Tail)
             match instrline with
             //normal with S or Cond or neither
-            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsRegOrLit op1 ] -> Line(ALU(inst(dest,op1),sf),None,cond)
-            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsRegOrLit op2 ] -> Line(ALU(inst(dest,op1,op2),sf),None,cond)
-            | [ IsShiftInst inst;  IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1; IsRegOrLit op2] -> Line(SHIFT(inst(dest,op1,op2),sf),None,cond)
-            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsRegOrLit op1] -> Line(SF(inst(dest,op1)),None,cond)
-            //| [ IsBranchInst inst; IsCondition cond; IsLabel lab] ->
+            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsRegOrLit op1 ] -> Line(ALU(inst(dest,op1),sf),None,CondCast cond)
+            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsRegOrLit op2 ] -> Line(ALU(inst(dest,op1,op2),sf),None,CondCast cond)
+            | [ IsShiftInst inst;  IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1; IsRegOrLit op2] -> Line(SHIFT(inst(dest,op1,op2),sf),None,CondCast cond)
+            | [ "RRX"; IsSetFlag sf; IsCondition cond;IsReg dest; IsReg exp]-> Line(SHIFT(RRX(dest,exp),sf),None,CondCast cond)
+            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsRegOrLit op1] -> Line(SF(inst(dest,op1)),None,CondCast cond)
+            | [ IsBranchInst inst; IsCondition cond; IsLabel label] when branch_map.TryFind(label) <> None-> Line(BRANCH(inst(branch_map.[label])),None,CondCast cond)
             // with shifts
-            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,Reg(op1)),sf),shiftinst(op1,op1,exp)|> Some,cond)
-            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsReg op2 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,op1,Reg(op2)),sf),shiftinst(op2,op2,exp)|> Some,cond)
-            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1 ; "," ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(SF(inst(dest,Reg(op1))),shiftinst(op1,op1,exp)|> Some,cond)
+            | [ IsMOVInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1 ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,Reg(op1)),sf),shiftinst(op1,op1,exp)|> Some,CondCast cond)
+            | [ IsALUInst inst; IsSetFlag sf; IsCondition cond; IsReg dest; IsReg op1; IsReg op2 ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(ALU(inst(dest,op1,Reg(op2)),sf),shiftinst(op2,op2,exp)|> Some,CondCast cond)
+            | [ IsCOMPInst inst; IsSetFlag sf; IsCondition cond;IsReg dest; IsReg op1 ; IsShiftInst shiftinst; IsRegOrLit exp] -> Line(SF(inst(dest,Reg(op1))),shiftinst(op1,op1,exp)|> Some,CondCast cond)
             | x -> failwithf "Unexpected match in parser: %A" x
 
         let instList = //: InstructionType list = 

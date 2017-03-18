@@ -20,23 +20,27 @@ module Program =
 //    ADDSEQ R3 R13 #15
 //    ADDLO R3 R13 #15" 
 
-    let s = "MOV R1 #10
+    let test = "MOV R1 #10
     MOV R2 #20
     ADD R3 R1 R2"
 
-    [<EntryPoint>]
+    let rec executeInstructions (state:MachineState) = 
+        let newState = Emulator.Instruction.executeLine state 
+        match newState.State with
+        | RunOK -> executeInstructions newState
+        | RunEND -> newState
+        | RunTimeErr s-> state
+        | SyntaxErr s -> state
+
+    let execute (s:string)=
+        readAsm s |> executeInstructions
+
+    //[<EntryPoint>]
     let main argv = 
         // Recursively execute the instructions of subsequent states
-        let rec executeInstructions (state:MachineState) = 
-            let newState = Emulator.Instruction.executeLine state 
-            match newState.State with
-            | RunOK -> executeInstructions newState
-            | RunEND -> newState
-            | RunTimeErr s-> state
-            | SyntaxErr s -> state
+        
+        printfn "%A" (execute test)
 
-        printfn "%A" (readAsm s |> executeInstructions)
-
-        System.Console.ReadKey() |> ignore
+        //System.Console.ReadKey() |> ignore
         0 // return an integer exit code
      

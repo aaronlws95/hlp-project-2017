@@ -44,13 +44,18 @@ module InstructionType =
         | ROR of dest:Register*op1:Register*op2:RegOrLit
         | RRX of op1:Register*op2:Register
     
-    type ConditionCode = | EQ | NE | CS | HS | CC | LO | MI | PL | VS | VC | HI | LS | GE | LT | GT | LE | AL 
+    type BRANCHInst = 
+        | B of target:Address
+        | BL of target:Address
+
+    type ConditionCode = | EQ | NE | CS | HS | CC | LO | MI | PL | VS | VC | HI | LS | GE | LT | GT | LE | AL | NoCond
 
     type InstructionType =
         | ALU of ALUInst*setFlag:bool  
         | MEM of MEMInst
         | SF of SFInst
         | SHIFT of SHIFTInst*setFlag:bool
+        | BRANCH of BRANCHInst
 
     //type ConditionType = Condition of ConditionCode
 

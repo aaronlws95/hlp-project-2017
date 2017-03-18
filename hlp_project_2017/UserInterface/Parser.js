@@ -17,7 +17,7 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
         };
     }
 
-    const whiteSpace = exports.whiteSpace = [" ", "\f", "\t", "\r", "\n"];
+    const whiteSpace = exports.whiteSpace = [" ", "\f", "\t", "\r", "\n", ","];
 
     function readAsm(textInput) {
         const splitIntoLines = text => {
@@ -42,43 +42,43 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
 
         const chooseAddr = b => i => {
             const matchValue = (0, _Seq.item)(i, lineList);
-            let $var17;
+            let $var10;
 
             if (matchValue.tail != null) {
-                const activePatternResult634 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.head);
+                const activePatternResult586 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.head);
 
-                if (activePatternResult634 != null) {
+                if (activePatternResult586 != null) {
                     if (matchValue.tail.tail != null) {
-                        const activePatternResult635 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.tail.head);
+                        const activePatternResult587 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.tail.head);
 
-                        if (activePatternResult635 != null) {
+                        if (activePatternResult587 != null) {
                             if (matchValue.tail.tail.tail != null) {
-                                const activePatternResult636 = (0, _Cast.$7C$IsReg$7C$_$7C$)(matchValue.tail.tail.head);
+                                const activePatternResult588 = (0, _Cast.$7C$IsReg$7C$_$7C$)(matchValue.tail.tail.head);
 
-                                if (activePatternResult636 != null) {
-                                    $var17 = [0, activePatternResult634];
+                                if (activePatternResult588 != null) {
+                                    $var10 = [0, activePatternResult586];
                                 } else {
-                                    $var17 = [1];
+                                    $var10 = [1];
                                 }
                             } else {
-                                $var17 = [1];
+                                $var10 = [1];
                             }
                         } else {
-                            $var17 = [1];
+                            $var10 = [1];
                         }
                     } else {
-                        $var17 = [1];
+                        $var10 = [1];
                     }
                 } else {
-                    $var17 = [1];
+                    $var10 = [1];
                 }
             } else {
-                $var17 = [1];
+                $var10 = [1];
             }
 
-            switch ($var17[0]) {
+            switch ($var10[0]) {
                 case 0:
-                    return (0, _Map.add)($var17[1], new _InstructionType.Address("Addr", [i * 4]), b);
+                    return (0, _Map.add)($var10[1], new _InstructionType.Address("Addr", [i * 4]), b);
 
                 case 1:
                     return b;
@@ -87,47 +87,47 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
 
         branch_map = (() => {
             const state = (0, _Map.create)(null, new _GenericComparer2.default(_Util.compare));
-            return source => (0, _Seq.fold)(function ($var18, $var19) {
-                return chooseAddr($var18)($var19);
+            return source => (0, _Seq.fold)(function ($var11, $var12) {
+                return chooseAddr($var11)($var12);
             }, state, source);
         })()((0, _Seq.range)(0, lineList.length - 1));
 
         const remove_branch_label = line_1 => {
-            let $var20;
+            let $var13;
 
             if (line_1.tail != null) {
-                const activePatternResult639 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.head);
+                const activePatternResult591 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.head);
 
-                if (activePatternResult639 != null) {
+                if (activePatternResult591 != null) {
                     if (line_1.tail.tail != null) {
-                        const activePatternResult640 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.tail.head);
+                        const activePatternResult592 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.tail.head);
 
-                        if (activePatternResult640 != null) {
+                        if (activePatternResult592 != null) {
                             if (line_1.tail.tail.tail != null) {
-                                const activePatternResult641 = (0, _Cast.$7C$IsReg$7C$_$7C$)(line_1.tail.tail.head);
+                                const activePatternResult593 = (0, _Cast.$7C$IsReg$7C$_$7C$)(line_1.tail.tail.head);
 
-                                if (activePatternResult641 != null) {
-                                    $var20 = [0];
+                                if (activePatternResult593 != null) {
+                                    $var13 = [0];
                                 } else {
-                                    $var20 = [1];
+                                    $var13 = [1];
                                 }
                             } else {
-                                $var20 = [1];
+                                $var13 = [1];
                             }
                         } else {
-                            $var20 = [1];
+                            $var13 = [1];
                         }
                     } else {
-                        $var20 = [1];
+                        $var13 = [1];
                     }
                 } else {
-                    $var20 = [1];
+                    $var13 = [1];
                 }
             } else {
-                $var20 = [1];
+                $var13 = [1];
             }
 
-            switch ($var20[0]) {
+            switch ($var13[0]) {
                 case 0:
                     return line_1.tail;
 
@@ -142,564 +142,652 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
             const setflag = (0, _Seq.item)(1, instruction);
             const condition = (0, _Seq.item)(2, instruction);
             const instrline = (0, _List.ofArray)([basicinstruction, setflag, condition], strlist.tail);
-            let $var21;
+            let $var14;
 
             if (instrline.tail != null) {
-                const activePatternResult685 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
+                const activePatternResult644 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
 
-                if (activePatternResult685 != null) {
+                if (activePatternResult644 != null) {
                     if (instrline.tail.tail != null) {
-                        const activePatternResult686 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                        const activePatternResult645 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                        if (activePatternResult686 != null) {
+                        if (activePatternResult645 != null) {
                             if (instrline.tail.tail.tail != null) {
-                                const activePatternResult687 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                const activePatternResult646 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                if (activePatternResult687 != null) {
+                                if (activePatternResult646 != null) {
                                     if (instrline.tail.tail.tail.tail != null) {
-                                        const activePatternResult688 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                        const activePatternResult647 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                        if (activePatternResult688 != null) {
+                                        if (activePatternResult647 != null) {
                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                const activePatternResult689 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                const activePatternResult648 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                if (activePatternResult689 != null) {
+                                                if (activePatternResult648 != null) {
                                                     if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                        $var21 = [0, activePatternResult687, activePatternResult688, activePatternResult685, activePatternResult689, activePatternResult686];
+                                                        $var14 = [0, activePatternResult646, activePatternResult647, activePatternResult644, activePatternResult648, activePatternResult645];
                                                     } else {
-                                                        $var21 = [1];
+                                                        $var14 = [1];
                                                     }
                                                 } else {
-                                                    $var21 = [1];
+                                                    $var14 = [1];
                                                 }
                                             } else {
-                                                $var21 = [1];
+                                                $var14 = [1];
                                             }
                                         } else {
-                                            $var21 = [1];
+                                            $var14 = [1];
                                         }
                                     } else {
-                                        $var21 = [1];
+                                        $var14 = [1];
                                     }
                                 } else {
-                                    $var21 = [1];
+                                    $var14 = [1];
                                 }
                             } else {
-                                $var21 = [1];
+                                $var14 = [1];
                             }
                         } else {
-                            $var21 = [1];
+                            $var14 = [1];
                         }
                     } else {
-                        $var21 = [1];
+                        $var14 = [1];
                     }
                 } else {
-                    $var21 = [1];
+                    $var14 = [1];
                 }
             } else {
-                $var21 = [1];
+                $var14 = [1];
             }
 
-            switch ($var21[0]) {
+            switch ($var14[0]) {
                 case 0:
-                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var21[3]([$var21[2], $var21[4]]), $var21[5]]), null, $var21[1]]);
+                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var14[3]([$var14[2], $var14[4]]), $var14[5]]), null, (0, _Cast.CondCast)($var14[1])]);
 
                 case 1:
-                    let $var22;
+                    let $var15;
 
                     if (instrline.tail != null) {
-                        const activePatternResult679 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
+                        const activePatternResult638 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
 
-                        if (activePatternResult679 != null) {
+                        if (activePatternResult638 != null) {
                             if (instrline.tail.tail != null) {
-                                const activePatternResult680 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                const activePatternResult639 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                if (activePatternResult680 != null) {
+                                if (activePatternResult639 != null) {
                                     if (instrline.tail.tail.tail != null) {
-                                        const activePatternResult681 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                        const activePatternResult640 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                        if (activePatternResult681 != null) {
+                                        if (activePatternResult640 != null) {
                                             if (instrline.tail.tail.tail.tail != null) {
-                                                const activePatternResult682 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                const activePatternResult641 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                if (activePatternResult682 != null) {
+                                                if (activePatternResult641 != null) {
                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                        const activePatternResult683 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                        const activePatternResult642 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                        if (activePatternResult683 != null) {
+                                                        if (activePatternResult642 != null) {
                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                const activePatternResult684 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                const activePatternResult643 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                if (activePatternResult684 != null) {
+                                                                if (activePatternResult643 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                        $var22 = [0, activePatternResult681, activePatternResult682, activePatternResult679, activePatternResult683, activePatternResult684, activePatternResult680];
+                                                                        $var15 = [0, activePatternResult640, activePatternResult641, activePatternResult638, activePatternResult642, activePatternResult643, activePatternResult639];
                                                                     } else {
-                                                                        $var22 = [1];
+                                                                        $var15 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var22 = [1];
+                                                                    $var15 = [1];
                                                                 }
                                                             } else {
-                                                                $var22 = [1];
+                                                                $var15 = [1];
                                                             }
                                                         } else {
-                                                            $var22 = [1];
+                                                            $var15 = [1];
                                                         }
                                                     } else {
-                                                        $var22 = [1];
+                                                        $var15 = [1];
                                                     }
                                                 } else {
-                                                    $var22 = [1];
+                                                    $var15 = [1];
                                                 }
                                             } else {
-                                                $var22 = [1];
+                                                $var15 = [1];
                                             }
                                         } else {
-                                            $var22 = [1];
+                                            $var15 = [1];
                                         }
                                     } else {
-                                        $var22 = [1];
+                                        $var15 = [1];
                                     }
                                 } else {
-                                    $var22 = [1];
+                                    $var15 = [1];
                                 }
                             } else {
-                                $var22 = [1];
+                                $var15 = [1];
                             }
                         } else {
-                            $var22 = [1];
+                            $var15 = [1];
                         }
                     } else {
-                        $var22 = [1];
+                        $var15 = [1];
                     }
 
-                    switch ($var22[0]) {
+                    switch ($var15[0]) {
                         case 0:
-                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var22[3]([$var22[2], $var22[4], $var22[5]]), $var22[6]]), null, $var22[1]]);
+                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var15[3]([$var15[2], $var15[4], $var15[5]]), $var15[6]]), null, (0, _Cast.CondCast)($var15[1])]);
 
                         case 1:
-                            let $var23;
+                            let $var16;
 
                             if (instrline.tail != null) {
-                                const activePatternResult673 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.head);
+                                const activePatternResult632 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.head);
 
-                                if (activePatternResult673 != null) {
+                                if (activePatternResult632 != null) {
                                     if (instrline.tail.tail != null) {
-                                        const activePatternResult674 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                        const activePatternResult633 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                        if (activePatternResult674 != null) {
+                                        if (activePatternResult633 != null) {
                                             if (instrline.tail.tail.tail != null) {
-                                                const activePatternResult675 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                const activePatternResult634 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                if (activePatternResult675 != null) {
+                                                if (activePatternResult634 != null) {
                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                        const activePatternResult676 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                        const activePatternResult635 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                        if (activePatternResult676 != null) {
+                                                        if (activePatternResult635 != null) {
                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                const activePatternResult677 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                const activePatternResult636 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                if (activePatternResult677 != null) {
+                                                                if (activePatternResult636 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                        const activePatternResult678 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                        const activePatternResult637 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                        if (activePatternResult678 != null) {
+                                                                        if (activePatternResult637 != null) {
                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                $var23 = [0, activePatternResult675, activePatternResult676, activePatternResult673, activePatternResult677, activePatternResult678, activePatternResult674];
+                                                                                $var16 = [0, activePatternResult634, activePatternResult635, activePatternResult632, activePatternResult636, activePatternResult637, activePatternResult633];
                                                                             } else {
-                                                                                $var23 = [1];
+                                                                                $var16 = [1];
                                                                             }
                                                                         } else {
-                                                                            $var23 = [1];
+                                                                            $var16 = [1];
                                                                         }
                                                                     } else {
-                                                                        $var23 = [1];
+                                                                        $var16 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var23 = [1];
+                                                                    $var16 = [1];
                                                                 }
                                                             } else {
-                                                                $var23 = [1];
+                                                                $var16 = [1];
                                                             }
                                                         } else {
-                                                            $var23 = [1];
+                                                            $var16 = [1];
                                                         }
                                                     } else {
-                                                        $var23 = [1];
+                                                        $var16 = [1];
                                                     }
                                                 } else {
-                                                    $var23 = [1];
+                                                    $var16 = [1];
                                                 }
                                             } else {
-                                                $var23 = [1];
+                                                $var16 = [1];
                                             }
                                         } else {
-                                            $var23 = [1];
+                                            $var16 = [1];
                                         }
                                     } else {
-                                        $var23 = [1];
+                                        $var16 = [1];
                                     }
                                 } else {
-                                    $var23 = [1];
+                                    $var16 = [1];
                                 }
                             } else {
-                                $var23 = [1];
+                                $var16 = [1];
                             }
 
-                            switch ($var23[0]) {
+                            switch ($var16[0]) {
                                 case 0:
-                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SHIFT", [$var23[3]([$var23[2], $var23[4], $var23[5]]), $var23[6]]), null, $var23[1]]);
+                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SHIFT", [$var16[3]([$var16[2], $var16[4], $var16[5]]), $var16[6]]), null, (0, _Cast.CondCast)($var16[1])]);
 
                                 case 1:
-                                    let $var24;
+                                    let $var17;
 
                                     if (instrline.tail != null) {
-                                        const activePatternResult668 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
-
-                                        if (activePatternResult668 != null) {
+                                        if (instrline.head === "RRX") {
                                             if (instrline.tail.tail != null) {
-                                                const activePatternResult669 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                const activePatternResult628 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                if (activePatternResult669 != null) {
+                                                if (activePatternResult628 != null) {
                                                     if (instrline.tail.tail.tail != null) {
-                                                        const activePatternResult670 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                        const activePatternResult629 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                        if (activePatternResult670 != null) {
+                                                        if (activePatternResult629 != null) {
                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                const activePatternResult671 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                const activePatternResult630 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                if (activePatternResult671 != null) {
+                                                                if (activePatternResult630 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                        const activePatternResult672 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                        const activePatternResult631 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                        if (activePatternResult672 != null) {
+                                                                        if (activePatternResult631 != null) {
                                                                             if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                                                $var24 = [0, activePatternResult670, activePatternResult671, activePatternResult668, activePatternResult672, activePatternResult669];
+                                                                                $var17 = [0, activePatternResult629, activePatternResult630, activePatternResult631, activePatternResult628];
                                                                             } else {
-                                                                                $var24 = [1];
+                                                                                $var17 = [1];
                                                                             }
                                                                         } else {
-                                                                            $var24 = [1];
+                                                                            $var17 = [1];
                                                                         }
                                                                     } else {
-                                                                        $var24 = [1];
+                                                                        $var17 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var24 = [1];
+                                                                    $var17 = [1];
                                                                 }
                                                             } else {
-                                                                $var24 = [1];
+                                                                $var17 = [1];
                                                             }
                                                         } else {
-                                                            $var24 = [1];
+                                                            $var17 = [1];
                                                         }
                                                     } else {
-                                                        $var24 = [1];
+                                                        $var17 = [1];
                                                     }
                                                 } else {
-                                                    $var24 = [1];
+                                                    $var17 = [1];
                                                 }
                                             } else {
-                                                $var24 = [1];
+                                                $var17 = [1];
                                             }
                                         } else {
-                                            $var24 = [1];
+                                            $var17 = [1];
                                         }
                                     } else {
-                                        $var24 = [1];
+                                        $var17 = [1];
                                     }
 
-                                    switch ($var24[0]) {
+                                    switch ($var17[0]) {
                                         case 0:
-                                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SF", [$var24[3]([$var24[2], $var24[4]])]), null, $var24[1]]);
+                                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SHIFT", [new _InstructionType.SHIFTInst("RRX", [$var17[2], $var17[3]]), $var17[4]]), null, (0, _Cast.CondCast)($var17[1])]);
 
                                         case 1:
-                                            let $var25;
+                                            let $var18;
 
                                             if (instrline.tail != null) {
-                                                const activePatternResult661 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
+                                                const activePatternResult623 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
 
-                                                if (activePatternResult661 != null) {
+                                                if (activePatternResult623 != null) {
                                                     if (instrline.tail.tail != null) {
-                                                        const activePatternResult662 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                        const activePatternResult624 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                        if (activePatternResult662 != null) {
+                                                        if (activePatternResult624 != null) {
                                                             if (instrline.tail.tail.tail != null) {
-                                                                const activePatternResult663 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                const activePatternResult625 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                if (activePatternResult663 != null) {
+                                                                if (activePatternResult625 != null) {
                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                        const activePatternResult664 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                        const activePatternResult626 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                        if (activePatternResult664 != null) {
+                                                                        if (activePatternResult626 != null) {
                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                const activePatternResult665 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                const activePatternResult627 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                if (activePatternResult665 != null) {
-                                                                                    if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                        if (instrline.tail.tail.tail.tail.tail.head === ",") {
-                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                const activePatternResult666 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
-
-                                                                                                if (activePatternResult666 != null) {
-                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                        const activePatternResult667 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
-
-                                                                                                        if (activePatternResult667 != null) {
-                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                $var25 = [0, activePatternResult663, activePatternResult664, activePatternResult667, activePatternResult661, activePatternResult665, activePatternResult662, activePatternResult666];
-                                                                                                            } else {
-                                                                                                                $var25 = [1];
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            $var25 = [1];
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        $var25 = [1];
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    $var25 = [1];
-                                                                                                }
-                                                                                            } else {
-                                                                                                $var25 = [1];
-                                                                                            }
-                                                                                        } else {
-                                                                                            $var25 = [1];
-                                                                                        }
+                                                                                if (activePatternResult627 != null) {
+                                                                                    if (instrline.tail.tail.tail.tail.tail.tail == null) {
+                                                                                        $var18 = [0, activePatternResult625, activePatternResult626, activePatternResult623, activePatternResult627, activePatternResult624];
                                                                                     } else {
-                                                                                        $var25 = [1];
+                                                                                        $var18 = [1];
                                                                                     }
                                                                                 } else {
-                                                                                    $var25 = [1];
+                                                                                    $var18 = [1];
                                                                                 }
                                                                             } else {
-                                                                                $var25 = [1];
+                                                                                $var18 = [1];
                                                                             }
                                                                         } else {
-                                                                            $var25 = [1];
+                                                                            $var18 = [1];
                                                                         }
                                                                     } else {
-                                                                        $var25 = [1];
+                                                                        $var18 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var25 = [1];
+                                                                    $var18 = [1];
                                                                 }
                                                             } else {
-                                                                $var25 = [1];
+                                                                $var18 = [1];
                                                             }
                                                         } else {
-                                                            $var25 = [1];
+                                                            $var18 = [1];
                                                         }
                                                     } else {
-                                                        $var25 = [1];
+                                                        $var18 = [1];
                                                     }
                                                 } else {
-                                                    $var25 = [1];
+                                                    $var18 = [1];
                                                 }
                                             } else {
-                                                $var25 = [1];
+                                                $var18 = [1];
                                             }
 
-                                            switch ($var25[0]) {
+                                            switch ($var18[0]) {
                                                 case 0:
-                                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var25[4]([$var25[2], new _InstructionType.RegOrLit("Reg", [$var25[5]])]), $var25[6]]), $var25[7]([$var25[5], $var25[5], $var25[3]]), $var25[1]]);
+                                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SF", [$var18[3]([$var18[2], $var18[4]])]), null, (0, _Cast.CondCast)($var18[1])]);
 
                                                 case 1:
-                                                    let $var26;
+                                                    let $var19;
 
                                                     if (instrline.tail != null) {
-                                                        const activePatternResult653 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
+                                                        const activePatternResult620 = (0, _Cast.$7C$IsBranchInst$7C$_$7C$)(instrline.head);
 
-                                                        if (activePatternResult653 != null) {
+                                                        if (activePatternResult620 != null) {
                                                             if (instrline.tail.tail != null) {
-                                                                const activePatternResult654 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                const activePatternResult621 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.head);
 
-                                                                if (activePatternResult654 != null) {
+                                                                if (activePatternResult621 != null) {
                                                                     if (instrline.tail.tail.tail != null) {
-                                                                        const activePatternResult655 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                        const activePatternResult622 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                        if (activePatternResult655 != null) {
-                                                                            if (instrline.tail.tail.tail.tail != null) {
-                                                                                const activePatternResult656 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
-
-                                                                                if (activePatternResult656 != null) {
-                                                                                    if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                        const activePatternResult657 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
-
-                                                                                        if (activePatternResult657 != null) {
-                                                                                            if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                const activePatternResult658 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
-
-                                                                                                if (activePatternResult658 != null) {
-                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                        if (instrline.tail.tail.tail.tail.tail.tail.head === ",") {
-                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult659 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
-
-                                                                                                                if (activePatternResult659 != null) {
-                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult660 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.tail.head);
-
-                                                                                                                        if (activePatternResult660 != null) {
-                                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                $var26 = [0, activePatternResult655, activePatternResult656, activePatternResult660, activePatternResult653, activePatternResult657, activePatternResult658, activePatternResult654, activePatternResult659];
-                                                                                                                            } else {
-                                                                                                                                $var26 = [1];
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            $var26 = [1];
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        $var26 = [1];
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    $var26 = [1];
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                $var26 = [1];
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            $var26 = [1];
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        $var26 = [1];
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    $var26 = [1];
-                                                                                                }
-                                                                                            } else {
-                                                                                                $var26 = [1];
-                                                                                            }
-                                                                                        } else {
-                                                                                            $var26 = [1];
-                                                                                        }
-                                                                                    } else {
-                                                                                        $var26 = [1];
-                                                                                    }
+                                                                        if (activePatternResult622 != null) {
+                                                                            if (instrline.tail.tail.tail.tail == null) {
+                                                                                if (!(0, _Util.equals)((0, _Map.tryFind)(activePatternResult622, branch_map), null)) {
+                                                                                    $var19 = [0, activePatternResult621, activePatternResult620, activePatternResult622];
                                                                                 } else {
-                                                                                    $var26 = [1];
+                                                                                    $var19 = [1];
                                                                                 }
                                                                             } else {
-                                                                                $var26 = [1];
+                                                                                $var19 = [1];
                                                                             }
                                                                         } else {
-                                                                            $var26 = [1];
+                                                                            $var19 = [1];
                                                                         }
                                                                     } else {
-                                                                        $var26 = [1];
+                                                                        $var19 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var26 = [1];
+                                                                    $var19 = [1];
                                                                 }
                                                             } else {
-                                                                $var26 = [1];
+                                                                $var19 = [1];
                                                             }
                                                         } else {
-                                                            $var26 = [1];
+                                                            $var19 = [1];
                                                         }
                                                     } else {
-                                                        $var26 = [1];
+                                                        $var19 = [1];
                                                     }
 
-                                                    switch ($var26[0]) {
+                                                    switch ($var19[0]) {
                                                         case 0:
-                                                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var26[4]([$var26[2], $var26[5], new _InstructionType.RegOrLit("Reg", [$var26[6]])]), $var26[7]]), $var26[8]([$var26[6], $var26[6], $var26[3]]), $var26[1]]);
+                                                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("BRANCH", [$var19[2](branch_map.get($var19[3]))]), null, (0, _Cast.CondCast)($var19[1])]);
 
                                                         case 1:
-                                                            let $var27;
+                                                            let $var20;
 
                                                             if (instrline.tail != null) {
-                                                                const activePatternResult646 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
+                                                                const activePatternResult613 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
 
-                                                                if (activePatternResult646 != null) {
+                                                                if (activePatternResult613 != null) {
                                                                     if (instrline.tail.tail != null) {
-                                                                        const activePatternResult647 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                        const activePatternResult614 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                                        if (activePatternResult647 != null) {
+                                                                        if (activePatternResult614 != null) {
                                                                             if (instrline.tail.tail.tail != null) {
-                                                                                const activePatternResult648 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                const activePatternResult615 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                if (activePatternResult648 != null) {
+                                                                                if (activePatternResult615 != null) {
                                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                                        const activePatternResult649 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                        const activePatternResult616 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                        if (activePatternResult649 != null) {
+                                                                                        if (activePatternResult616 != null) {
                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                const activePatternResult650 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                const activePatternResult617 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                if (activePatternResult650 != null) {
+                                                                                                if (activePatternResult617 != null) {
                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                        if (instrline.tail.tail.tail.tail.tail.head === ",") {
+                                                                                                        const activePatternResult618 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+
+                                                                                                        if (activePatternResult618 != null) {
                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult651 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                const activePatternResult619 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                if (activePatternResult651 != null) {
-                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult652 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
-
-                                                                                                                        if (activePatternResult652 != null) {
-                                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                $var27 = [0, activePatternResult648, activePatternResult649, activePatternResult652, activePatternResult646, activePatternResult650, activePatternResult647, activePatternResult651];
-                                                                                                                            } else {
-                                                                                                                                $var27 = [1];
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            $var27 = [1];
-                                                                                                                        }
+                                                                                                                if (activePatternResult619 != null) {
+                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
+                                                                                                                        $var20 = [0, activePatternResult615, activePatternResult616, activePatternResult619, activePatternResult613, activePatternResult617, activePatternResult614, activePatternResult618];
                                                                                                                     } else {
-                                                                                                                        $var27 = [1];
+                                                                                                                        $var20 = [1];
                                                                                                                     }
                                                                                                                 } else {
-                                                                                                                    $var27 = [1];
+                                                                                                                    $var20 = [1];
                                                                                                                 }
                                                                                                             } else {
-                                                                                                                $var27 = [1];
+                                                                                                                $var20 = [1];
                                                                                                             }
                                                                                                         } else {
-                                                                                                            $var27 = [1];
+                                                                                                            $var20 = [1];
                                                                                                         }
                                                                                                     } else {
-                                                                                                        $var27 = [1];
+                                                                                                        $var20 = [1];
                                                                                                     }
                                                                                                 } else {
-                                                                                                    $var27 = [1];
+                                                                                                    $var20 = [1];
                                                                                                 }
                                                                                             } else {
-                                                                                                $var27 = [1];
+                                                                                                $var20 = [1];
                                                                                             }
                                                                                         } else {
-                                                                                            $var27 = [1];
+                                                                                            $var20 = [1];
                                                                                         }
                                                                                     } else {
-                                                                                        $var27 = [1];
+                                                                                        $var20 = [1];
                                                                                     }
                                                                                 } else {
-                                                                                    $var27 = [1];
+                                                                                    $var20 = [1];
                                                                                 }
                                                                             } else {
-                                                                                $var27 = [1];
+                                                                                $var20 = [1];
                                                                             }
                                                                         } else {
-                                                                            $var27 = [1];
+                                                                            $var20 = [1];
                                                                         }
                                                                     } else {
-                                                                        $var27 = [1];
+                                                                        $var20 = [1];
                                                                     }
                                                                 } else {
-                                                                    $var27 = [1];
+                                                                    $var20 = [1];
                                                                 }
                                                             } else {
-                                                                $var27 = [1];
+                                                                $var20 = [1];
                                                             }
 
-                                                            switch ($var27[0]) {
+                                                            switch ($var20[0]) {
                                                                 case 0:
-                                                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SF", [$var27[4]([$var27[2], new _InstructionType.RegOrLit("Reg", [$var27[5]])])]), $var27[7]([$var27[5], $var27[5], $var27[3]]), $var27[1]]);
+                                                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var20[4]([$var20[2], new _InstructionType.RegOrLit("Reg", [$var20[5]])]), $var20[6]]), $var20[7]([$var20[5], $var20[5], $var20[3]]), (0, _Cast.CondCast)($var20[1])]);
 
                                                                 case 1:
-                                                                    return (0, _String.fsFormat)("Unexpected match in parser: %A")(x => {
-                                                                        throw new Error(x);
-                                                                    })(instrline);
+                                                                    let $var21;
+
+                                                                    if (instrline.tail != null) {
+                                                                        const activePatternResult605 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
+
+                                                                        if (activePatternResult605 != null) {
+                                                                            if (instrline.tail.tail != null) {
+                                                                                const activePatternResult606 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+
+                                                                                if (activePatternResult606 != null) {
+                                                                                    if (instrline.tail.tail.tail != null) {
+                                                                                        const activePatternResult607 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+
+                                                                                        if (activePatternResult607 != null) {
+                                                                                            if (instrline.tail.tail.tail.tail != null) {
+                                                                                                const activePatternResult608 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+
+                                                                                                if (activePatternResult608 != null) {
+                                                                                                    if (instrline.tail.tail.tail.tail.tail != null) {
+                                                                                                        const activePatternResult609 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+
+                                                                                                        if (activePatternResult609 != null) {
+                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail != null) {
+                                                                                                                const activePatternResult610 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+
+                                                                                                                if (activePatternResult610 != null) {
+                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
+                                                                                                                        const activePatternResult611 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+
+                                                                                                                        if (activePatternResult611 != null) {
+                                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
+                                                                                                                                const activePatternResult612 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
+
+                                                                                                                                if (activePatternResult612 != null) {
+                                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
+                                                                                                                                        $var21 = [0, activePatternResult607, activePatternResult608, activePatternResult612, activePatternResult605, activePatternResult609, activePatternResult610, activePatternResult606, activePatternResult611];
+                                                                                                                                    } else {
+                                                                                                                                        $var21 = [1];
+                                                                                                                                    }
+                                                                                                                                } else {
+                                                                                                                                    $var21 = [1];
+                                                                                                                                }
+                                                                                                                            } else {
+                                                                                                                                $var21 = [1];
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            $var21 = [1];
+                                                                                                                        }
+                                                                                                                    } else {
+                                                                                                                        $var21 = [1];
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    $var21 = [1];
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                $var21 = [1];
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            $var21 = [1];
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        $var21 = [1];
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    $var21 = [1];
+                                                                                                }
+                                                                                            } else {
+                                                                                                $var21 = [1];
+                                                                                            }
+                                                                                        } else {
+                                                                                            $var21 = [1];
+                                                                                        }
+                                                                                    } else {
+                                                                                        $var21 = [1];
+                                                                                    }
+                                                                                } else {
+                                                                                    $var21 = [1];
+                                                                                }
+                                                                            } else {
+                                                                                $var21 = [1];
+                                                                            }
+                                                                        } else {
+                                                                            $var21 = [1];
+                                                                        }
+                                                                    } else {
+                                                                        $var21 = [1];
+                                                                    }
+
+                                                                    switch ($var21[0]) {
+                                                                        case 0:
+                                                                            return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("ALU", [$var21[4]([$var21[2], $var21[5], new _InstructionType.RegOrLit("Reg", [$var21[6]])]), $var21[7]]), $var21[8]([$var21[6], $var21[6], $var21[3]]), (0, _Cast.CondCast)($var21[1])]);
+
+                                                                        case 1:
+                                                                            let $var22;
+
+                                                                            if (instrline.tail != null) {
+                                                                                const activePatternResult598 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
+
+                                                                                if (activePatternResult598 != null) {
+                                                                                    if (instrline.tail.tail != null) {
+                                                                                        const activePatternResult599 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+
+                                                                                        if (activePatternResult599 != null) {
+                                                                                            if (instrline.tail.tail.tail != null) {
+                                                                                                const activePatternResult600 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+
+                                                                                                if (activePatternResult600 != null) {
+                                                                                                    if (instrline.tail.tail.tail.tail != null) {
+                                                                                                        const activePatternResult601 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+
+                                                                                                        if (activePatternResult601 != null) {
+                                                                                                            if (instrline.tail.tail.tail.tail.tail != null) {
+                                                                                                                const activePatternResult602 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+
+                                                                                                                if (activePatternResult602 != null) {
+                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail != null) {
+                                                                                                                        const activePatternResult603 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+
+                                                                                                                        if (activePatternResult603 != null) {
+                                                                                                                            if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
+                                                                                                                                const activePatternResult604 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+
+                                                                                                                                if (activePatternResult604 != null) {
+                                                                                                                                    if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
+                                                                                                                                        $var22 = [0, activePatternResult600, activePatternResult601, activePatternResult604, activePatternResult598, activePatternResult602, activePatternResult599, activePatternResult603];
+                                                                                                                                    } else {
+                                                                                                                                        $var22 = [1];
+                                                                                                                                    }
+                                                                                                                                } else {
+                                                                                                                                    $var22 = [1];
+                                                                                                                                }
+                                                                                                                            } else {
+                                                                                                                                $var22 = [1];
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            $var22 = [1];
+                                                                                                                        }
+                                                                                                                    } else {
+                                                                                                                        $var22 = [1];
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    $var22 = [1];
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                $var22 = [1];
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            $var22 = [1];
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        $var22 = [1];
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    $var22 = [1];
+                                                                                                }
+                                                                                            } else {
+                                                                                                $var22 = [1];
+                                                                                            }
+                                                                                        } else {
+                                                                                            $var22 = [1];
+                                                                                        }
+                                                                                    } else {
+                                                                                        $var22 = [1];
+                                                                                    }
+                                                                                } else {
+                                                                                    $var22 = [1];
+                                                                                }
+                                                                            } else {
+                                                                                $var22 = [1];
+                                                                            }
+
+                                                                            switch ($var22[0]) {
+                                                                                case 0:
+                                                                                    return new _InstructionType.InstructionLine("Line", [new _InstructionType.InstructionType("SF", [$var22[4]([$var22[2], new _InstructionType.RegOrLit("Reg", [$var22[5]])])]), $var22[7]([$var22[5], $var22[5], $var22[3]]), (0, _Cast.CondCast)($var22[1])]);
+
+                                                                                case 1:
+                                                                                    return (0, _String.fsFormat)("Unexpected match in parser: %A")(x => {
+                                                                                        throw new Error(x);
+                                                                                    })(instrline);
+                                                                            }
+
+                                                                    }
+
                                                             }
 
                                                     }
@@ -726,8 +814,8 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
 
         init_memory = (() => {
             const state_1 = (0, _Map.create)(null, new _GenericComparer2.default((x, y) => x.CompareTo(y)));
-            return source_1 => (0, _Seq.fold)(function ($var28, $var29) {
-                return chooseAddr_1($var28)($var29);
+            return source_1 => (0, _Seq.fold)(function ($var23, $var24) {
+                return chooseAddr_1($var23)($var24);
             }, state_1, source_1);
         })()((0, _Seq.range)(0, instList.length - 1));
 

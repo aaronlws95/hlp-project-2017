@@ -63,8 +63,8 @@
     <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
     <Compile Include="Parser.fs" />
-    <Compile Include="UserInterface.fs" />
     <Compile Include="Program.fs" />
+    <Compile Include="UserInterface.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

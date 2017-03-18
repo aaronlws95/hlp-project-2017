@@ -8,39 +8,31 @@ module UserInterfaceController =
     open Parser
     open MachineState
     open InstructionType
-    let s = 
-        "MOV R1 R2
-    ADD R2 R3 #3
-    MYBRANCH MVN R2 #2
-    CMP R13 R2 , LSL #10
-    LSL R6 R7 #10
-    ASR R8 R9 R10
-    ADDS R3 R13 #15
-    ADDSEQ R3 R13 #15
-    ADDLO R3 R13 #15"
 
     //let state = readAsm s
-    let init_reg = 
-            [0..15] |> Seq.map (fun x -> (R x, x*x)) |> Map.ofSeq
-        
-    let init_memory =
-        let chooseAddr (m:Map<Address,Memory>) i = m.Add(Addr(i*4),Inst(Line (ALU (MOV (R 1,Reg (R 2)),false),None,None)))
-        seq { 0 .. 20 - 1 } 
-            |> Seq.fold chooseAddr Map.empty
-    let state: MachineState = { 
-            //PC = Addr 0 // PC is now Reg 15
-            END = Addr (4*20)
-            RegMap = init_reg
-            MemMap = init_memory
-            Flags = {N=false; Z=false; C=false; V=false}
-            State = RunOK
-        }
-    let getRegister i = state.RegMap.TryFind(R i)
-    let getMemory address = 
+//    let init_reg = 
+//            [0..15] |> Seq.map (fun x -> (R x, x*x)) |> Map.ofSeq
+//        
+//    let init_memory =
+//        let chooseAddr (m:Map<Address,Memory>) i = m.Add(Addr(i*4),Inst(Line (ALU (MOV (R 1,Reg (R 2)),false),None,None)))
+//        seq { 0 .. 20 - 1 } 
+//            |> Seq.fold chooseAddr Map.empty
+//    let state: MachineState = { 
+//            //PC = Addr 0 // PC is now Reg 15
+//            END = Addr (4*20)
+//            RegMap = init_reg
+//            MemMap = init_memory
+//            Flags = {N=false; Z=false; C=false; V=false}
+//            State = RunOK
+//        }
+    
+    
+    let getRegister (state:MachineState) i = state.RegMap.TryFind(R i)
+    let getMemory (state:MachineState) address = 
         let head = address - (address % 4)
         toJson (state.MemMap.TryFind(Addr head))
-    let getState = toJson state.State
-    let getFlags = 
+    let getState (state:MachineState) = toJson state.State
+    let getFlags (state:MachineState) = 
         let flags = state.Flags
         //fable ignores System.Convert.ToInt32(boolean)
         [flags.N; flags.Z; flags.C; flags.V] |> List.map (fun x -> match x with | true -> 1 | _ -> 0)
@@ -84,10 +76,12 @@ module UserInterface =
     open Fable.Core.JsInterop
     open Fable.Import
     open Fable.Import.Browser
-    open Parser
+    //open Parser
     open UserInterfaceController
-    open MachineState
-    open InstructionType
+    //open MachineState
+    //open InstructionType
+    //open Emulator
+    open Program
 
     Browser.console.log("Initialising Application...")
 
@@ -97,11 +91,6 @@ module UserInterface =
     
     //get button elements
     let executeButton = document.getElementById "execute" :?>HTMLButtonElement
-        
-    let splitIntoWords = 
-        "MOV R3 #10".Split whiteSpace
-        |> Array.toList
-        |> List.filter ((<>) "")
          
     //controller functions
     let execute() =
@@ -109,15 +98,17 @@ module UserInterface =
         //get values from input elements
         let sourceCode = sourceDOMElement.value
 
+        let newstate = execute sourceCode
+
         Browser.console.info("Displaying Register Values...")
-        [0..15] |> List.map (fun x -> Browser.console.log("R",x,"=",(getRegister x))) |> ignore
-        [0..4..32] |> List.map (fun x -> Browser.console.log((getMemory x))) |> ignore
+        [0..15] |> List.map (fun x -> Browser.console.log("R",x,"=",(getRegister newstate x))) |> ignore
+        [0..4..32] |> List.map (fun x -> Browser.console.log((getMemory newstate x))) |> ignore
 
         Browser.console.info("Displaying NZCV flags...")
-        Browser.console.log(toJson getFlags)
+        Browser.console.log(toJson (getFlags newstate))
 
         Browser.console.info("Displaying Emulation Status")
-        Browser.console.log(getState)
+        Browser.console.log(getState newstate)
 
     let openFile() = 
         Browser.console.log("Opening file...");

@@ -184,25 +184,25 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
     }({});
 
     const MEMInstruction = exports.MEMInstruction = function (__exports) {
-        const adr = function (state, dest, exp, s) {
-            const newRegMap = (0, _Map.add)(dest, exp, state.RegMap);
-            const newFlags = s ? ProcessFlag.processFlags(state, new ProcessFlag.ProcessFlagType("OTHER", [exp])) : state.Flags;
-            return new _MachineState.MachineState(state.END, newRegMap, state.MemMap, newFlags, state.State);
-        };
-
-        const ldrpi = function (state, dest, exp) {
+        const adr = function (state, dest, exp) {
             const newRegMap = (0, _Map.add)(dest, exp, state.RegMap);
             return new _MachineState.MachineState(state.END, newRegMap, state.MemMap, state.Flags, state.State);
         };
 
-        const ldrreg = function (state, dest, source, offset, autoIndex, s) {
+        const ldr = function (state, dest, source, offset, autoIndex, s) {
             const em = addr => {
                 return Extractor.extractMemory(state, addr);
             };
 
             let newRegMap;
             const loadRegMap = (0, _Map.add)(dest, em(new _InstructionType.Address("Addr", [state.RegMap.get(source) + offset])), state.RegMap);
-            newRegMap = (0, _Map.add)(source, state.RegMap.get(source) + autoIndex, loadRegMap);
+
+            if (!dest.Equals(source)) {
+                newRegMap = (0, _Map.add)(source, loadRegMap.get(source) + autoIndex, loadRegMap);
+            } else {
+                newRegMap = loadRegMap;
+            }
+
             return new _MachineState.MachineState(state.END, newRegMap, state.MemMap, state.Flags, state.State);
         };
 
@@ -212,9 +212,9 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
             };
 
             let patternInput;
-            const $var11 = dir.Case === "IB" ? [0] : dir.Case === "FD" ? [1] : dir.Case === "IA" ? [1] : dir.Case === "EA" ? [2] : dir.Case === "DB" ? [2] : dir.Case === "FA" ? [3] : dir.Case === "DA" ? [3] : [0];
+            const $var4 = dir.Case === "IB" ? [0] : dir.Case === "FD" ? [1] : dir.Case === "IA" ? [1] : dir.Case === "EA" ? [2] : dir.Case === "DB" ? [2] : dir.Case === "FA" ? [3] : dir.Case === "DA" ? [3] : [0];
 
-            switch ($var11[0]) {
+            switch ($var4[0]) {
                 case 0:
                     patternInput = (0, _Seq.fold)((tupledArg, elem) => [(0, _Map.add)(elem, em(new _InstructionType.Address("Addr", [state.RegMap.get(source) + tupledArg[1] + 4])), tupledArg[0]), tupledArg[1] + 4], [state.RegMap, 0], regList);
                     break;
@@ -248,9 +248,9 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
 
         const stm = function (state, dir, dest, regList, writeBack) {
             let patternInput;
-            const $var12 = dir.Case === "IB" ? [0] : dir.Case === "FD" ? [1] : dir.Case === "IA" ? [1] : dir.Case === "EA" ? [2] : dir.Case === "DB" ? [2] : dir.Case === "FA" ? [3] : dir.Case === "DA" ? [3] : [0];
+            const $var5 = dir.Case === "IB" ? [0] : dir.Case === "FD" ? [1] : dir.Case === "IA" ? [1] : dir.Case === "EA" ? [2] : dir.Case === "DB" ? [2] : dir.Case === "FA" ? [3] : dir.Case === "DA" ? [3] : [0];
 
-            switch ($var12[0]) {
+            switch ($var5[0]) {
                 case 0:
                     patternInput = (0, _Seq.fold)((tupledArg, elem) => [(0, _Map.add)(new _InstructionType.Address("Addr", [state.RegMap.get(dest) + tupledArg[1]]), new _InstructionType.Memory("Val", [state.RegMap.get(elem)]), tupledArg[0]), tupledArg[1] - 4], [state.MemMap, 0], (0, _List.reverse)(regList));
                     break;
@@ -281,10 +281,8 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
                 return Extractor.getAddressValue(arg00_);
             };
 
-            if (instruction.Case === "LDRPI") {
-                return ldrpi(state, instruction.Fields[0], ga(instruction.Fields[1]));
-            } else if (instruction.Case === "LDRREG") {
-                return ldrreg(state, instruction.Fields[0], instruction.Fields[1], er(instruction.Fields[2]), er(instruction.Fields[3]), instruction.Fields[4]);
+            if (instruction.Case === "LDR") {
+                return ldr(state, instruction.Fields[0], instruction.Fields[1], er(instruction.Fields[2]), er(instruction.Fields[3]), instruction.Fields[4]);
             } else if (instruction.Case === "STR") {
                 return str(state, state.RegMap.get(instruction.Fields[0]), instruction.Fields[1], er(instruction.Fields[2]), er(instruction.Fields[3]), instruction.Fields[4]);
             } else if (instruction.Case === "LDM") {
@@ -292,7 +290,7 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
             } else if (instruction.Case === "STM") {
                 return stm(state, instruction.Fields[0], instruction.Fields[1], instruction.Fields[2], instruction.Fields[3]);
             } else {
-                return adr(state, instruction.Fields[0], ga(instruction.Fields[1]), instruction.Fields[2]);
+                return adr(state, instruction.Fields[0], ga(instruction.Fields[1]));
             }
         };
 
@@ -351,14 +349,16 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
 
     const Instruction = exports.Instruction = function (__exports) {
         const executeInstruction = __exports.executeInstruction = function (state, instruction) {
-            if (instruction.Case === "SF") {
+            if (instruction.Case === "ALU") {
+                return ALUInstruction.executeInstruction(state, instruction.Fields[0], instruction.Fields[1]);
+            } else if (instruction.Case === "SF") {
                 return SFInstruction.executeInstruction(state, instruction.Fields[0]);
             } else if (instruction.Case === "MEM") {
                 return MEMInstruction.executeInstruction(state, instruction.Fields[0]);
             } else if (instruction.Case === "SHIFT") {
                 return SHIFTInstruction.executeInstruction(state, instruction.Fields[0], instruction.Fields[1]);
             } else {
-                return ALUInstruction.executeInstruction(state, instruction.Fields[0], instruction.Fields[1]);
+                throw new Error("C:\\Users\\Santiago\\Rubio 2016\\4th year\\4th year modules\\HLP\\Project\\hlp-project-2017\\hlp_project_2017\\Emulator.fs", 229, 18);
             }
         };
 
@@ -366,9 +366,9 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
             const programCounter = Extractor.extractRegister(state, new _InstructionType.RegOrLit("Reg", [new _InstructionType.Register("R", [15])]));
 
             const checkCondition = cond => {
-                const $var13 = cond.Case === "NE" ? [1] : cond.Case === "CS" ? [2] : cond.Case === "HS" ? [2] : cond.Case === "CC" ? [3] : cond.Case === "LO" ? [3] : cond.Case === "MI" ? [4] : cond.Case === "PL" ? [5] : cond.Case === "VS" ? [6] : cond.Case === "VC" ? [7] : cond.Case === "HI" ? [8] : cond.Case === "LS" ? [9] : cond.Case === "GE" ? [10] : cond.Case === "LT" ? [11] : cond.Case === "GT" ? [12] : cond.Case === "LE" ? [13] : cond.Case === "AL" ? [14] : [0];
+                const $var6 = cond.Case === "EQ" ? [0] : cond.Case === "NE" ? [1] : cond.Case === "CS" ? [2] : cond.Case === "HS" ? [2] : cond.Case === "CC" ? [3] : cond.Case === "LO" ? [3] : cond.Case === "MI" ? [4] : cond.Case === "PL" ? [5] : cond.Case === "VS" ? [6] : cond.Case === "VC" ? [7] : cond.Case === "HI" ? [8] : cond.Case === "LS" ? [9] : cond.Case === "GE" ? [10] : cond.Case === "LT" ? [11] : cond.Case === "GT" ? [12] : cond.Case === "LE" ? [13] : cond.Case === "AL" ? [14] : [15];
 
-                switch ($var13[0]) {
+                switch ($var6[0]) {
                     case 0:
                         return state.Flags.Z === true;
 
@@ -429,51 +429,54 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
 
                     case 14:
                         return true;
+
+                    case 15:
+                        throw new Error("C:\\Users\\Santiago\\Rubio 2016\\4th year\\4th year modules\\HLP\\Project\\hlp-project-2017\\hlp_project_2017\\Emulator.fs", 237, 22);
                 }
             };
 
             const instLine = (0, _Map.tryFind)(new _InstructionType.Address("Addr", [programCounter]), state.MemMap);
             let outputState;
-            const $var14 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[1] != null ? instLine.Fields[0].Fields[2] == null ? [1, instLine.Fields[0].Fields[0], instLine.Fields[0].Fields[1]] : [3] : instLine.Fields[0].Fields[2] != null ? (() => {
+            const $var7 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[1] != null ? instLine.Fields[0].Fields[2] == null ? [1, instLine.Fields[0].Fields[0], instLine.Fields[0].Fields[1]] : [3] : instLine.Fields[0].Fields[2] != null ? (() => {
                 const inst_2 = instLine.Fields[0].Fields[0];
                 const c_2 = instLine.Fields[0].Fields[2];
                 return checkCondition(c_2) === true;
             })() ? [2, instLine.Fields[0].Fields[2], instLine.Fields[0].Fields[0]] : [3] : [0, instLine.Fields[0].Fields[0]] : [3] : [3];
 
-            switch ($var14[0]) {
+            switch ($var7[0]) {
                 case 0:
-                    outputState = executeInstruction(state, $var14[1]);
+                    outputState = executeInstruction(state, $var7[1]);
                     break;
 
                 case 1:
-                    outputState = executeInstruction(executeInstruction(state, new _InstructionType.InstructionType("SHIFT", [$var14[2], false])), $var14[1]);
+                    outputState = executeInstruction(executeInstruction(state, new _InstructionType.InstructionType("SHIFT", [$var7[2], false])), $var7[1]);
                     break;
 
                 case 2:
-                    outputState = executeInstruction(state, $var14[2]);
+                    outputState = executeInstruction(state, $var7[2]);
                     break;
 
                 case 3:
-                    const $var15 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[1] != null ? instLine.Fields[0].Fields[2] != null ? (() => {
+                    const $var8 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[1] != null ? instLine.Fields[0].Fields[2] != null ? (() => {
                         const sInst = instLine.Fields[0].Fields[1];
                         const inst_1 = instLine.Fields[0].Fields[0];
                         const c_1 = instLine.Fields[0].Fields[2];
                         return checkCondition(c_1) === true;
                     })() ? [0, instLine.Fields[0].Fields[2], instLine.Fields[0].Fields[0], instLine.Fields[0].Fields[1]] : [1] : [1] : [1] : [1] : [1];
 
-                    switch ($var15[0]) {
+                    switch ($var8[0]) {
                         case 0:
-                            outputState = executeInstruction(executeInstruction(state, new _InstructionType.InstructionType("SHIFT", [$var15[3], false])), $var15[2]);
+                            outputState = executeInstruction(executeInstruction(state, new _InstructionType.InstructionType("SHIFT", [$var8[3], false])), $var8[2]);
                             break;
 
                         case 1:
-                            const $var16 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[2] != null ? (() => {
+                            const $var9 = instLine != null ? instLine.Case === "Inst" ? instLine.Fields[0].Fields[2] != null ? (() => {
                                 const inst = instLine.Fields[0].Fields[0];
                                 const c = instLine.Fields[0].Fields[2];
                                 return checkCondition(c) === false;
                             })() ? [0, instLine.Fields[0].Fields[2], instLine.Fields[0].Fields[0]] : [1] : [1] : [1] : [1];
 
-                            switch ($var16[0]) {
+                            switch ($var9[0]) {
                                 case 0:
                                     outputState = state;
                                     break;
@@ -498,10 +501,18 @@ define(["exports", "fable-core/umd/Symbol", "fable-core/umd/Util", "./MachineSta
                     break;
             }
 
-            const newRegMap = (0, _Map.add)(new _InstructionType.Register("R", [15]), programCounter + 4, outputState.RegMap);
-            const matchValue = new _InstructionType.Address("Addr", [newRegMap.get(new _InstructionType.Register("R", [15]))]);
+            let newRegMap;
+            const matchValue = outputState.RegMap.get(new _InstructionType.Register("R", [15]));
 
-            if (matchValue.CompareTo(state.END) >= 0) {
+            if (matchValue === state.RegMap.get(new _InstructionType.Register("R", [15]))) {
+                newRegMap = (0, _Map.add)(new _InstructionType.Register("R", [15]), matchValue + 4, outputState.RegMap);
+            } else {
+                newRegMap = outputState.RegMap;
+            }
+
+            const matchValue_1 = new _InstructionType.Address("Addr", [newRegMap.get(new _InstructionType.Register("R", [15]))]);
+
+            if (matchValue_1.CompareTo(outputState.END) >= 0) {
                 const State = new _MachineState.RunState("RunEND", []);
                 return new _MachineState.MachineState(outputState.END, newRegMap, outputState.MemMap, outputState.Flags, State);
             } else {
