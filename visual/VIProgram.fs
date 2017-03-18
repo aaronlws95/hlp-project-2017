@@ -7,6 +7,7 @@ module VIProgram=
     open CreateTest
     open CreateRandomTest
     open CreateRandomTestLong
+    open CreateMemTest
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """
@@ -98,10 +99,9 @@ module VIProgram=
 
     [<EntryPoint>]
     let main argv =
-
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
         let input = 
-            repeatingPrompt (fun x -> x = "1" || x = "2" || x = "3")  "1: Manual Test\n2: Random Instruction Test\n3: Random Long Instruction Test" 
+            repeatingPrompt (fun x -> x = "1" || x = "2" || x = "3" || x = "4")  "1: Manual Test\n2: Random Instruction Test\n3: Random Long Instruction Test\n4: Memory Instruction Test" 
         let createdTestList =
             match int(input) with
             | 1 -> createdManualTestList
@@ -116,11 +116,15 @@ module VIProgram=
                           let sf = System.Console.ReadLine()
                           let reglit = System.Console.ReadLine()
                           createdRandTestList (int(numTest)) inst sf reglit
-                   | _ -> failwithf "invalid"
+                   | _ -> failwithf "invalid number"
             | 3 -> printf "Enter: Number of instruction lines,Number of tests\n"
                    let numInst = System.Console.ReadLine()
                    let numTest =  System.Console.ReadLine()
                    createdRandTestListLong (int(numInst)) (int(numTest))
+            | 4 -> printf "Enter: Number of tests,Instruction name \n"
+                   let numTest = System.Console.ReadLine()
+                   let name = System.Console.ReadLine()
+                   createdRandMemTestList (int(numTest)) name
             | _ -> failwithf "invalid number"
 
         let tests = testList "Visual tests" (createdTestList |> List.map VisualUnitTest)

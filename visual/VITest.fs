@@ -24,17 +24,18 @@ module VITest =
         //create tuple to send for testing        
         let createTest name text instructionList  = 
             //initial machine state
-            let mstate:MachineState =     
+            let mstate:MachineState =       
                 { 
                     RegMap = [0..12] |> Seq.map (fun x -> (R x, 0)) |> Map.ofSeq
-                    MemMap = [0x10000..4..0x10160] |> Seq.map (fun x -> (Addr x, Val (x+1))) |> Map.ofSeq
-                    Flags = { N = false; Z = false; C = false; V = false; }
+                    MemMap = [0..9] |> Seq.map (fun x -> (0x10000 + 0x4*x,x)) |> Seq.map (fun (x,y) -> (Addr x, Val (y+1))) |> Map.ofSeq
+                    Flags = { N = false; Z = false; C = false; V = false;}
                     State = MachineState.RunState.RunOK 
                     END = Addr 0
                 } 
             //initialise all registers to 0
             let initializeAllReg = 
                 "
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
                 MOV R0, #0
                 MOV R1, #0
                 MOV R2, #0

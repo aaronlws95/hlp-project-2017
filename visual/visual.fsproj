@@ -60,6 +60,7 @@
     <Compile Include="CreateTest.fs" />
     <Compile Include="CreateRandomTest.fs" />
     <Compile Include="CreateRandomTestLong.fs" />
+    <Compile Include="CreateMemTest.fs" />
     <Compile Include="VIProgram.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />

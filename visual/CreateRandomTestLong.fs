@@ -9,9 +9,9 @@ module CreateRandomTestLong =
     let rand = System.Random()
     let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
             "ORR";"TST";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|]
-    let createRandomTestRestrictReg (instName:string) (setFlagRand:string) (regLitSet:string) =       
-        let reg = rand.Next(0,2)
-        let reg2 = rand.Next(0,2)
+    let createRandomTestRestrictReg (rest:int) (instName:string) (setFlagRand:string) (regLitSet:string) =       
+        let reg = rand.Next(0,rest)
+        let reg2 = rand.Next(0,rest)
         let op2shift = rand.Next(0,256)
         let strop2,op2 = 
             match regLitSet.ToUpper() with
@@ -31,7 +31,7 @@ module CreateRandomTestLong =
                     | "LSL"|"LSR"|"ASR"|"ROR"|"RRX" -> (", #" + string(op2shift),Lit op2shift)
                     | _ ->  let out =  ((rand.Next(0,256)>>>shift) ||| (rand.Next(0,256)<<<(32-shift)))
                             (", #" + string(out),Lit out)   
-            | "REG" ->  let out = rand.Next(0,2)
+            | "REG" ->  let out = rand.Next(0,rest)
                         (", R" + string(out),Reg (R out))
             | _ -> failwithf "invalid setting"
                
@@ -70,7 +70,7 @@ module CreateRandomTestLong =
 
     let createRandomTestLong length setFlag setRegLit= 
         let addInst (strOld,instOld)  = 
-            let strNew,instNew = (createRandomTestRestrictReg (getRandInstName()) setFlag setRegLit)
+            let strNew,instNew = (createRandomTestRestrictReg 2 (getRandInstName()) setFlag setRegLit)
             ((strOld + "\n" + strNew),(List.append instOld [instNew]))
         [1..length] |> List.fold (fun acc elem -> addInst acc) ("MOV R0, #0",[ALU(MOV(R 0,Lit 0),false)])
     

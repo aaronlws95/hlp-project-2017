@@ -36,6 +36,6 @@ module Program =
 
         printfn "%A" (readAsm s |> executeInstructions)
 
-        System.Console.ReadKey() |> ignore
+        //System.Console.ReadKey() |> ignore
         0 // return an integer exit code
      

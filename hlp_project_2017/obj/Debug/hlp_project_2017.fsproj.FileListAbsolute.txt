@@ -83,3 +83,5 @@ C:\Users\Jun Shern\Projects\hlp-project-2017\hlp_project_2017\bin\Debug\FsCheck.
 C:\Users\Jun Shern\Projects\hlp-project-2017\hlp_project_2017\bin\Debug\FSharp.Core.xml
 C:\Users\Jun Shern\Projects\hlp-project-2017\hlp_project_2017\bin\Debug\nunit.framework.xml
 C:\Users\Jun Shern\Projects\hlp-project-2017\hlp_project_2017\obj\Debug\hlp_project_2017.pdb
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Fable.Core.dll
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\hlp_project_2017\bin\Debug\Fable.Core.xml

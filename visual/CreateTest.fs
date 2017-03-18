@@ -71,7 +71,6 @@ module CreateTest =
     //TEST LDR 1
     let testLDR1 = 
         let testText = "
-            TEST DCD 65537,65541
             LDR R0, =TEST
             ADD R0, R0, #4
             LDR R1, [R0]
@@ -86,7 +85,6 @@ module CreateTest =
      //TEST LDR 2
     let testLDR2 = 
         let testText = "
-            TEST DCD 65537,65541
             LDR R0, =TEST
             LDR R1, [R0, #4]
             "
@@ -99,7 +97,6 @@ module CreateTest =
      //TEST LDR 3
     let testLDR3 = 
         let testText = "
-            TEST DCD 65537,65541
             LDR R0, =TEST
             LDR R1, [R0, #4]!
             LDR R2, [R0], #4
@@ -114,7 +111,6 @@ module CreateTest =
      //TEST LDR 4
     let testLDR4 = 
         let testText = "
-            TEST DCD 65537,65541
             LDR R0, =TEST
             MOV R1, #4
             LDR R2, [R0,R1]!
@@ -129,7 +125,6 @@ module CreateTest =
     //TEST STR 1
     let testSTR1 = 
         let testText = "
-            TEST DCD 65537,65541
             LDR R0, =TEST
             MOV R1, #476
             STR R1, [R0]
@@ -146,7 +141,6 @@ module CreateTest =
     //TEST STR 2
     let testSTR2 = 
         let testText = "
-            TEST DCD 65537,65541,65545
             LDR R0, =TEST
             MOV R1, #476
             STR R1, [R0,#4]!
@@ -163,7 +157,6 @@ module CreateTest =
     //TEST LDMFD 1
     let testLDMFD1 = 
         let testText = "
-            TEST DCD 65537,65541,65545,65549,65553
             LDR R0, =TEST
             LDMFD R0!, {R1,R2,R3}
             "
@@ -176,7 +169,6 @@ module CreateTest =
     //TEST LDMED 1
     let testLDMED1 = 
         let testText = "
-            TEST DCD 65537,65541,65545,65549,65553
             LDR R0, =TEST
             LDMED R0!, {R1,R2,R3}
             "
@@ -189,7 +181,6 @@ module CreateTest =
     //TEST LDMEA 1
     let testLDMEA1 = 
         let testText = "
-            TEST DCD 65537,65541,65545,65549,65553
             LDR R0, =TEST
             ADD R0, R0, #12
             LDMEA R0!, {R1,R2,R3}
@@ -203,7 +194,6 @@ module CreateTest =
     //TEST LDMFA 1
     let testLDMFA1 = 
         let testText = "
-            TEST DCD 65537,65541,65545,65549,65553
             LDR R0, =TEST
             ADD R0, R0, #12
             LDMFA R0!, {R1,R2,R3}
@@ -217,7 +207,6 @@ module CreateTest =
     //TEST STMEA 1
     let testSTMEA1 = 
         let testText = "
-        TEST		DCD		65537,65541,65545,65549,65553,65557
 		LDR		R0, =TEST
 		MOV		R1, #1
 		MOV		R2, #2
@@ -236,7 +225,6 @@ module CreateTest =
 
     let testSTMFA1 = 
         let testText = "
-        TEST		DCD		65537,65541,65545,65549,65553,65557
 		LDR		R0, =TEST
 		MOV		R1, #1
 		MOV		R2, #2
@@ -255,7 +243,6 @@ module CreateTest =
 
     let testSTMED1 = 
         let testText = "
-        TEST		DCD		65537,65541,65545,65549,65553,65557
 		LDR		R0, =TEST
 		MOV		R1, #1
 		MOV		R2, #2
@@ -276,7 +263,6 @@ module CreateTest =
 
     let testSTMFD1 = 
         let testText = "
-        TEST		DCD		65537,65541,65545,65549,65553,65557
 		LDR		R0, =TEST
 		MOV		R1, #1
 		MOV		R2, #2

@@ -2,6 +2,11 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
+<member name="M:VisualInterface.CreateMemTest.getRandInstName">
+<summary>
+ get random instruction name 
+</summary>
+</member>
 <member name="M:VisualInterface.CreateRandomTest.createdRandTestListAll(System.Int32)">
 <summary>
 create 10 random test for each valid instruction list 

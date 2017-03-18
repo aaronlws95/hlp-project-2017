@@ -1,4 +1,5 @@
 
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
                 MOV R0, #0
                 MOV R1, #0
                 MOV R2, #0
@@ -12,12 +13,7 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                MOV R0, #0
-SBCS R1, R0, R0
-BIC R1, R0, R1
-ROR R0, R1, #72
-EOR R0, R1, #-1073741808
-ADDS R0, R1, R0
+                ADR R11, 0x100
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4
