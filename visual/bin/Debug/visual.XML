@@ -2,7 +2,7 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
-<member name="M:VisualInterface.CreateMemTest.getRandInstName">
+<member name="P:VisualInterface.CreateRandomMemTest.getRandInstName">
 <summary>
  get random instruction name 
 </summary>

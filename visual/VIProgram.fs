@@ -7,7 +7,7 @@ module VIProgram=
     open CreateTest
     open CreateRandomTest
     open CreateRandomTestLong
-    open CreateMemTest
+    open CreateRandomMemTest
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """

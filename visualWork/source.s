@@ -13,7 +13,10 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                ADR R11, 0x100
+                MOV R0, #0
+RSBS R0, R0, R1
+ROR R1, R0, #127
+TST R0, #4079616
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

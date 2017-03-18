@@ -7,6 +7,5 @@
       "../Cast.fs"
       "../Emulator.fs"
       "../Parser.fs"
-      "../Environment.fs"
       "../UserInterface.fs"
       "../Program.fs"

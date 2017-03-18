@@ -142,20 +142,15 @@ module Emulator =
     /// ===========================================
     module MEMInstruction = 
         /// update register with address value
-        let private adr state dest exp s =  
-            let newRegMap = Map.add dest exp state.RegMap
-            let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(exp)) else state.Flags
-            {state with RegMap = newRegMap;Flags = newFlags}
-        /// load register with address value given by label
-        let private ldrpi state dest exp = 
+        let private adr state dest exp=  
             let newRegMap = Map.add dest exp state.RegMap
             {state with RegMap = newRegMap}
         /// load register with memory content
-        let private ldrreg state dest source offset autoIndex s  = 
+        let private ldr state dest source offset autoIndex s  = 
             let em = Extractor.extractMemory state
             let newRegMap = 
                 let loadRegMap = Map.add dest (em (Addr (state.RegMap.[source] + offset))) state.RegMap
-                Map.add source (state.RegMap.[source] + autoIndex) loadRegMap
+                if dest <> source then Map.add source (loadRegMap.[source] + autoIndex) loadRegMap else loadRegMap
             {state with RegMap = newRegMap}
         /// load multiple register with memory content
         let private ldm state dir source regList writeBack  = 
@@ -188,9 +183,8 @@ module Emulator =
             let er = Extractor.extractRegister state
             let ga = Extractor.getAddressValue
             match instruction with
-                | ADR(r,addr,s) -> adr state r (ga addr) s //Address load  R:=ADDR
-                | LDRPI(r,addr) -> ldrpi state r (ga addr) //LDR pseudo-instruction R:=ADDR
-                | LDRREG(r1,r2,offset,autoIndex,b) -> ldrreg state r1 r2 (er offset) (er autoIndex) b //Load register R1:=[R2]             
+                | ADR(r,addr) -> adr state r (ga addr) //Address load  R:=ADDR
+                | LDR(r1,r2,offset,autoIndex,b) -> ldr state r1 r2 (er offset) (er autoIndex) b //Load register R1:=[R2]             
                 | STR(r1,r2,offset,autoIndex,b) -> str state state.RegMap.[r1] r2 (er offset) (er autoIndex) b //Store register [R2]:=R1
                 | LDM(dir,r,regList,wb) -> ldm state dir r regList wb // Load multiple registers 
                 | STM(dir,r,regList,wb) -> stm state dir r regList wb // Store multiple registers 

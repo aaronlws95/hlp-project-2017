@@ -66,7 +66,7 @@ module CreateTest =
 
     //MEMORY INSTRUCTION TESTS
     //TEST ADR 1
-    let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [ MEM(ADR(R 0, Addr 0x100,false)) ]
+    let testADR1 = createTest "ADR Test" "ADR R0, 0x100" [ MEM(ADR(R 0, Addr 0x100)) ]
     
     //TEST LDR 1
     let testLDR1 = 
@@ -77,9 +77,9 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(ADD(R 0, R 0, Lit 4),false)
-              MEM(LDRREG(R 1, R 0,Lit 0,Lit 0,false)) ]
+              MEM(LDR(R 1, R 0,Lit 0,Lit 0,false)) ]
         createTest "LDR Test 1" testText testInstruction
 
      //TEST LDR 2
@@ -90,8 +90,8 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
-              MEM(LDRREG(R 1, R 0,Lit 4,Lit 0,false)) ]
+            [ MEM(ADR(R 0, Addr 0x10000))
+              MEM(LDR(R 1, R 0,Lit 4,Lit 0,false)) ]
         createTest "LDR Test 2" testText testInstruction
      
      //TEST LDR 3
@@ -103,9 +103,9 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
-              MEM(LDRREG(R 1, R 0,Lit 4,Lit 4,false))
-              MEM(LDRREG(R 2, R 0, Lit 0,Lit 4,false)) ]
+            [ MEM(ADR(R 0, Addr 0x10000))
+              MEM(LDR(R 1, R 0,Lit 4,Lit 4,false))
+              MEM(LDR(R 2, R 0, Lit 0,Lit 4,false)) ]
         createTest "LDR Test 3" testText testInstruction
 
      //TEST LDR 4
@@ -117,9 +117,9 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1, Lit 4), false)
-              MEM(LDRREG(R 2, R 0, Reg (R 1),Reg (R 1),false)) ]
+              MEM(LDR(R 2, R 0, Reg (R 1),Reg (R 1),false)) ]
         createTest "LDR Test 3" testText testInstruction
           
     //TEST STR 1
@@ -132,10 +132,10 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1, Lit 476), false)
               MEM(STR(R 1, R 0,Lit 0,Lit 0, false))
-              MEM(LDRREG(R 2, R 0,Lit 0,Lit 0,false)) ]
+              MEM(LDR(R 2, R 0,Lit 0,Lit 0,false)) ]
         createTest "LDR Test" testText testInstruction
 
     //TEST STR 2
@@ -148,10 +148,10 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1, Lit 476), false)
               MEM(STR(R 1, R 0,Lit 4,Lit 4, false))
-              MEM(LDRREG(R 2, R 0,Lit 4,Lit 0,false)) ]
+              MEM(LDR(R 2, R 0,Lit 4,Lit 0,false)) ]
         createTest "LDR Test" testText testInstruction
 
     //TEST LDMFD 1
@@ -162,7 +162,7 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               MEM(LDM(FD,R 0,[R 1;R 2;R 3],true)) ]
         createTest "LDMFD Test" testText testInstruction
 
@@ -174,7 +174,7 @@ module CreateTest =
             "
         
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               MEM(LDM(ED,R 0,[R 1;R 2;R 3],true)) ]
         createTest "LDMED Test" testText testInstruction
 
@@ -186,7 +186,7 @@ module CreateTest =
             LDMEA R0!, {R1,R2,R3}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(ADD(R 0,R 0,Lit 12),false)
               MEM(LDM(EA,R 0,[R 1;R 2;R 3],true)) ]
         createTest "LDMEA Test" testText testInstruction
@@ -199,7 +199,7 @@ module CreateTest =
             LDMFA R0!, {R1,R2,R3}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(ADD(R 0,R 0,Lit 12),false)
               MEM(LDM(FA,R 0,[R 1;R 2;R 3],true)) ]
         createTest "LDMFA Test" testText testInstruction
@@ -215,7 +215,7 @@ module CreateTest =
 		LDMFD	R0, {R4,R5,R6}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1,Lit 1),false)
               ALU(MOV(R 2,Lit 2),false)
               ALU(MOV(R 3,Lit 3),false)
@@ -233,7 +233,7 @@ module CreateTest =
 		LDMFD	R0, {R4,R5,R6}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1,Lit 1),false)
               ALU(MOV(R 2,Lit 2),false)
               ALU(MOV(R 3,Lit 3),false)
@@ -252,7 +252,7 @@ module CreateTest =
 		LDMFD	R0, {R4,R5,R6}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1,Lit 1),false)
               ALU(MOV(R 2,Lit 2),false)
               ALU(MOV(R 3,Lit 3),false)
@@ -272,7 +272,7 @@ module CreateTest =
 		LDMFD	R0, {R4,R5,R6}
             "
         let testInstruction = 
-            [ MEM(LDRPI(R 0, Addr 0x10000))
+            [ MEM(ADR(R 0, Addr 0x10000))
               ALU(MOV(R 1,Lit 1),false)
               ALU(MOV(R 2,Lit 2),false)
               ALU(MOV(R 3,Lit 3),false)
@@ -281,32 +281,35 @@ module CreateTest =
               MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
         createTest "STMFD Test" testText testInstruction
 
-//    let testDEBUG1 = 
-//        let testText = "
-//	    SUBS		R0, R1, #81
-//	    RSBS		R0, R0, R0
-//		
-//            "
-//        let testInstruction = 
-//            [   ALU(SUB(R 0,R 1,Lit 81),true) 
-//                ALU(RSB(R 0,R 0,Reg (R 0)),true)]
-//        createTest "DEBUG Test" testText testInstruction
+    let testDEBUG1 = 
+        let testText = "
+            LDR R0, =TEST
+            MOV R1, #476
+            STR R1, [R0]
+            LDR R0, [R0]
+            "
+        let testInstruction = 
+            [ MEM(ADR(R 0, Addr 0x10000))
+              ALU(MOV(R 1, Lit 476), false)
+              MEM(STR(R 1, R 0,Lit 0,Lit 0, false))
+              MEM(LDR(R 0, R 0,Lit 0,Lit 0,false)) ]
+        createTest "DEBUG Test" testText testInstruction
     
-    //let createdManualTestList = [testDEBUG1]
+    let createdManualTestList = [testDEBUG1]
 
-    let createdManualTestList = 
-        [ 
-            //ALU
-            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
-            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
-            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
-            //SET FLAG
-            testTST1; testTEQ1; testCMP1; testCMN1; 
-            //SHIFT
-            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
-            //MEM
-            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
-            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
-        ]
+//    let createdManualTestList = 
+//        [ 
+//            //ALU
+//            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
+//            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
+//            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
+//            //SET FLAG
+//            testTST1; testTEQ1; testCMP1; testCMN1; 
+//            //SHIFT
+//            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
+//            //MEM
+//            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+//            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+//            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
+//        ]
 
