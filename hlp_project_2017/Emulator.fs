@@ -233,12 +233,11 @@ module Emulator =
         let executeInstruction state instruction = 
             match instruction with 
             | ALU(ai,s) -> ALUInstruction.executeInstruction state ai s 
-            | SF(sfi) -> SFInstruction.executeInstruction state sfi  
-            | MEM(mi) -> MEMInstruction.executeInstruction state mi
-            | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s  
-
+            | SF(sfi) -> SFInstruction.executeInstruction state sfi 
+            | MEM(mi) -> MEMInstruction.executeInstruction state mi 
+            | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s 
         let executeLine state = 
-            let pc = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
+            let programCounter = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
             let checkCondition cond = 
                 match cond with
                 | EQ -> state.Flags.Z = true
@@ -256,18 +255,25 @@ module Emulator =
                 | GT -> state.Flags.Z = false && state.Flags.N = state.Flags.V
                 | LE -> state.Flags.Z = true && not (state.Flags.N = state.Flags.V)
                 | AL -> true
-            let instLine = state.MemMap.TryFind( Addr(pc) )
-            match instLine with
-            // Shift:None, Condition:None
-            | Some (Inst(Line(inst, None, None))) -> executeInstruction state inst
-            // Shift:Some, Condition:None
-            | Some (Inst(Line(inst, Some(sInst), None))) -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
-            // Shift:None, Condition:True
-            | Some (Inst(Line(inst, None, Some(c) ))) when checkCondition c = true -> executeInstruction state inst 
-            // Shift:Some, Condition:True
-            | Some (Inst(Line(inst, Some(sInst), Some(c) ))) when checkCondition c = true -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
-            // Shift:None/Some, Condition:False
-            | Some (Inst(Line(inst, _, Some(c) ))) when checkCondition c = false -> state 
-            // Error cases
-            | None -> failwithf "run time error: no instruction line found at address %A" (state.RegMap.TryFind(R 15)) 
-            | x -> failwithf "run time error: instruction line not defined %A" x 
+            let instLine = state.MemMap.TryFind( Addr(programCounter) )
+            let outputState = 
+                match instLine with
+                // Shift:None, Condition:None
+                | Some (Inst(Line(inst, None, None))) -> executeInstruction state inst
+                // Shift:Some, Condition:None
+                | Some (Inst(Line(inst, Some(sInst), None))) -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
+                // Shift:None, Condition:True
+                | Some (Inst(Line(inst, None, Some(c) ))) when checkCondition c = true -> executeInstruction state inst 
+                // Shift:Some, Condition:True
+                | Some (Inst(Line(inst, Some(sInst), Some(c) ))) when checkCondition c = true -> executeInstruction (executeInstruction state (SHIFT(sInst,false))) inst
+                // Shift:None/Some, Condition:False
+                | Some (Inst(Line(inst, _, Some(c) ))) when checkCondition c = false -> state 
+                // Error cases
+                | None -> failwithf "run time error: no instruction line found at address %A" (state.RegMap.TryFind(R 15)) 
+                | x -> failwithf "run time error: instruction line not defined %A" x 
+            // Update PC
+            let newRegMap = Map.add (R 15) (programCounter+4) outputState.RegMap
+            // Check if we have reached the end
+            match Addr(newRegMap.[R 15]) with
+            | pc when pc >= state.END -> {outputState with RegMap = newRegMap; State = RunEND}
+            | _ -> {outputState with RegMap = newRegMap}
