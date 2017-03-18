@@ -9,7 +9,6 @@ module Program =
     open InstructionType
     open Cast
 
-
 //    let s = 
 //        "MOV R1 R2
 //    ADD R2 R3 #3
@@ -22,12 +21,14 @@ module Program =
 //    ADDLO R3 R13 #15" 
 
     let s = "MOV R1 #10
-    MOV R2 #10"
+    MOV R2 #20
+    ADD R3 R1 R2"
 
     [<EntryPoint>]
     let main argv = 
+        // Recursively execute the instructions of subsequent states
         let rec executeInstructions (state:MachineState) = 
-            let newState = Emulator.Instruction.executeLine state //(state.MemMap.TryFind(ValueOptToAddr (state.RegMap.TryFind(R 15))))
+            let newState = Emulator.Instruction.executeLine state 
             match newState.State with
             | RunOK -> executeInstructions newState
             | RunEND -> newState
