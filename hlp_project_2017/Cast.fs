@@ -36,6 +36,13 @@ module Cast=
         else
             None//invalidOp "register does not exist"
 
+    /// matches string list returning register list
+    let rec (|IsRegList|_|) (lst:string list) = 
+        match lst with
+        | IsReg reg::IsRegList rest -> reg::rest |> Some
+        | [IsReg reg] -> [reg] |> Some
+        | [] -> [] |> Some
+        | _ -> None
 
     /// matches RegOrLit string returning the RegOrLit
     let (|IsRegOrLit|_|) =
@@ -52,6 +59,17 @@ module Cast=
             try 
                 string s |> Some 
             with _ -> None
+
+    ///matches Addr label or addr literal
+    let (|IsAddr|_|) (b_map:Map<string,Address>) (s:string) = 
+        let getX = s.[1..] 
+        if s.[0]='#'
+        then
+            match getX with
+            | IsInt x -> Some(Addr(x))
+            | _ -> None
+        else
+            b_map.TryFind(s)
 
     //cast value to addr
     let ValueToAddr (value:Value) =
@@ -87,8 +105,6 @@ module Cast=
         | "MVN" -> MVN |> Some
         | _ -> None
 
-    //No forget ADR and LDR
-
     //ALU
     let (|IsALUInst|_|) =
         function
@@ -97,7 +113,7 @@ module Cast=
         | "SUB" -> SUB |> Some
         | "SBC" -> SBC |> Some
         | "RSB" -> RSB |> Some
-        //| "RSC" -> RSC |> Some
+        | "RSC" -> RSC |> Some
         //| "AND" -> AND |> Some
         | "EOR" -> EOR |> Some
         | "BIC" -> BIC |> Some
@@ -113,7 +129,7 @@ module Cast=
         | "ROR" -> ROR |> Some
         | _ -> None
     
-    //No forget RRX
+    //RRX has its own pattern matching
 
     //compare
     let (|IsCOMPInst|_|) =
@@ -124,9 +140,19 @@ module Cast=
         | "TEQ" -> TEQ |> Some
         | _ -> None
 
-    //No forget LDR and STR
+    //ADR and LDR pseudo has their own pattern matching
+    //Memory
+    let (|IsMEMRInst|_|) =
+        function
+        | "LDR" -> LDR |> Some
+        | "STR" -> STR |> Some
+        | _ -> None
 
-    //No forget LDM and STM
+    let (|IsMEMMInst|_|) =
+        function
+        | "LDM" -> LDM |> Some
+        | "STM" -> STM |> Some
+        | _ -> None
 
     let (|IsBranchInst|_|) =
         function
@@ -137,6 +163,12 @@ module Cast=
     let (|IsSetFlag|_|) =
         function
         | "S" -> true |> Some
+        | "" -> false |> Some
+        | _ -> None
+
+    let (|IsByteMode|_|) =
+        function
+        | "B" -> true |> Some
         | "" -> false |> Some
         | _ -> None
 
@@ -162,6 +194,18 @@ module Cast=
         | "" -> NoCond |> Some
         | _ -> None
 
+        //LDMdir
+    let (|IsLDMdir|_|) = 
+        function
+        | "ED" -> ED |> Some
+        | "IB" -> IB |> Some
+        | "FD" -> FD |> Some
+        | "IA" -> IA |> Some
+        | "EA" -> EA |> Some
+        | "DB" -> DB |> Some
+        | "FA" -> FA |> Some
+        | "DA" -> DA |> Some
+        | _ -> None 
     //because of fable we have to do this
     let CondCast =
         function
@@ -175,11 +219,13 @@ module Cast=
         else
             None
 
-    let checkS (s:string) =
+    let checkS_or_B (s:string) =
         if s <> ""
         then 
             if s.[0] ='S'
             then "S"
+            elif s.[0] ='B'
+            then "B"
             else ""
         else ""
     let checkCond (s:string) =
@@ -189,33 +235,41 @@ module Cast=
         then s.[1..2]
         elif s = "S"
         then ""
+        elif s = "B"
+        then ""
         else s
 
-    let toTuple (inst:string) (rest:string) = [inst; checkS rest; checkCond rest]
+    let toTuple (inst:string) (rest:string) = [inst; checkS_or_B rest; checkCond rest]
 
     let TokenizeInst (s:string)=
         match s with
-        | Prefix "MOV" rest -> toTuple "MOV" rest
-        | Prefix "MVN" rest -> toTuple "MVN" rest
-        | Prefix "ADD" rest -> toTuple "ADD" rest
-        | Prefix "ADC" rest -> toTuple "ADC" rest
-        | Prefix "SUB" rest -> toTuple "SUB" rest
-        | Prefix "SBC" rest -> toTuple "SBC" rest
-        | Prefix "RSB" rest -> toTuple "RSB" rest
-        | Prefix "RSC" rest -> toTuple "RSC" rest
-        | Prefix "AND" rest -> toTuple "AND" rest
-        | Prefix "EOR" rest -> toTuple "EOR" rest
-        | Prefix "BIC" rest -> toTuple "BIC" rest
-        | Prefix "ORR" rest -> toTuple "ORR" rest
-        | Prefix "LSL" rest -> toTuple "LSL" rest
-        | Prefix "LSR" rest -> toTuple "LSR" rest
-        | Prefix "ASR" rest -> toTuple "ASR" rest
-        | Prefix "ROR" rest -> toTuple "ROR" rest
-        | Prefix "CMP" rest -> toTuple "CMP" rest
-        | Prefix "CMN" rest -> toTuple "CMN" rest
-        | Prefix "TST" rest -> toTuple "TST" rest
-        | Prefix "TEQ" rest -> toTuple "TEQ" rest
-        | Prefix "B" rest -> toTuple "B" rest
-        | Prefix "B" rest -> toTuple "BL" rest
+        | Prefix "MOV" rest -> toTuple "MOV" rest   //1
+        | Prefix "MVN" rest -> toTuple "MVN" rest   //2
+        | Prefix "ADD" rest -> toTuple "ADD" rest   //3
+        | Prefix "ADC" rest -> toTuple "ADC" rest   //4
+        | Prefix "SUB" rest -> toTuple "SUB" rest   //5
+        | Prefix "SBC" rest -> toTuple "SBC" rest   //6
+        | Prefix "RSB" rest -> toTuple "RSB" rest   //7
+        | Prefix "RSC" rest -> toTuple "RSC" rest   //8
+        | Prefix "AND" rest -> toTuple "AND" rest   //9
+        | Prefix "EOR" rest -> toTuple "EOR" rest   //10
+        | Prefix "BIC" rest -> toTuple "BIC" rest   //11
+        | Prefix "ORR" rest -> toTuple "ORR" rest   //12
+        | Prefix "LSL" rest -> toTuple "LSL" rest   //13
+        | Prefix "LSR" rest -> toTuple "LSR" rest   //14
+        | Prefix "ASR" rest -> toTuple "ASR" rest   //15
+        | Prefix "ROR" rest -> toTuple "ROR" rest   //16
+        | Prefix "RRX" rest -> toTuple "ROR" rest   //17
+        | Prefix "CMP" rest -> toTuple "CMP" rest   //18
+        | Prefix "CMN" rest -> toTuple "CMN" rest   //19
+        | Prefix "TST" rest -> toTuple "TST" rest   //20
+        | Prefix "TEQ" rest -> toTuple "TEQ" rest   //21
+        | Prefix "B" rest -> toTuple "B" rest       //22
+        | Prefix "BL" rest -> toTuple "BL" rest     //23
+        | Prefix "ADR" rest -> toTuple "ADR" rest   //24
+        | Prefix "LDR" rest -> toTuple "LDR" rest   //25 - double
+        | Prefix "STR" rest -> toTuple "STR" rest   //26
+        | Prefix "LDM" rest -> toTuple "LDM" rest   //27
+        | Prefix "STM" rest -> toTuple "STM" rest   //28
         | x -> [x; ""; ""]
    

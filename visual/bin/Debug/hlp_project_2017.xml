@@ -2,6 +2,11 @@
 <doc>
 <assembly><name>hlp_project_2017</name></assembly>
 <members>
+<member name="M:ARM7TDMI.Cast.|IsAddr|_|(Microsoft.FSharp.Collections.FSharpMap{System.String,ARM7TDMI.InstructionType.Address},System.String)">
+<summary>
+matches Addr label or addr literal
+</summary>
+</member>
 <member name="M:ARM7TDMI.Cast.|IsLabel|_|(System.String)">
 <summary>
  matches string returning string
@@ -10,6 +15,11 @@
 <member name="M:ARM7TDMI.Cast.|IsRegOrLit|_|(System.String)">
 <summary>
  matches RegOrLit string returning the RegOrLit
+</summary>
+</member>
+<member name="M:ARM7TDMI.Cast.|IsRegList|_|(Microsoft.FSharp.Collections.FSharpList{System.String})">
+<summary>
+ matches string list returning register list
 </summary>
 </member>
 <member name="M:ARM7TDMI.Cast.|IsReg|_|(System.String)">
