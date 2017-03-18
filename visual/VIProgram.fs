@@ -6,6 +6,7 @@ module VIProgram=
     open Expecto
     open CreateTest
     open CreateRandomTest
+    open CreateRandomTestLong
     /// postlude which sets R1 bits to status bit values
     let NZCVToR12 =
        """
@@ -89,14 +90,45 @@ module VIProgram=
       
     let seqConfig = { Expecto.Tests.defaultConfig with parallel = false}
 
+    let repeatingPrompt predicate (message:string) =
+        let prompt _ =
+            System.Console.WriteLine(message)
+            System.Console.ReadLine()
+        Seq.initInfinite prompt |> Seq.find predicate
 
     [<EntryPoint>]
-    let main argv = 
+    let main argv =
+
         InitCache defaultParas.WorkFileDir // read the currently cached info from disk to speed things up
-            
-        //let tests =  testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
-        let tests = testList "Visual tests" (randTestList1 |> List.map VisualUnitTest)
+        let input = 
+            repeatingPrompt (fun x -> x = "1" || x = "2" || x = "3")  "1: Manual Test\n2: Random Instruction Test\n3: Random Long Instruction Test" 
+        let createdTestList =
+            match int(input) with
+            | 1 -> createdManualTestList
+            | 2 -> let input2 = repeatingPrompt (fun x -> x = "1" || x = "2") "1. All Instructions\n2. Specific Instructions"
+                   match int(input2) with
+                   | 1 -> printf "Enter: Number of tests per instruction\nn"
+                          let input3 = System.Console.ReadLine()
+                          createdRandTestListAll (int(input3))
+                   | 2 -> printf "Enter: Number of tests,Instruction name,Set flag: SET/NOSET/RAND,op2 is Reg or Lit:REG/LIT/RAND\n"
+                          let numTest = System.Console.ReadLine()
+                          let inst = System.Console.ReadLine()
+                          let sf = System.Console.ReadLine()
+                          let reglit = System.Console.ReadLine()
+                          createdRandTestList (int(numTest)) inst sf reglit
+                   | _ -> failwithf "invalid"
+            | 3 -> printf "Enter: Number of instruction lines,Number of tests\n"
+                   let numInst = System.Console.ReadLine()
+                   let numTest =  System.Console.ReadLine()
+                   createdRandTestListLong (int(numInst)) (int(numTest))
+            | _ -> failwithf "invalid number"
+
+        let tests = testList "Visual tests" (createdTestList |> List.map VisualUnitTest)
+
         let rc = runTests seqConfig tests
         System.Console.ReadKey() |> ignore                
         rc // return an integer exit code - 0 if all tests pass
+//          printf "%A" randTestListLong1
+//          System.Console.ReadKey() |> ignore  
+//          0
 

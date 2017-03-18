@@ -1,5 +1,6 @@
 ﻿namespace VisualInterface
 
+///Create custom tests manually
 module CreateTest = 
     open VITest.TestEnvt
     open ARM7TDMI
@@ -294,7 +295,20 @@ module CreateTest =
               MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
         createTest "STMFD Test" testText testInstruction
 
-    let createdTestList = 
+//    let testDEBUG1 = 
+//        let testText = "
+//	    SUBS		R0, R1, #81
+//	    RSBS		R0, R0, R0
+//		
+//            "
+//        let testInstruction = 
+//            [   ALU(SUB(R 0,R 1,Lit 81),true) 
+//                ALU(RSB(R 0,R 0,Reg (R 0)),true)]
+//        createTest "DEBUG Test" testText testInstruction
+    
+    //let createdManualTestList = [testDEBUG1]
+
+    let createdManualTestList = 
         [ 
             //ALU
             testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARM SIMULATOR</title>
+    <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="node_modules/photonkit/dist/css/photon.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <h1 class="title">ARM SIMULATOR - HLP 2017 Project</h1>
+
+            <div class="toolbar-actions">
+                <button class="btn btn-positive" id="execute">Execute</button>
+                <button class="btn btn-negative">Quit</button>
+            </div>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane">
+                    <textarea id="sourceCode" class="form-control inputBox" rows="3" placeholder="Enter your ARM code here.">MOV R3 #20</textarea>
+                </div>
+
+                <div class="pane">
+                    <table class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>Register</th>
+                                <th>Value</th>
+                                <th>Base</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>R0</td>
+                                <td>0x0</td>
+                                <td>bin/hex/dec</td>
+                            </tr>
+                            <tr>
+                                <td>R1</td>
+                                <td>0x0</td>
+                                <td>bin/hex/dec</td>
+                            </tr>
+                            <tr>
+                                <td>R2</td>
+                                <td>0x0</td>
+                                <td>bin/hex/dec</td>
+                            </tr>
+                            <tr>
+                                <td>R3</td>
+                                <td>0x0</td>
+                                <td>bin/hex/dec</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <footer class="toolbar toolbar-footer">
+            <h1 class="title">Status Bar</h1>
+            <p id="output"></p>
+        </footer>
+    </div>
+
+    <!--3rd Party Library-->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/core-js/client/core.min.js"></script>
+    <script src="./node_modules/requirejs/require.js"></script>
+
+    <!--Load Fsharp Project-->
+    <script>
+                requirejs.config({
+                    // Set the baseUrl to the path of the compiled JS code
+                    baseUrl: '.',
+                    paths: {
+                        // Explicit path to core lib (relative to baseUrl, omit .js)
+                        'fable-core': './node_modules/fable-core'
+                    }
+                });
+                // Load the entry file of the app (use array, omit .js)
+                requirejs(["UserInterface"]);
+            </script>
+</body>
+
+</html>

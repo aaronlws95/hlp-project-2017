@@ -26,7 +26,6 @@ module Program =
 
     [<EntryPoint>]
     let main argv = 
-        
         let rec executeInstructions (state:MachineState) = 
             let newState = Emulator.Instruction.executeLine state //(state.MemMap.TryFind(ValueOptToAddr (state.RegMap.TryFind(R 15))))
             match newState.State with
@@ -35,10 +34,6 @@ module Program =
             | RunTimeErr s-> state
             | SyntaxErr s -> state
 
-        
-        //let s = "MOV R1 #20"
-        //printfn "%A" (readAsm s)
-        //let x = executeInstructions (readAsm s)
         printfn "%A" (readAsm s |> executeInstructions)
 
         System.Console.ReadKey() |> ignore

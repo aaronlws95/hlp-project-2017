@@ -1,13 +1,19 @@
 {
-  "name": "ui",
+  "name": "hlp-project-2017-user-interface",
   "version": "1.0.0",
   "description": "The frontend application for HLP project 2017",
   "main": "main.js",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "core-js": "^2.4.1",
     "electron": "^1.6.1",
+    "fable-core": "^0.7.29",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-shell": "^0.6.3",
     "jquery": "^3.1.1",
-    "photonkit": "^0.1.2"
+    "photonkit": "^0.1.2",
+    "requirejs": "^2.3.3"
   },
   "devDependencies": {
     "electron": "^1.6.1"

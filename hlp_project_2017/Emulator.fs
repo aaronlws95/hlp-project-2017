@@ -32,27 +32,27 @@ module Emulator =
                                             N = N res 
                                             Z = Z res
                                             //set carry if result is >=0   
-                                            C = if (uint64(uint32(op1)) + uint64(~~~uint32(op2)) + 1UL >= 4294967296UL) then true else false 
+                                            C = if (op1 >= op2 && res<=op1) || op1 = op2 then true else false 
                                             //set overflow if subtracting +ve from -ve generates a +ve or subtracting -ve from +ve generates a -ve
-                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
+                                            V = if ((op1>0 && op2<0 && res<0) || (op1<0 && op2>0 && res>0))then true else false
                                         }
                 | SUBWC(op1,op2,res) -> {   N = N res 
                                             Z = Z res
                                             //set carry if result is greater than or equal to 2^32
-                                            C = if res>=0 then true else false 
+                                            C = if (op1+System.Convert.ToInt32(state.Flags.C)-1 >= op2  && res<=op1+System.Convert.ToInt32(state.Flags.C)-1) || op1 + System.Convert.ToInt32(state.Flags.C)- 1 = op2   then true else false  
                                             //set overflow if adding two same signed values results in a result of a different sign
-                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false }
+                                            V = if ((op1>0 && op2<0 && res<0) || (op1<0 && op2>0 && res>0)) then true else false }
                 | LEFTSHIFT(op1,op2,res) -> {   
                                                 N = N res
                                                 Z = Z res
-                                                C = if ((op1 &&& (0x80000000 >>> (op2-1))) = op1) then true else false
+                                                C = if ((op1 &&& (0x80000000 >>> (op2-1))) = op1) && (op1 <> 0 && op2 <> 0) then true else false
                                                 V = state.Flags.V
                                             }
                 | RIGHTSHIFT(op1,op2,res) -> {
                                                 N = N res
                                                 Z = Z res
                                                 //set carry if 1 is shifted out
-                                                C = if ((op1 &&& (1 <<< (op2-1))) = op1) then true else false
+                                                C = if ((op1 &&& (1 <<< (op2-1))) = op1) && (op1 <> 0 && op2 <> 0) then true else false
                                                 V = state.Flags.V
                                              }
                 | OTHER(res) ->        {
@@ -175,11 +175,12 @@ module Emulator =
             {state with MemMap = newMemMap;RegMap = newRegMap}
         /// load multiple register with memory content
         let private stm state dir dest regList writeBack = 
-            let newMemMap,offset = match dir with
-                                | ED | IB -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                                | FD | IA -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                                | EA | DB -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
-                                | FA | DA -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+            let newMemMap,offset = 
+                match dir with
+                    | ED | IB -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                    | FD | IA -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                    | EA | DB -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+                    | FA | DA -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
             let newRegMap = if writeBack then (Map.add dest (state.RegMap.[dest]+offset) state.RegMap) else state.RegMap
             {state with RegMap = newRegMap;MemMap = newMemMap}
         /// execute memory instruction 
@@ -212,7 +213,7 @@ module Emulator =
         let private rrx state dest exp s = 
             let newExp = (exp >>> 1) + (System.Convert.ToInt32(state.Flags.C) <<< 31)
             let newRegMap = Map.add dest newExp state.RegMap
-            let newC = System.Convert.ToBoolean(exp &&& 1)
+            let newC = if (exp &&& 1) = 1 then true else false
             let newFlags = if s then {ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.OTHER(newExp)) with C = newC} else state.Flags
             {state with RegMap = newRegMap;Flags = newFlags}
         ///execute shift function
