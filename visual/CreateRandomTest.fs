@@ -1,5 +1,6 @@
 ﻿namespace VisualInterface
 
+/// Create random tests on individual instructions
 module CreateRandomTest = 
 
     open VITest.TestEnvt
@@ -39,7 +40,7 @@ module CreateRandomTest =
                 | _ -> failwithf "invalid setting"
                
             let strsf,sf =                
-                match setFlagRand with
+                match setFlagRand.ToUpper() with
                 | "SET" -> (instName + "S R",true)
                 | "NOSET" -> (instName + " R",false)
                 | "RAND" -> if rand.Next(0,2) = 0 then (instName + " R",false) else (instName + "S R",true)
@@ -69,24 +70,21 @@ module CreateRandomTest =
                 | _ -> failwithf "instruction name not valid"
 
     /// get random instruction name 
-    let getRandInstName = instNameArr.[rand.Next(0,Array.length instNameArr)]
+    let getRandInstName = fun() -> instNameArr.[rand.Next(0,Array.length instNameArr)]
     /// create test list given length of list and instruction name.
     /// Use RAND for random instructions
     let createdRandTestList n (instName:string) (setFlag:string) (regLitSet:string) = 
         let getTestParam num = 
             match instName.ToUpper() with 
-            | "RAND" -> let instName = getRandInstName
-                        ("Test " + instName + string(num),(createRandomTest getRandInstName setFlag regLitSet))
+            | "RAND" -> let instName = getRandInstName()
+                        ("Test " + instName + string(num),(createRandomTest instName setFlag regLitSet))
             | x ->  ("Test " + instName + string(num),(createRandomTest x setFlag regLitSet))
 
         [1..n] |> List.map getTestParam |> List.map (fun (n,(t,il)) -> createTest n t [il])
 
-    let createRandomTestLong length = 
-        let addInst (strOld,instOld)  = 
-            let strNew,instNew = (createRandomTest getRandInstName "rand" "rand")
-            ((strOld + "\n" + strNew),(List.append instOld [instNew]))
-       
-
    ///create 10 random test for each valid instruction list 
-    let randTestList1 = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList 100 x "RAND" "RAND")) |> List.concat
-    //let randTestList1 = createdRandTestList 10 "ORR" "SET"
+    let createdRandTestListAll n = instNameArr |> Array.toList |> List.map (fun x -> (createdRandTestList n x "RAND" "RAND")) |> List.concat
+
+    let randTestList1 = createdRandTestList 1 "sub" "SET" "reg"
+//    let instNameArrSub = [|"SBC";"RSC"|]
+//    let randTestList1 = instNameArrSub |> Array.toList |> List.map (fun x -> (createdRandTestList 50 x "RAND" "RAND")) |> List.concat

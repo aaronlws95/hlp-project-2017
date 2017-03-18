@@ -10,6 +10,7 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FSharp.Core.dl
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FSharp.Data.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FsPickler.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\hlp_project_2017.exe
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\MathNet.Numerics.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\Mono.Cecil.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\Mono.Cecil.Mdb.dll
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\Mono.Cecil.Pdb.dll
@@ -27,14 +28,8 @@ C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FSharp.Data.pd
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FSharp.Data.xml
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FsPickler.pdb
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\FsPickler.xml
-C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsprojResolveAssemblyReference.cache
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\MathNet.Numerics.xml
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsproj.visual.exe.config
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.exe
 C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.pdb
-C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\bin\Debug\visual.XML
-C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.fsprojResolveAssemblyReference.cache
-C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.fsproj.visual.exe.config
-C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.exe
-C:\Users\Santiago\Rubio 2016\4th year\4th year modules\HLP\Project\hlp-project-2017\visual\obj\Debug\visual.pdb
-C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\MathNet.Numerics.dll
-C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\bin\Debug\MathNet.Numerics.xml
+C:\Users\AARON\Documents\GitHub\hlp-project-2017\visual\obj\Debug\visual.fsprojResolveAssemblyReference.cache

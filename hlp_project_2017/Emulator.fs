@@ -32,16 +32,16 @@ module Emulator =
                                             N = N res 
                                             Z = Z res
                                             //set carry if result is >=0   
-                                            C = if (res>=0 && (op2 = 0)) || op2 = 0 then true else false 
+                                            C = if (op1 >= op2 && res<=op1) || op1 = op2 then true else false 
                                             //set overflow if subtracting +ve from -ve generates a +ve or subtracting -ve from +ve generates a -ve
-                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false
+                                            V = if ((op1>0 && op2<0 && res<0) || (op1<0 && op2>0 && res>0))then true else false
                                         }
                 | SUBWC(op1,op2,res) -> {   N = N res 
                                             Z = Z res
                                             //set carry if result is greater than or equal to 2^32
-                                            C = if (res>=0 && (op2 = 0)) || (op2 = 0 && op1 <> 0) then true else false  
+                                            C = if (op1+System.Convert.ToInt32(state.Flags.C)-1 >= op2  && res<=op1+System.Convert.ToInt32(state.Flags.C)-1) || op1 + System.Convert.ToInt32(state.Flags.C)- 1 = op2   then true else false  
                                             //set overflow if adding two same signed values results in a result of a different sign
-                                            V = if (op1<0 && op2<0 && res>=0) || (op1>0 && op2>0 && res< 0) then true else false }
+                                            V = if ((op1>0 && op2<0 && res<0) || (op1<0 && op2>0 && res>0)) then true else false }
                 | LEFTSHIFT(op1,op2,res) -> {   
                                                 N = N res
                                                 Z = Z res

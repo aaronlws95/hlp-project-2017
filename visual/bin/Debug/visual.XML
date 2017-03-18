@@ -2,7 +2,7 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
-<member name="P:VisualInterface.CreateRandomTest.randTestList1">
+<member name="M:VisualInterface.CreateRandomTest.createdRandTestListAll(System.Int32)">
 <summary>
 create 10 random test for each valid instruction list 
 </summary>
@@ -13,7 +13,7 @@ create 10 random test for each valid instruction list
  Use RAND for random instructions
 </summary>
 </member>
-<member name="P:VisualInterface.CreateRandomTest.getRandInstName">
+<member name="M:VisualInterface.CreateRandomTest.getRandInstName">
 <summary>
  get random instruction name 
 </summary>
@@ -31,6 +31,26 @@ array of all valid instruction names
 <member name="P:VisualInterface.CreateRandomTest.rand">
 <summary>
 random seed
+</summary>
+</member>
+<member name="T:VisualInterface.CreateRandomTest">
+<summary>
+ Create random tests on individual instructions
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomTestLong.getRandInstName">
+<summary>
+ get random instruction name 
+</summary>
+</member>
+<member name="T:VisualInterface.CreateRandomTestLong">
+<summary>
+Create random tests on multiple instructions
+</summary>
+</member>
+<member name="T:VisualInterface.CreateTest">
+<summary>
+Create custom tests manually
 </summary>
 </member>
 <member name="M:VisualInterface.VIProgram.VisualUnitTest(System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{VisualInterface.VisualInterface.Out,System.Int32}})">
