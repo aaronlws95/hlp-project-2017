@@ -20,17 +20,17 @@ module CreateRandomMemTest =
                 fun() -> memList.[rand.Next(0,Array.length memList)]   
             let op2 =  memLoc()   
 
-            let stroff,off =
+            let stroff,off,isOff =
                 let offset = 4*rand.Next(0,9)                 
                 match isOff.ToUpper() with
-                | "OFFSET" -> (", #" + string(offset) + "]",offset)
-                | "NOOFFSET" -> ("]",0)
-                | "RAND" -> if rand.Next(0,2) = 0 then (", #" + string(offset) + "]",offset) else ("]",0)
-                | _ -> failwithf "invalid setting"
+                | "OFFSET" -> (", #" + string(offset) + "]",offset,true)
+                | "NOOFFSET" -> ("]",0,false)
+                | "RAND" -> if rand.Next(0,2) = 0 then (", #" + string(offset) + "]",offset,true) else ("]",0,false)
+                | _ -> failwithf "invalid setting" 
 
             let strAutoInd,autoInd =           
                 match isAutoIndex.ToUpper() with
-                | "AI" -> ("!",off)
+                | "AI" -> if isOff then ("!",off) else ("",0)
                 | "NOAI" -> ("",0)
                 | "RAND" -> if rand.Next(0,2) = 0 then ("!",off) else ("",0)
                 | _ -> failwithf "invalid setting"

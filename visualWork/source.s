@@ -13,11 +13,9 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                LDR R9, =TEST
+                LDR R7, =TEST
 
-                            MOV R2, #931135488
-STR R2, [R9, #8]!
-LDR R8, [R9]
+                            LDR R2, [R7]!
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

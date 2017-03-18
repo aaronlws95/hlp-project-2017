@@ -110,7 +110,7 @@ module VIProgram=
                    | 1 -> printf "Enter: Number of tests per instruction\nn"
                           let input3 = System.Console.ReadLine()
                           createdRandTestListAll (int(input3))
-                   | 2 -> printf "Enter: Number of tests,Instruction name,Set flag: SET/NOSET/RAND,op2 is Reg or Lit:REG/LIT/RAND\n"
+                   | 2 -> printf "Enter: Number of tests,Instruction name/RAND,Set flag: SET/NOSET/RAND,op2 is Reg or Lit:REG/LIT/RAND\n"
                           let numTest = System.Console.ReadLine()
                           let inst = System.Console.ReadLine()
                           let sf = System.Console.ReadLine()
@@ -121,7 +121,7 @@ module VIProgram=
                    let numInst = System.Console.ReadLine()
                    let numTest =  System.Console.ReadLine()
                    createdRandTestListLong (int(numInst)) (int(numTest))
-            | 4 -> printf "Enter: Number of tests,Instruction name, Set offset: OFFSET/NOOFFSET/RAND, Set autoindex: AI/NOAI/RAND \n"
+            | 4 -> printf "Enter: Number of tests,Instruction name/RAND, Set offset: OFFSET/NOOFFSET/RAND, Set autoindex: AI/NOAI/RAND \n"
                    let numTest = System.Console.ReadLine()
                    let name = System.Console.ReadLine()
                    let io = System.Console.ReadLine()
