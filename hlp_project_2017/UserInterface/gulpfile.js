@@ -27,6 +27,6 @@ gulp.task("test", ["build"], () => {
 
 });
 
-gulp.watch("./**/*.fs", ["run"]).on("change", (event) => {
+gulp.watch("../**/*.fs", ["run"]).on("change", (event) => {
     console.log(`File <${path.basename(event.path)}> was ${event.type}`);
 });

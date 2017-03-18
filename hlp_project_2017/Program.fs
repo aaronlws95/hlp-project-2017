@@ -25,6 +25,6 @@ module Program =
     [<EntryPoint>]
     let main argv = 
         printfn "%A" (readAsm s)
-        System.Console.ReadKey() |> ignore
+        //System.Console.ReadKey() |> ignore
         0 // return an integer exit code
      
