@@ -2,6 +2,38 @@
 <doc>
 <assembly><name>hlp_project_2017</name></assembly>
 <members>
+<member name="M:ARM7TDMI.ALUInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.ALUInst,System.Boolean)">
+<summary>
+ execute ALU instruction 
+</summary>
+</member>
+<member name="M:ARM7TDMI.ALUInstruction.subwc(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with subtraction
+</summary>
+</member>
+<member name="M:ARM7TDMI.ALUInstruction.sub(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with subtraction
+</summary>
+</member>
+<member name="M:ARM7TDMI.ALUInstruction.add(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZCV based on result with addition
+</summary>
+</member>
+<member name="M:ARM7TDMI.ALUInstruction.updateRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ update register and set NZ based on new result   
+</summary>
+</member>
+<member name="T:ARM7TDMI.ALUInstruction">
+<summary>
+ ===========================================
+ ALU functions
+ ===========================================
+</summary>
+</member>
 <member name="M:ARM7TDMI.Cast.|IsAddr|_|(Microsoft.FSharp.Collections.FSharpMap{System.String,ARM7TDMI.InstructionType.Address},System.String)">
 <summary>
 matches Addr label or addr literal
@@ -45,154 +77,132 @@ matches string (#X-&gt;X) returning integer
 <member name="T:ARM7TDMI.Emulator.Instruction">
 <summary>
  ===========================================
- Instruction functions
+ Emulator functions
  ===========================================
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SHIFTInst,System.Boolean)">
-<summary>
-execute shift function
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.rrx(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
-<summary>
- rotate right with extend
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.shiftLeft(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
-<summary>
- move bits to the left and set NZC based on new result 
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.SHIFTInstruction.shiftRight(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
-<summary>
- move bits to the right and set NZC based on new result 
-</summary>
-</member>
-<member name="T:ARM7TDMI.Emulator.SHIFTInstruction">
-<summary>
- ===========================================
- Shift functions
- ===========================================
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst)">
-<summary>
- execute memory instruction 
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.stm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
-<summary>
- load multiple register with memory content
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
-<summary>
- store register contents into memory
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
-<summary>
- load multiple register with memory content
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.ldr``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
-<summary>
- load register with memory content
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.MEMInstruction.adr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32)">
-<summary>
- update register with address value
-</summary>
-</member>
-<member name="T:ARM7TDMI.Emulator.MEMInstruction">
-<summary>
- ===========================================
- Memory functions
- ===========================================
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.SFInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SFInst)">
-<summary>
- execute set flag instruction
-</summary>
-</member>
-<member name="T:ARM7TDMI.Emulator.SFInstruction">
-<summary>
- ===========================================
- Set flag functions
- ===========================================
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.ALUInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.ALUInst,System.Boolean)">
-<summary>
- execute ALU instruction 
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.ALUInstruction.subwc(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
-<summary>
- update register and set NZCV based on result with subtraction with carry
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.ALUInstruction.sub(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
-<summary>
- update register and set NZCV based on result with subtraction
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.ALUInstruction.add(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Int32,System.Boolean)">
-<summary>
- update register and set NZCV based on result with addition
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.ALUInstruction.updateRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
-<summary>
- update register and set NZ based on new result   
-</summary>
-</member>
-<member name="T:ARM7TDMI.Emulator.ALUInstruction">
-<summary>
- ===========================================
- ALU functions
- ===========================================
-</summary>
-</member>
-<member name="M:ARM7TDMI.Emulator.Extractor.getAddressValue(ARM7TDMI.InstructionType.Address)">
+<member name="M:ARM7TDMI.EmulatorHelper.Extractor.getAddressValue(ARM7TDMI.InstructionType.Address)">
 <summary>
  get value of address
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.Extractor.extractMemory(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Address)">
+<member name="M:ARM7TDMI.EmulatorHelper.Extractor.extractMemory(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Address)">
 <summary>
  extract value from memory
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.Extractor.extractRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.RegOrLit)">
+<member name="M:ARM7TDMI.EmulatorHelper.Extractor.extractRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.RegOrLit)">
 <summary>
  extract value from register
 </summary>
 </member>
-<member name="T:ARM7TDMI.Emulator.Extractor">
+<member name="T:ARM7TDMI.EmulatorHelper.Extractor">
 <summary>
  ===========================================
  Extracting functions
  ===========================================
 </summary>
 </member>
-<member name="T:ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType">
+<member name="T:ARM7TDMI.EmulatorHelper.ProcessFlag.ProcessFlagType">
 <summary>
  types for processing flags 
 </summary>
 </member>
-<member name="M:ARM7TDMI.Emulator.ProcessFlag.processFlags(ARM7TDMI.MachineState.MachineState,ARM7TDMI.Emulator.ProcessFlag.ProcessFlagType)">
+<member name="M:ARM7TDMI.EmulatorHelper.ProcessFlag.processFlags(ARM7TDMI.MachineState.MachineState,ARM7TDMI.EmulatorHelper.ProcessFlag.ProcessFlagType)">
 <summary>
 process and return new flags
 </summary>
 </member>
-<member name="T:ARM7TDMI.Emulator.ProcessFlag">
+<member name="T:ARM7TDMI.EmulatorHelper.ProcessFlag">
 <summary>
  ===========================================
  Processing flag functions
+ ===========================================
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst)">
+<summary>
+ execute memory instruction 
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.stm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
+<summary>
+ load multiple register with memory content
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
+<summary>
+ store register contents into memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.ldm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
+<summary>
+ load multiple register with memory content
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.ldr``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
+<summary>
+ load register with memory content
+</summary>
+</member>
+<member name="M:ARM7TDMI.MEMInstruction.adr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32)">
+<summary>
+ update register with address value
+</summary>
+</member>
+<member name="T:ARM7TDMI.MEMInstruction">
+<summary>
+ ===========================================
+ Memory functions
+ ===========================================
+</summary>
+</member>
+<member name="M:ARM7TDMI.SFInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SFInst)">
+<summary>
+ execute set flag instruction
+</summary>
+</member>
+<member name="T:ARM7TDMI.SFInstruction">
+<summary>
+ ===========================================
+ Set flag functions
+ ===========================================
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.SHIFTInst,System.Boolean)">
+<summary>
+execute shift function
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.rrx(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Boolean)">
+<summary>
+ rotate right with extend
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.ror(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ rotate right 
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.ashr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ arithmetic shift right
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.lshr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ logical shift right
+</summary>
+</member>
+<member name="M:ARM7TDMI.SHIFTInstruction.lshl(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,System.Boolean)">
+<summary>
+ logical shit left
+</summary>
+</member>
+<member name="T:ARM7TDMI.SHIFTInstruction">
+<summary>
+ ===========================================
+ Shift functions
  ===========================================
 </summary>
 </member>

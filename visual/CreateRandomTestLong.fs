@@ -68,7 +68,7 @@ module CreateRandomTestLong =
 
     ///array of all valid instruction names
     let instNameArr = [|"MOV";"MVN";"ADD";"SUB";"EOR";"RSB";"RSC";"ADC";"SBC";"BIC";
-        "ORR";"TEQ";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|] //Visual error with TST so remove
+        "ORR";"CMN";"CMP";"LSL";"LSR";"ASR";"ROR";"RRX"|] //Visual error with TST TEQ so remove
     
     /// create one test with multiple random instructions
     /// Use RAND for random instructions

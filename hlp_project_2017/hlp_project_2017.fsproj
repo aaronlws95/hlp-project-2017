@@ -60,6 +60,11 @@
     <None Include="App.config" />
     <Compile Include="InstructionType.fs" />
     <Compile Include="MachineState.fs" />
+    <Compile Include="EmulatorHelper.fs" />
+    <Compile Include="SFInstruction.fs" />
+    <Compile Include="ALUInstruction.fs" />
+    <Compile Include="MEMInstruction.fs" />
+    <Compile Include="SHIFTInstruction.fs" />
     <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
     <Compile Include="Parser.fs" />

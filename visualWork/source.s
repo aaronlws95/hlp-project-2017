@@ -13,9 +13,10 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                LDR R7, =TEST
-
-                            LDR R2, [R7]!
+                MOV R0, #0
+MVNS R1, #196608
+BIC R0, R0, R1
+SBC R0, R0, #103
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

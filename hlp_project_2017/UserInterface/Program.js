@@ -12,7 +12,7 @@ define(["exports", "./Emulator", "./Parser", "fable-core/umd/String"], function 
 
     function executeInstructions(state) {
         executeInstructions: while (true) {
-            const newState = _Emulator.Instruction.executeLine(state);
+            const newState = (0, _Emulator.executeLine)(state);
 
             if (newState.State.Case === "RunEND") {
                 return newState;

@@ -7,6 +7,55 @@ module CreateTest =
     open Emulator.Instruction
     open InstructionType
     
+    let testDEBUG1 = 
+        let testText = "
+
+
+		MOV		R1, #11584
+		
+		RORS		R0, R1, #233
+
+            "
+        let testInstruction = 
+            [   ALU(MOV(R 1,Lit 11584),false)
+                SHIFT(ROR(R 0,R 1,Lit 233),true) ]
+        createTest "DEBUG Test" testText testInstruction
+    let testDEBUG2 = 
+        let testText = "
+        SBC R0, R1, R1
+	RORS		R0, R0, #163
+		
+	RRXS		R1, R1
+
+            "
+        let testInstruction = 
+            [   ALU(SBC(R 0, R 1, Reg(R 1)),false)
+                SHIFT(ROR(R 0,R 0,Lit 163),true)
+                SHIFT(RRX(R 1,R 1),true) ]
+        createTest "DEBUG Test" testText testInstruction
+    let testDEBUG3 = 
+        let testText = "
+            MOV R1, #-1
+            ASRS R0, R1, R1
+
+            "
+        let testInstruction = 
+            [   ALU(MOV(R 1, Lit -1),false)
+                SHIFT(ROR(R 0,R 1,Reg(R 1)),true)]
+        createTest "DEBUG Test" testText testInstruction
+    let testDEBUG4 = 
+        let testText = "
+		MVN		R1, #-1677721597
+		
+		ASRS		R1, R1, #68
+
+            "
+        let testInstruction = 
+            [   ALU(MVN(R 1, Lit -1677721597),false)
+                SHIFT(ASR(R 1,R 1,Lit 68),true)]
+        createTest "DEBUG Test" testText testInstruction
+    let createdManualTestList = [testDEBUG1]
+
     //ALU INSTRUCTION TESTS
     let testMOV1 = createTest "MOV Test" "MOV R0, #2" [ ALU(MOV(R 0, Lit 2), false) ] //TEST MOV 1
     
@@ -281,21 +330,6 @@ module CreateTest =
               MEM(LDM(FD,R 0,[R 4;R 5;R 6],false)) ]
         createTest "STMFD Test" testText testInstruction
 
-    let testDEBUG1 = 
-        let testText = "
-            LDR R0, =TEST
-            MOV R1, #476
-            STR R1, [R0]
-            LDR R0, [R0]
-            "
-        let testInstruction = 
-            [ MEM(ADR(R 0, Addr 0x10000))
-              ALU(MOV(R 1, Lit 476), false)
-              MEM(STR(R 1, R 0,Lit 0,Lit 0, false))
-              MEM(LDR(R 0, R 0,Lit 0,Lit 0,false)) ]
-        createTest "DEBUG Test" testText testInstruction
-    
-    let createdManualTestList = [testDEBUG1]
 
 //    let createdManualTestList = 
 //        [ 

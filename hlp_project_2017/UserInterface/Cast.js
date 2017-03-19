@@ -38,10 +38,10 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
         const getX = s.slice(1, s.length);
 
         if (s[0] === "#") {
-            const activePatternResult320 = _IsInt___(getX);
+            const activePatternResult446 = _IsInt___(getX);
 
-            if (activePatternResult320 != null) {
-                return activePatternResult320;
+            if (activePatternResult446 != null) {
+                return activePatternResult446;
             } else {
                 return null;
             }
@@ -56,23 +56,23 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
         const getX = s.slice(1, s.length);
 
         if (s[0] === "R") {
-            let $var1;
+            let $var3;
 
-            const activePatternResult323 = _IsInt___(getX);
+            const activePatternResult449 = _IsInt___(getX);
 
-            if (activePatternResult323 != null) {
-                if (activePatternResult323 <= 15) {
-                    $var1 = [0, activePatternResult323];
+            if (activePatternResult449 != null) {
+                if (activePatternResult449 <= 15) {
+                    $var3 = [0, activePatternResult449];
                 } else {
-                    $var1 = [1];
+                    $var3 = [1];
                 }
             } else {
-                $var1 = [1];
+                $var3 = [1];
             }
 
-            switch ($var1[0]) {
+            switch ($var3[0]) {
                 case 0:
-                    return new _InstructionType.Register("R", [$var1[1]]);
+                    return new _InstructionType.Register("R", [$var3[1]]);
 
                 case 1:
                     return null;
@@ -85,52 +85,52 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     exports.$7C$IsReg$7C$_$7C$ = _IsReg___;
 
     function _IsRegList___(lst) {
-        let $var2;
+        let $var4;
 
         if (lst.tail != null) {
-            const activePatternResult329 = _IsReg___(lst.head);
+            const activePatternResult455 = _IsReg___(lst.head);
 
-            if (activePatternResult329 != null) {
-                const activePatternResult330 = _IsRegList___(lst.tail);
+            if (activePatternResult455 != null) {
+                const activePatternResult456 = _IsRegList___(lst.tail);
 
-                if (activePatternResult330 != null) {
-                    $var2 = [0, activePatternResult329, activePatternResult330];
+                if (activePatternResult456 != null) {
+                    $var4 = [0, activePatternResult455, activePatternResult456];
                 } else {
-                    $var2 = [1];
+                    $var4 = [1];
                 }
             } else {
-                $var2 = [1];
+                $var4 = [1];
             }
         } else {
-            $var2 = [1];
+            $var4 = [1];
         }
 
-        switch ($var2[0]) {
+        switch ($var4[0]) {
             case 0:
-                return new _List2.default($var2[1], $var2[2]);
+                return new _List2.default($var4[1], $var4[2]);
 
             case 1:
-                let $var3;
+                let $var5;
 
                 if (lst.tail != null) {
-                    const activePatternResult328 = _IsReg___(lst.head);
+                    const activePatternResult454 = _IsReg___(lst.head);
 
-                    if (activePatternResult328 != null) {
+                    if (activePatternResult454 != null) {
                         if (lst.tail.tail == null) {
-                            $var3 = [0, activePatternResult328];
+                            $var5 = [0, activePatternResult454];
                         } else {
-                            $var3 = [1];
+                            $var5 = [1];
                         }
                     } else {
-                        $var3 = [1];
+                        $var5 = [1];
                     }
                 } else {
-                    $var3 = [1];
+                    $var5 = [1];
                 }
 
-                switch ($var3[0]) {
+                switch ($var5[0]) {
                     case 0:
-                        return (0, _List.ofArray)([$var3[1]]);
+                        return (0, _List.ofArray)([$var5[1]]);
 
                     case 1:
                         if (lst.tail == null) {
@@ -147,15 +147,15 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     exports.$7C$IsRegList$7C$_$7C$ = _IsRegList___;
 
     function _IsRegOrLit___(_arg1) {
-        const activePatternResult335 = _IsReg___(_arg1);
+        const activePatternResult461 = _IsReg___(_arg1);
 
-        if (activePatternResult335 != null) {
-            return new _InstructionType.RegOrLit("Reg", [activePatternResult335]);
+        if (activePatternResult461 != null) {
+            return new _InstructionType.RegOrLit("Reg", [activePatternResult461]);
         } else {
-            const activePatternResult334 = _IsLit___(_arg1);
+            const activePatternResult460 = _IsLit___(_arg1);
 
-            if (activePatternResult334 != null) {
-                return new _InstructionType.RegOrLit("Lit", [activePatternResult334]);
+            if (activePatternResult460 != null) {
+                return new _InstructionType.RegOrLit("Lit", [activePatternResult460]);
             } else {
                 return null;
             }
@@ -165,9 +165,9 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     exports.$7C$IsRegOrLit$7C$_$7C$ = _IsRegOrLit___;
 
     function _IsLabel___(_arg1) {
-        const activePatternResult341 = _IsReg___(_arg1);
+        const activePatternResult467 = _IsReg___(_arg1);
 
-        if (activePatternResult341 != null) {
+        if (activePatternResult467 != null) {
             return null;
         } else {
             try {
@@ -184,10 +184,10 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
         const getX = s.slice(1, s.length);
 
         if (s[0] === "#") {
-            const activePatternResult343 = _IsInt___(getX);
+            const activePatternResult469 = _IsInt___(getX);
 
-            if (activePatternResult343 != null) {
-                return new _InstructionType.Address("Addr", [activePatternResult343]);
+            if (activePatternResult469 != null) {
+                return new _InstructionType.Address("Addr", [activePatternResult469]);
             } else {
                 return null;
             }
@@ -215,25 +215,25 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     }
 
     function IsBranch(_arg1) {
-        let $var4;
+        let $var6;
 
         if (_arg1.tail != null) {
-            const activePatternResult349 = _IsLabel___(_arg1.head);
+            const activePatternResult475 = _IsLabel___(_arg1.head);
 
-            if (activePatternResult349 != null) {
+            if (activePatternResult475 != null) {
                 if (_arg1.tail.tail == null) {
-                    $var4 = [0, activePatternResult349];
+                    $var6 = [0, activePatternResult475];
                 } else {
-                    $var4 = [1];
+                    $var6 = [1];
                 }
             } else {
-                $var4 = [1];
+                $var6 = [1];
             }
         } else {
-            $var4 = [1];
+            $var6 = [1];
         }
 
-        switch ($var4[0]) {
+        switch ($var6[0]) {
             case 0:
                 return true;
 
@@ -243,25 +243,25 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     }
 
     function IsNotBranch(_arg1) {
-        let $var5;
+        let $var7;
 
         if (_arg1.tail != null) {
-            const activePatternResult351 = _IsLabel___(_arg1.head);
+            const activePatternResult477 = _IsLabel___(_arg1.head);
 
-            if (activePatternResult351 != null) {
+            if (activePatternResult477 != null) {
                 if (_arg1.tail.tail == null) {
-                    $var5 = [0, activePatternResult351];
+                    $var7 = [0, activePatternResult477];
                 } else {
-                    $var5 = [1];
+                    $var7 = [1];
                 }
             } else {
-                $var5 = [1];
+                $var7 = [1];
             }
         } else {
-            $var5 = [1];
+            $var7 = [1];
         }
 
-        switch ($var5[0]) {
+        switch ($var7[0]) {
             case 0:
                 return false;
 
@@ -585,145 +585,145 @@ define(["exports", "./InstructionType", "fable-core/umd/List", "fable-core/umd/M
     }
 
     function TokenizeInst(s) {
-        const activePatternResult507 = _Prefix___("MOV", s);
+        const activePatternResult633 = _Prefix___("MOV", s);
 
-        if (activePatternResult507 != null) {
-            return toTuple("MOV", activePatternResult507);
+        if (activePatternResult633 != null) {
+            return toTuple("MOV", activePatternResult633);
         } else {
-            const activePatternResult505 = _Prefix___("MVN", s);
+            const activePatternResult631 = _Prefix___("MVN", s);
 
-            if (activePatternResult505 != null) {
-                return toTuple("MVN", activePatternResult505);
+            if (activePatternResult631 != null) {
+                return toTuple("MVN", activePatternResult631);
             } else {
-                const activePatternResult503 = _Prefix___("ADD", s);
+                const activePatternResult629 = _Prefix___("ADD", s);
 
-                if (activePatternResult503 != null) {
-                    return toTuple("ADD", activePatternResult503);
+                if (activePatternResult629 != null) {
+                    return toTuple("ADD", activePatternResult629);
                 } else {
-                    const activePatternResult501 = _Prefix___("ADC", s);
+                    const activePatternResult627 = _Prefix___("ADC", s);
 
-                    if (activePatternResult501 != null) {
-                        return toTuple("ADC", activePatternResult501);
+                    if (activePatternResult627 != null) {
+                        return toTuple("ADC", activePatternResult627);
                     } else {
-                        const activePatternResult499 = _Prefix___("SUB", s);
+                        const activePatternResult625 = _Prefix___("SUB", s);
 
-                        if (activePatternResult499 != null) {
-                            return toTuple("SUB", activePatternResult499);
+                        if (activePatternResult625 != null) {
+                            return toTuple("SUB", activePatternResult625);
                         } else {
-                            const activePatternResult497 = _Prefix___("SBC", s);
+                            const activePatternResult623 = _Prefix___("SBC", s);
 
-                            if (activePatternResult497 != null) {
-                                return toTuple("SBC", activePatternResult497);
+                            if (activePatternResult623 != null) {
+                                return toTuple("SBC", activePatternResult623);
                             } else {
-                                const activePatternResult495 = _Prefix___("RSB", s);
+                                const activePatternResult621 = _Prefix___("RSB", s);
 
-                                if (activePatternResult495 != null) {
-                                    return toTuple("RSB", activePatternResult495);
+                                if (activePatternResult621 != null) {
+                                    return toTuple("RSB", activePatternResult621);
                                 } else {
-                                    const activePatternResult493 = _Prefix___("RSC", s);
+                                    const activePatternResult619 = _Prefix___("RSC", s);
 
-                                    if (activePatternResult493 != null) {
-                                        return toTuple("RSC", activePatternResult493);
+                                    if (activePatternResult619 != null) {
+                                        return toTuple("RSC", activePatternResult619);
                                     } else {
-                                        const activePatternResult491 = _Prefix___("AND", s);
+                                        const activePatternResult617 = _Prefix___("AND", s);
 
-                                        if (activePatternResult491 != null) {
-                                            return toTuple("AND", activePatternResult491);
+                                        if (activePatternResult617 != null) {
+                                            return toTuple("AND", activePatternResult617);
                                         } else {
-                                            const activePatternResult489 = _Prefix___("EOR", s);
+                                            const activePatternResult615 = _Prefix___("EOR", s);
 
-                                            if (activePatternResult489 != null) {
-                                                return toTuple("EOR", activePatternResult489);
+                                            if (activePatternResult615 != null) {
+                                                return toTuple("EOR", activePatternResult615);
                                             } else {
-                                                const activePatternResult487 = _Prefix___("BIC", s);
+                                                const activePatternResult613 = _Prefix___("BIC", s);
 
-                                                if (activePatternResult487 != null) {
-                                                    return toTuple("BIC", activePatternResult487);
+                                                if (activePatternResult613 != null) {
+                                                    return toTuple("BIC", activePatternResult613);
                                                 } else {
-                                                    const activePatternResult485 = _Prefix___("ORR", s);
+                                                    const activePatternResult611 = _Prefix___("ORR", s);
 
-                                                    if (activePatternResult485 != null) {
-                                                        return toTuple("ORR", activePatternResult485);
+                                                    if (activePatternResult611 != null) {
+                                                        return toTuple("ORR", activePatternResult611);
                                                     } else {
-                                                        const activePatternResult483 = _Prefix___("LSL", s);
+                                                        const activePatternResult609 = _Prefix___("LSL", s);
 
-                                                        if (activePatternResult483 != null) {
-                                                            return toTuple("LSL", activePatternResult483);
+                                                        if (activePatternResult609 != null) {
+                                                            return toTuple("LSL", activePatternResult609);
                                                         } else {
-                                                            const activePatternResult481 = _Prefix___("LSR", s);
+                                                            const activePatternResult607 = _Prefix___("LSR", s);
 
-                                                            if (activePatternResult481 != null) {
-                                                                return toTuple("LSR", activePatternResult481);
+                                                            if (activePatternResult607 != null) {
+                                                                return toTuple("LSR", activePatternResult607);
                                                             } else {
-                                                                const activePatternResult479 = _Prefix___("ASR", s);
+                                                                const activePatternResult605 = _Prefix___("ASR", s);
 
-                                                                if (activePatternResult479 != null) {
-                                                                    return toTuple("ASR", activePatternResult479);
+                                                                if (activePatternResult605 != null) {
+                                                                    return toTuple("ASR", activePatternResult605);
                                                                 } else {
-                                                                    const activePatternResult477 = _Prefix___("ROR", s);
+                                                                    const activePatternResult603 = _Prefix___("ROR", s);
 
-                                                                    if (activePatternResult477 != null) {
-                                                                        return toTuple("ROR", activePatternResult477);
+                                                                    if (activePatternResult603 != null) {
+                                                                        return toTuple("ROR", activePatternResult603);
                                                                     } else {
-                                                                        const activePatternResult475 = _Prefix___("RRX", s);
+                                                                        const activePatternResult601 = _Prefix___("RRX", s);
 
-                                                                        if (activePatternResult475 != null) {
-                                                                            return toTuple("ROR", activePatternResult475);
+                                                                        if (activePatternResult601 != null) {
+                                                                            return toTuple("ROR", activePatternResult601);
                                                                         } else {
-                                                                            const activePatternResult473 = _Prefix___("CMP", s);
+                                                                            const activePatternResult599 = _Prefix___("CMP", s);
 
-                                                                            if (activePatternResult473 != null) {
-                                                                                return toTuple("CMP", activePatternResult473);
+                                                                            if (activePatternResult599 != null) {
+                                                                                return toTuple("CMP", activePatternResult599);
                                                                             } else {
-                                                                                const activePatternResult471 = _Prefix___("CMN", s);
+                                                                                const activePatternResult597 = _Prefix___("CMN", s);
 
-                                                                                if (activePatternResult471 != null) {
-                                                                                    return toTuple("CMN", activePatternResult471);
+                                                                                if (activePatternResult597 != null) {
+                                                                                    return toTuple("CMN", activePatternResult597);
                                                                                 } else {
-                                                                                    const activePatternResult469 = _Prefix___("TST", s);
+                                                                                    const activePatternResult595 = _Prefix___("TST", s);
 
-                                                                                    if (activePatternResult469 != null) {
-                                                                                        return toTuple("TST", activePatternResult469);
+                                                                                    if (activePatternResult595 != null) {
+                                                                                        return toTuple("TST", activePatternResult595);
                                                                                     } else {
-                                                                                        const activePatternResult467 = _Prefix___("TEQ", s);
+                                                                                        const activePatternResult593 = _Prefix___("TEQ", s);
 
-                                                                                        if (activePatternResult467 != null) {
-                                                                                            return toTuple("TEQ", activePatternResult467);
+                                                                                        if (activePatternResult593 != null) {
+                                                                                            return toTuple("TEQ", activePatternResult593);
                                                                                         } else {
-                                                                                            const activePatternResult465 = _Prefix___("B", s);
+                                                                                            const activePatternResult591 = _Prefix___("B", s);
 
-                                                                                            if (activePatternResult465 != null) {
-                                                                                                return toTuple("B", activePatternResult465);
+                                                                                            if (activePatternResult591 != null) {
+                                                                                                return toTuple("B", activePatternResult591);
                                                                                             } else {
-                                                                                                const activePatternResult463 = _Prefix___("BL", s);
+                                                                                                const activePatternResult589 = _Prefix___("BL", s);
 
-                                                                                                if (activePatternResult463 != null) {
-                                                                                                    return toTuple("BL", activePatternResult463);
+                                                                                                if (activePatternResult589 != null) {
+                                                                                                    return toTuple("BL", activePatternResult589);
                                                                                                 } else {
-                                                                                                    const activePatternResult461 = _Prefix___("ADR", s);
+                                                                                                    const activePatternResult587 = _Prefix___("ADR", s);
 
-                                                                                                    if (activePatternResult461 != null) {
-                                                                                                        return toTuple("ADR", activePatternResult461);
+                                                                                                    if (activePatternResult587 != null) {
+                                                                                                        return toTuple("ADR", activePatternResult587);
                                                                                                     } else {
-                                                                                                        const activePatternResult459 = _Prefix___("LDR", s);
+                                                                                                        const activePatternResult585 = _Prefix___("LDR", s);
 
-                                                                                                        if (activePatternResult459 != null) {
-                                                                                                            return toTuple("LDR", activePatternResult459);
+                                                                                                        if (activePatternResult585 != null) {
+                                                                                                            return toTuple("LDR", activePatternResult585);
                                                                                                         } else {
-                                                                                                            const activePatternResult457 = _Prefix___("STR", s);
+                                                                                                            const activePatternResult583 = _Prefix___("STR", s);
 
-                                                                                                            if (activePatternResult457 != null) {
-                                                                                                                return toTuple("STR", activePatternResult457);
+                                                                                                            if (activePatternResult583 != null) {
+                                                                                                                return toTuple("STR", activePatternResult583);
                                                                                                             } else {
-                                                                                                                const activePatternResult455 = _Prefix___("LDM", s);
+                                                                                                                const activePatternResult581 = _Prefix___("LDM", s);
 
-                                                                                                                if (activePatternResult455 != null) {
-                                                                                                                    return toTuple("LDM", activePatternResult455);
+                                                                                                                if (activePatternResult581 != null) {
+                                                                                                                    return toTuple("LDM", activePatternResult581);
                                                                                                                 } else {
-                                                                                                                    const activePatternResult453 = _Prefix___("STM", s);
+                                                                                                                    const activePatternResult579 = _Prefix___("STM", s);
 
-                                                                                                                    if (activePatternResult453 != null) {
-                                                                                                                        return toTuple("STM", activePatternResult453);
+                                                                                                                    if (activePatternResult579 != null) {
+                                                                                                                        return toTuple("STM", activePatternResult579);
                                                                                                                     } else {
                                                                                                                         return (0, _List.ofArray)([s, "", ""]);
                                                                                                                     }

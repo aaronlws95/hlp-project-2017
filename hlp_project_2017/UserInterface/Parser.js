@@ -45,18 +45,18 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
             let $var12;
 
             if (matchValue.tail != null) {
-                const activePatternResult632 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.head);
+                const activePatternResult641 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.head);
 
-                if (activePatternResult632 != null) {
+                if (activePatternResult641 != null) {
                     if (matchValue.tail.tail != null) {
-                        const activePatternResult633 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.tail.head);
+                        const activePatternResult642 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(matchValue.tail.head);
 
-                        if (activePatternResult633 != null) {
+                        if (activePatternResult642 != null) {
                             if (matchValue.tail.tail.tail != null) {
-                                const activePatternResult634 = (0, _Cast.$7C$IsReg$7C$_$7C$)(matchValue.tail.tail.head);
+                                const activePatternResult643 = (0, _Cast.$7C$IsReg$7C$_$7C$)(matchValue.tail.tail.head);
 
-                                if (activePatternResult634 != null) {
-                                    $var12 = [0, activePatternResult632];
+                                if (activePatternResult643 != null) {
+                                    $var12 = [0, activePatternResult641];
                                 } else {
                                     $var12 = [1];
                                 }
@@ -96,17 +96,17 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
             let $var15;
 
             if (line_1.tail != null) {
-                const activePatternResult637 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.head);
+                const activePatternResult646 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.head);
 
-                if (activePatternResult637 != null) {
+                if (activePatternResult646 != null) {
                     if (line_1.tail.tail != null) {
-                        const activePatternResult638 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.tail.head);
+                        const activePatternResult647 = (0, _Cast.$7C$IsLabel$7C$_$7C$)(line_1.tail.head);
 
-                        if (activePatternResult638 != null) {
+                        if (activePatternResult647 != null) {
                             if (line_1.tail.tail.tail != null) {
-                                const activePatternResult639 = (0, _Cast.$7C$IsReg$7C$_$7C$)(line_1.tail.tail.head);
+                                const activePatternResult648 = (0, _Cast.$7C$IsReg$7C$_$7C$)(line_1.tail.tail.head);
 
-                                if (activePatternResult639 != null) {
+                                if (activePatternResult648 != null) {
                                     $var15 = [0];
                                 } else {
                                     $var15 = [1];
@@ -145,27 +145,27 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
             let $var16;
 
             if (instrline.tail != null) {
-                const activePatternResult734 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
+                const activePatternResult743 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
 
-                if (activePatternResult734 != null) {
+                if (activePatternResult743 != null) {
                     if (instrline.tail.tail != null) {
-                        const activePatternResult735 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                        const activePatternResult744 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                        if (activePatternResult735 != null) {
+                        if (activePatternResult744 != null) {
                             if (instrline.tail.tail.tail != null) {
-                                const activePatternResult736 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                const activePatternResult745 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                if (activePatternResult736 != null) {
+                                if (activePatternResult745 != null) {
                                     if (instrline.tail.tail.tail.tail != null) {
-                                        const activePatternResult737 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                        const activePatternResult746 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                        if (activePatternResult737 != null) {
+                                        if (activePatternResult746 != null) {
                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                const activePatternResult738 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                const activePatternResult747 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                if (activePatternResult738 != null) {
+                                                if (activePatternResult747 != null) {
                                                     if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                        $var16 = [0, activePatternResult736, activePatternResult737, activePatternResult734, activePatternResult738, activePatternResult735];
+                                                        $var16 = [0, activePatternResult745, activePatternResult746, activePatternResult743, activePatternResult747, activePatternResult744];
                                                     } else {
                                                         $var16 = [1];
                                                     }
@@ -208,31 +208,31 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                     let $var17;
 
                     if (instrline.tail != null) {
-                        const activePatternResult728 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
+                        const activePatternResult737 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
 
-                        if (activePatternResult728 != null) {
+                        if (activePatternResult737 != null) {
                             if (instrline.tail.tail != null) {
-                                const activePatternResult729 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                const activePatternResult738 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                if (activePatternResult729 != null) {
+                                if (activePatternResult738 != null) {
                                     if (instrline.tail.tail.tail != null) {
-                                        const activePatternResult730 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                        const activePatternResult739 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                        if (activePatternResult730 != null) {
+                                        if (activePatternResult739 != null) {
                                             if (instrline.tail.tail.tail.tail != null) {
-                                                const activePatternResult731 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                const activePatternResult740 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                if (activePatternResult731 != null) {
+                                                if (activePatternResult740 != null) {
                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                        const activePatternResult732 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                        const activePatternResult741 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                        if (activePatternResult732 != null) {
+                                                        if (activePatternResult741 != null) {
                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                const activePatternResult733 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                const activePatternResult742 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                if (activePatternResult733 != null) {
+                                                                if (activePatternResult742 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                        $var17 = [0, activePatternResult730, activePatternResult731, activePatternResult728, activePatternResult732, activePatternResult733, activePatternResult729];
+                                                                        $var17 = [0, activePatternResult739, activePatternResult740, activePatternResult737, activePatternResult741, activePatternResult742, activePatternResult738];
                                                                     } else {
                                                                         $var17 = [1];
                                                                     }
@@ -281,31 +281,31 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                             let $var18;
 
                             if (instrline.tail != null) {
-                                const activePatternResult722 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.head);
+                                const activePatternResult731 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.head);
 
-                                if (activePatternResult722 != null) {
+                                if (activePatternResult731 != null) {
                                     if (instrline.tail.tail != null) {
-                                        const activePatternResult723 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                        const activePatternResult732 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                        if (activePatternResult723 != null) {
+                                        if (activePatternResult732 != null) {
                                             if (instrline.tail.tail.tail != null) {
-                                                const activePatternResult724 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                const activePatternResult733 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                if (activePatternResult724 != null) {
+                                                if (activePatternResult733 != null) {
                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                        const activePatternResult725 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                        const activePatternResult734 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                        if (activePatternResult725 != null) {
+                                                        if (activePatternResult734 != null) {
                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                const activePatternResult726 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                const activePatternResult735 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                if (activePatternResult726 != null) {
+                                                                if (activePatternResult735 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                        const activePatternResult727 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                        const activePatternResult736 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                        if (activePatternResult727 != null) {
+                                                                        if (activePatternResult736 != null) {
                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                $var18 = [0, activePatternResult724, activePatternResult725, activePatternResult722, activePatternResult726, activePatternResult727, activePatternResult723];
+                                                                                $var18 = [0, activePatternResult733, activePatternResult734, activePatternResult731, activePatternResult735, activePatternResult736, activePatternResult732];
                                                                             } else {
                                                                                 $var18 = [1];
                                                                             }
@@ -356,23 +356,23 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                     if (instrline.tail != null) {
                                         if (instrline.head === "RRX") {
                                             if (instrline.tail.tail != null) {
-                                                const activePatternResult718 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                const activePatternResult727 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                if (activePatternResult718 != null) {
+                                                if (activePatternResult727 != null) {
                                                     if (instrline.tail.tail.tail != null) {
-                                                        const activePatternResult719 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                        const activePatternResult728 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                        if (activePatternResult719 != null) {
+                                                        if (activePatternResult728 != null) {
                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                const activePatternResult720 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                const activePatternResult729 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                if (activePatternResult720 != null) {
+                                                                if (activePatternResult729 != null) {
                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                        const activePatternResult721 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                        const activePatternResult730 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                        if (activePatternResult721 != null) {
+                                                                        if (activePatternResult730 != null) {
                                                                             if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                                                $var19 = [0, activePatternResult719, activePatternResult720, activePatternResult721, activePatternResult718];
+                                                                                $var19 = [0, activePatternResult728, activePatternResult729, activePatternResult730, activePatternResult727];
                                                                             } else {
                                                                                 $var19 = [1];
                                                                             }
@@ -415,24 +415,24 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                             let $var20;
 
                                             if (instrline.tail != null) {
-                                                const activePatternResult714 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
+                                                const activePatternResult723 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
 
-                                                if (activePatternResult714 != null) {
+                                                if (activePatternResult723 != null) {
                                                     if (instrline.tail.tail != null) {
                                                         if (instrline.tail.tail.tail != null) {
-                                                            const activePatternResult715 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                            const activePatternResult724 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                            if (activePatternResult715 != null) {
+                                                            if (activePatternResult724 != null) {
                                                                 if (instrline.tail.tail.tail.tail != null) {
-                                                                    const activePatternResult716 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                    const activePatternResult725 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                    if (activePatternResult716 != null) {
+                                                                    if (activePatternResult725 != null) {
                                                                         if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                            const activePatternResult717 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                            const activePatternResult726 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                            if (activePatternResult717 != null) {
+                                                                            if (activePatternResult726 != null) {
                                                                                 if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                                                    $var20 = [0, activePatternResult715, activePatternResult716, activePatternResult714, activePatternResult717];
+                                                                                    $var20 = [0, activePatternResult724, activePatternResult725, activePatternResult723, activePatternResult726];
                                                                                 } else {
                                                                                     $var20 = [1];
                                                                                 }
@@ -472,20 +472,20 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                     let $var21;
 
                                                     if (instrline.tail != null) {
-                                                        const activePatternResult710 = (0, _Cast.$7C$IsBranchInst$7C$_$7C$)(instrline.head);
+                                                        const activePatternResult719 = (0, _Cast.$7C$IsBranchInst$7C$_$7C$)(instrline.head);
 
-                                                        if (activePatternResult710 != null) {
+                                                        if (activePatternResult719 != null) {
                                                             if (instrline.tail.tail != null) {
                                                                 if (instrline.tail.tail.tail != null) {
-                                                                    const activePatternResult711 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                    const activePatternResult720 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                    if (activePatternResult711 != null) {
+                                                                    if (activePatternResult720 != null) {
                                                                         if (instrline.tail.tail.tail.tail != null) {
-                                                                            const activePatternResult713 = (0, _Cast.$7C$IsAddr$7C$_$7C$)(branch_map, instrline.tail.tail.tail.head);
+                                                                            const activePatternResult722 = (0, _Cast.$7C$IsAddr$7C$_$7C$)(branch_map, instrline.tail.tail.tail.head);
 
-                                                                            if (activePatternResult713 != null) {
+                                                                            if (activePatternResult722 != null) {
                                                                                 if (instrline.tail.tail.tail.tail.tail == null) {
-                                                                                    $var21 = [0, activePatternResult713, activePatternResult711, activePatternResult710];
+                                                                                    $var21 = [0, activePatternResult722, activePatternResult720, activePatternResult719];
                                                                                 } else {
                                                                                     $var21 = [1];
                                                                                 }
@@ -519,35 +519,35 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                             let $var22;
 
                                                             if (instrline.tail != null) {
-                                                                const activePatternResult703 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
+                                                                const activePatternResult712 = (0, _Cast.$7C$IsMOVInst$7C$_$7C$)(instrline.head);
 
-                                                                if (activePatternResult703 != null) {
+                                                                if (activePatternResult712 != null) {
                                                                     if (instrline.tail.tail != null) {
-                                                                        const activePatternResult704 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                        const activePatternResult713 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                                        if (activePatternResult704 != null) {
+                                                                        if (activePatternResult713 != null) {
                                                                             if (instrline.tail.tail.tail != null) {
-                                                                                const activePatternResult705 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                const activePatternResult714 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                if (activePatternResult705 != null) {
+                                                                                if (activePatternResult714 != null) {
                                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                                        const activePatternResult706 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                        const activePatternResult715 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                        if (activePatternResult706 != null) {
+                                                                                        if (activePatternResult715 != null) {
                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                const activePatternResult707 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                const activePatternResult716 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                if (activePatternResult707 != null) {
+                                                                                                if (activePatternResult716 != null) {
                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                        const activePatternResult708 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                        const activePatternResult717 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                        if (activePatternResult708 != null) {
+                                                                                                        if (activePatternResult717 != null) {
                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult709 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                const activePatternResult718 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                if (activePatternResult709 != null) {
+                                                                                                                if (activePatternResult718 != null) {
                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                        $var22 = [0, activePatternResult705, activePatternResult706, activePatternResult709, activePatternResult703, activePatternResult707, activePatternResult704, activePatternResult708];
+                                                                                                                        $var22 = [0, activePatternResult714, activePatternResult715, activePatternResult718, activePatternResult712, activePatternResult716, activePatternResult713, activePatternResult717];
                                                                                                                     } else {
                                                                                                                         $var22 = [1];
                                                                                                                     }
@@ -602,39 +602,39 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                     let $var23;
 
                                                                     if (instrline.tail != null) {
-                                                                        const activePatternResult695 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
+                                                                        const activePatternResult704 = (0, _Cast.$7C$IsALUInst$7C$_$7C$)(instrline.head);
 
-                                                                        if (activePatternResult695 != null) {
+                                                                        if (activePatternResult704 != null) {
                                                                             if (instrline.tail.tail != null) {
-                                                                                const activePatternResult696 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                                const activePatternResult705 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                                                if (activePatternResult696 != null) {
+                                                                                if (activePatternResult705 != null) {
                                                                                     if (instrline.tail.tail.tail != null) {
-                                                                                        const activePatternResult697 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                        const activePatternResult706 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                        if (activePatternResult697 != null) {
+                                                                                        if (activePatternResult706 != null) {
                                                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                                                const activePatternResult698 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                const activePatternResult707 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                if (activePatternResult698 != null) {
+                                                                                                if (activePatternResult707 != null) {
                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                        const activePatternResult699 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                        const activePatternResult708 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                        if (activePatternResult699 != null) {
+                                                                                                        if (activePatternResult708 != null) {
                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult700 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                const activePatternResult709 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                if (activePatternResult700 != null) {
+                                                                                                                if (activePatternResult709 != null) {
                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult701 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                        const activePatternResult710 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                        if (activePatternResult701 != null) {
+                                                                                                                        if (activePatternResult710 != null) {
                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                const activePatternResult702 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                const activePatternResult711 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                if (activePatternResult702 != null) {
+                                                                                                                                if (activePatternResult711 != null) {
                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                        $var23 = [0, activePatternResult697, activePatternResult698, activePatternResult702, activePatternResult695, activePatternResult699, activePatternResult700, activePatternResult696, activePatternResult701];
+                                                                                                                                        $var23 = [0, activePatternResult706, activePatternResult707, activePatternResult711, activePatternResult704, activePatternResult708, activePatternResult709, activePatternResult705, activePatternResult710];
                                                                                                                                     } else {
                                                                                                                                         $var23 = [1];
                                                                                                                                     }
@@ -695,35 +695,35 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                             let $var24;
 
                                                                             if (instrline.tail != null) {
-                                                                                const activePatternResult688 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
+                                                                                const activePatternResult697 = (0, _Cast.$7C$IsCOMPInst$7C$_$7C$)(instrline.head);
 
-                                                                                if (activePatternResult688 != null) {
+                                                                                if (activePatternResult697 != null) {
                                                                                     if (instrline.tail.tail != null) {
-                                                                                        const activePatternResult689 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                                        const activePatternResult698 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                                                        if (activePatternResult689 != null) {
+                                                                                        if (activePatternResult698 != null) {
                                                                                             if (instrline.tail.tail.tail != null) {
-                                                                                                const activePatternResult690 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                const activePatternResult699 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                if (activePatternResult690 != null) {
+                                                                                                if (activePatternResult699 != null) {
                                                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                                                        const activePatternResult691 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                        const activePatternResult700 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                        if (activePatternResult691 != null) {
+                                                                                                        if (activePatternResult700 != null) {
                                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult692 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                                const activePatternResult701 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                                if (activePatternResult692 != null) {
+                                                                                                                if (activePatternResult701 != null) {
                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult693 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                        const activePatternResult702 = (0, _Cast.$7C$IsShiftInst$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                        if (activePatternResult693 != null) {
+                                                                                                                        if (activePatternResult702 != null) {
                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                const activePatternResult694 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                const activePatternResult703 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                if (activePatternResult694 != null) {
+                                                                                                                                if (activePatternResult703 != null) {
                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                        $var24 = [0, activePatternResult690, activePatternResult691, activePatternResult694, activePatternResult688, activePatternResult692, activePatternResult689, activePatternResult693];
+                                                                                                                                        $var24 = [0, activePatternResult699, activePatternResult700, activePatternResult703, activePatternResult697, activePatternResult701, activePatternResult698, activePatternResult702];
                                                                                                                                     } else {
                                                                                                                                         $var24 = [1];
                                                                                                                                     }
@@ -780,23 +780,23 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                     if (instrline.tail != null) {
                                                                                         if (instrline.head === "ADR") {
                                                                                             if (instrline.tail.tail != null) {
-                                                                                                const activePatternResult683 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
+                                                                                                const activePatternResult692 = (0, _Cast.$7C$IsSetFlag$7C$_$7C$)(instrline.tail.head);
 
-                                                                                                if (activePatternResult683 != null) {
+                                                                                                if (activePatternResult692 != null) {
                                                                                                     if (instrline.tail.tail.tail != null) {
-                                                                                                        const activePatternResult684 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                        const activePatternResult693 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                        if (activePatternResult684 != null) {
+                                                                                                        if (activePatternResult693 != null) {
                                                                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                                                                const activePatternResult685 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                                const activePatternResult694 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                                if (activePatternResult685 != null) {
+                                                                                                                if (activePatternResult694 != null) {
                                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult687 = (0, _Cast.$7C$IsAddr$7C$_$7C$)(branch_map, instrline.tail.tail.tail.tail.head);
+                                                                                                                        const activePatternResult696 = (0, _Cast.$7C$IsAddr$7C$_$7C$)(branch_map, instrline.tail.tail.tail.tail.head);
 
-                                                                                                                        if (activePatternResult687 != null) {
+                                                                                                                        if (activePatternResult696 != null) {
                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                $var25 = [0, activePatternResult687, activePatternResult684, activePatternResult685, activePatternResult683];
+                                                                                                                                $var25 = [0, activePatternResult696, activePatternResult693, activePatternResult694, activePatternResult692];
                                                                                                                             } else {
                                                                                                                                 $var25 = [1];
                                                                                                                             }
@@ -839,31 +839,31 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                             let $var26;
 
                                                                                             if (instrline.tail != null) {
-                                                                                                const activePatternResult678 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
+                                                                                                const activePatternResult687 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
 
-                                                                                                if (activePatternResult678 != null) {
+                                                                                                if (activePatternResult687 != null) {
                                                                                                     if (instrline.tail.tail != null) {
-                                                                                                        const activePatternResult679 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
+                                                                                                        const activePatternResult688 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
 
-                                                                                                        if (activePatternResult679 != null) {
+                                                                                                        if (activePatternResult688 != null) {
                                                                                                             if (instrline.tail.tail.tail != null) {
-                                                                                                                const activePatternResult680 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                                const activePatternResult689 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                                if (activePatternResult680 != null) {
+                                                                                                                if (activePatternResult689 != null) {
                                                                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult681 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                                        const activePatternResult690 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                                        if (activePatternResult681 != null) {
+                                                                                                                        if (activePatternResult690 != null) {
                                                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
                                                                                                                                 if (instrline.tail.tail.tail.tail.head === "[") {
                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                        const activePatternResult682 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                                        const activePatternResult691 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                        if (activePatternResult682 != null) {
+                                                                                                                                        if (activePatternResult691 != null) {
                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                 if (instrline.tail.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                        $var26 = [0, activePatternResult679, activePatternResult680, activePatternResult681, activePatternResult678, activePatternResult682];
+                                                                                                                                                        $var26 = [0, activePatternResult688, activePatternResult689, activePatternResult690, activePatternResult687, activePatternResult691];
                                                                                                                                                     } else {
                                                                                                                                                         $var26 = [1];
                                                                                                                                                     }
@@ -918,35 +918,35 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                     let $var27;
 
                                                                                                     if (instrline.tail != null) {
-                                                                                                        const activePatternResult672 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
+                                                                                                        const activePatternResult681 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
 
-                                                                                                        if (activePatternResult672 != null) {
+                                                                                                        if (activePatternResult681 != null) {
                                                                                                             if (instrline.tail.tail != null) {
-                                                                                                                const activePatternResult673 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
+                                                                                                                const activePatternResult682 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
 
-                                                                                                                if (activePatternResult673 != null) {
+                                                                                                                if (activePatternResult682 != null) {
                                                                                                                     if (instrline.tail.tail.tail != null) {
-                                                                                                                        const activePatternResult674 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                                        const activePatternResult683 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                                        if (activePatternResult674 != null) {
+                                                                                                                        if (activePatternResult683 != null) {
                                                                                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                                                                                const activePatternResult675 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                                                const activePatternResult684 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                                                if (activePatternResult675 != null) {
+                                                                                                                                if (activePatternResult684 != null) {
                                                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
                                                                                                                                         if (instrline.tail.tail.tail.tail.head === "[") {
                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                const activePatternResult676 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                                                const activePatternResult685 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                if (activePatternResult676 != null) {
+                                                                                                                                                if (activePatternResult685 != null) {
                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                        const activePatternResult677 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                        const activePatternResult686 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                        if (activePatternResult677 != null) {
+                                                                                                                                                        if (activePatternResult686 != null) {
                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                 if (instrline.tail.tail.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                                        $var27 = [0, activePatternResult673, activePatternResult674, activePatternResult675, activePatternResult672, activePatternResult677, activePatternResult676];
+                                                                                                                                                                        $var27 = [0, activePatternResult682, activePatternResult683, activePatternResult684, activePatternResult681, activePatternResult686, activePatternResult685];
                                                                                                                                                                     } else {
                                                                                                                                                                         $var27 = [1];
                                                                                                                                                                     }
@@ -1007,37 +1007,37 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                             let $var28;
 
                                                                                                             if (instrline.tail != null) {
-                                                                                                                const activePatternResult666 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
+                                                                                                                const activePatternResult675 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                if (activePatternResult666 != null) {
+                                                                                                                if (activePatternResult675 != null) {
                                                                                                                     if (instrline.tail.tail != null) {
-                                                                                                                        const activePatternResult667 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
+                                                                                                                        const activePatternResult676 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
 
-                                                                                                                        if (activePatternResult667 != null) {
+                                                                                                                        if (activePatternResult676 != null) {
                                                                                                                             if (instrline.tail.tail.tail != null) {
-                                                                                                                                const activePatternResult668 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                                                const activePatternResult677 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                                                if (activePatternResult668 != null) {
+                                                                                                                                if (activePatternResult677 != null) {
                                                                                                                                     if (instrline.tail.tail.tail.tail != null) {
-                                                                                                                                        const activePatternResult669 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                                                        const activePatternResult678 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                                                        if (activePatternResult669 != null) {
+                                                                                                                                        if (activePatternResult678 != null) {
                                                                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
                                                                                                                                                 if (instrline.tail.tail.tail.tail.head === "[") {
                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                        const activePatternResult670 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                                                        const activePatternResult679 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                        if (activePatternResult670 != null) {
+                                                                                                                                                        if (activePatternResult679 != null) {
                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                const activePatternResult671 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                const activePatternResult680 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                if (activePatternResult671 != null) {
+                                                                                                                                                                if (activePatternResult680 != null) {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                         if (instrline.tail.tail.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                                 if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.head === "!") {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                                                        $var28 = [0, activePatternResult667, activePatternResult668, activePatternResult669, activePatternResult666, activePatternResult671, activePatternResult670];
+                                                                                                                                                                                        $var28 = [0, activePatternResult676, activePatternResult677, activePatternResult678, activePatternResult675, activePatternResult680, activePatternResult679];
                                                                                                                                                                                     } else {
                                                                                                                                                                                         $var28 = [1];
                                                                                                                                                                                     }
@@ -1104,35 +1104,35 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                                     let $var29;
 
                                                                                                                     if (instrline.tail != null) {
-                                                                                                                        const activePatternResult660 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
+                                                                                                                        const activePatternResult669 = (0, _Cast.$7C$IsMEMRInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                        if (activePatternResult660 != null) {
+                                                                                                                        if (activePatternResult669 != null) {
                                                                                                                             if (instrline.tail.tail != null) {
-                                                                                                                                const activePatternResult661 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
+                                                                                                                                const activePatternResult670 = (0, _Cast.$7C$IsByteMode$7C$_$7C$)(instrline.tail.head);
 
-                                                                                                                                if (activePatternResult661 != null) {
+                                                                                                                                if (activePatternResult670 != null) {
                                                                                                                                     if (instrline.tail.tail.tail != null) {
-                                                                                                                                        const activePatternResult662 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
+                                                                                                                                        const activePatternResult671 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.head);
 
-                                                                                                                                        if (activePatternResult662 != null) {
+                                                                                                                                        if (activePatternResult671 != null) {
                                                                                                                                             if (instrline.tail.tail.tail.tail != null) {
-                                                                                                                                                const activePatternResult663 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
+                                                                                                                                                const activePatternResult672 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.head);
 
-                                                                                                                                                if (activePatternResult663 != null) {
+                                                                                                                                                if (activePatternResult672 != null) {
                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
                                                                                                                                                         if (instrline.tail.tail.tail.tail.head === "[") {
                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                const activePatternResult664 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                const activePatternResult673 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                if (activePatternResult664 != null) {
+                                                                                                                                                                if (activePatternResult673 != null) {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                         if (instrline.tail.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                const activePatternResult665 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                const activePatternResult674 = (0, _Cast.$7C$IsRegOrLit$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                if (activePatternResult665 != null) {
+                                                                                                                                                                                if (activePatternResult674 != null) {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                                                        $var29 = [0, activePatternResult661, activePatternResult662, activePatternResult663, activePatternResult660, activePatternResult665, activePatternResult664];
+                                                                                                                                                                                        $var29 = [0, activePatternResult670, activePatternResult671, activePatternResult672, activePatternResult669, activePatternResult674, activePatternResult673];
                                                                                                                                                                                     } else {
                                                                                                                                                                                         $var29 = [1];
                                                                                                                                                                                     }
@@ -1193,29 +1193,29 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                                             let $var30;
 
                                                                                                                             if (instrline.tail != null) {
-                                                                                                                                const activePatternResult656 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
+                                                                                                                                const activePatternResult665 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                                if (activePatternResult656 != null) {
+                                                                                                                                if (activePatternResult665 != null) {
                                                                                                                                     if (instrline.tail.tail != null) {
                                                                                                                                         if (instrline.tail.tail.tail != null) {
                                                                                                                                             if (instrline.tail.tail.tail.tail != null) {
                                                                                                                                                 if (instrline.tail.tail.tail.head === "[") {
                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                        const activePatternResult657 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                                                                        const activePatternResult666 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                                                                        if (activePatternResult657 != null) {
+                                                                                                                                                        if (activePatternResult666 != null) {
                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                 if (instrline.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                        const activePatternResult658 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                        const activePatternResult667 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                        if (activePatternResult658 != null) {
+                                                                                                                                                                        if (activePatternResult667 != null) {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                const activePatternResult659 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                const activePatternResult668 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                if (activePatternResult659 != null) {
+                                                                                                                                                                                if (activePatternResult668 != null) {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                                                        $var30 = [0, activePatternResult658, activePatternResult657, activePatternResult656, activePatternResult659];
+                                                                                                                                                                                        $var30 = [0, activePatternResult667, activePatternResult666, activePatternResult665, activePatternResult668];
                                                                                                                                                                                     } else {
                                                                                                                                                                                         $var30 = [1];
                                                                                                                                                                                     }
@@ -1270,25 +1270,25 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                                                     let $var31;
 
                                                                                                                                     if (instrline.tail != null) {
-                                                                                                                                        const activePatternResult653 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
+                                                                                                                                        const activePatternResult662 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                                        if (activePatternResult653 != null) {
+                                                                                                                                        if (activePatternResult662 != null) {
                                                                                                                                             if (instrline.tail.tail != null) {
                                                                                                                                                 if (instrline.tail.tail.tail != null) {
                                                                                                                                                     if (instrline.tail.tail.tail.tail != null) {
                                                                                                                                                         if (instrline.tail.tail.tail.head === "[") {
                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                const activePatternResult654 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                                                                                const activePatternResult663 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                                                                                if (activePatternResult654 != null) {
+                                                                                                                                                                if (activePatternResult663 != null) {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                         if (instrline.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                const activePatternResult655 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                const activePatternResult664 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                if (activePatternResult655 != null) {
+                                                                                                                                                                                if (activePatternResult664 != null) {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail.tail == null) {
-                                                                                                                                                                                        $var31 = [0, activePatternResult654, activePatternResult653, activePatternResult655];
+                                                                                                                                                                                        $var31 = [0, activePatternResult663, activePatternResult662, activePatternResult664];
                                                                                                                                                                                     } else {
                                                                                                                                                                                         $var31 = [1];
                                                                                                                                                                                     }
@@ -1337,31 +1337,31 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                                                             let $var32;
 
                                                                                                                                             if (instrline.tail != null) {
-                                                                                                                                                const activePatternResult648 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
+                                                                                                                                                const activePatternResult657 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                                                if (activePatternResult648 != null) {
+                                                                                                                                                if (activePatternResult657 != null) {
                                                                                                                                                     if (instrline.tail.tail != null) {
                                                                                                                                                         if (instrline.tail.tail.tail != null) {
                                                                                                                                                             if (instrline.tail.tail.tail.tail != null) {
                                                                                                                                                                 if (instrline.tail.tail.tail.head === "[") {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                        const activePatternResult649 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                                                                                        const activePatternResult658 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                                                                                        if (activePatternResult649 != null) {
+                                                                                                                                                                        if (activePatternResult658 != null) {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                                 if (instrline.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                        const activePatternResult650 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                        const activePatternResult659 = (0, _Cast.$7C$IsCondition$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                        if (activePatternResult650 != null) {
+                                                                                                                                                                                        if (activePatternResult659 != null) {
                                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                                const activePatternResult651 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                                const activePatternResult660 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                                if (activePatternResult651 != null) {
-                                                                                                                                                                                                    const activePatternResult652 = (0, _Cast.$7C$IsRegList$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.tail);
+                                                                                                                                                                                                if (activePatternResult660 != null) {
+                                                                                                                                                                                                    const activePatternResult661 = (0, _Cast.$7C$IsRegList$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail.tail);
 
-                                                                                                                                                                                                    if (activePatternResult652 != null) {
-                                                                                                                                                                                                        $var32 = [0, activePatternResult650, activePatternResult649, activePatternResult648, activePatternResult652, activePatternResult651];
+                                                                                                                                                                                                    if (activePatternResult661 != null) {
+                                                                                                                                                                                                        $var32 = [0, activePatternResult659, activePatternResult658, activePatternResult657, activePatternResult661, activePatternResult660];
                                                                                                                                                                                                     } else {
                                                                                                                                                                                                         $var32 = [1];
                                                                                                                                                                                                     }
@@ -1416,27 +1416,27 @@ define(["exports", "fable-core/umd/List", "fable-core/umd/Seq", "fable-core/umd/
                                                                                                                                                     let $var33;
 
                                                                                                                                                     if (instrline.tail != null) {
-                                                                                                                                                        const activePatternResult644 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
+                                                                                                                                                        const activePatternResult653 = (0, _Cast.$7C$IsMEMMInst$7C$_$7C$)(instrline.head);
 
-                                                                                                                                                        if (activePatternResult644 != null) {
+                                                                                                                                                        if (activePatternResult653 != null) {
                                                                                                                                                             if (instrline.tail.tail != null) {
                                                                                                                                                                 if (instrline.tail.tail.tail != null) {
                                                                                                                                                                     if (instrline.tail.tail.tail.tail != null) {
                                                                                                                                                                         if (instrline.tail.tail.tail.head === "[") {
                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                const activePatternResult645 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
+                                                                                                                                                                                const activePatternResult654 = (0, _Cast.$7C$IsLDMdir$7C$_$7C$)(instrline.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                if (activePatternResult645 != null) {
+                                                                                                                                                                                if (activePatternResult654 != null) {
                                                                                                                                                                                     if (instrline.tail.tail.tail.tail.tail.tail != null) {
                                                                                                                                                                                         if (instrline.tail.tail.tail.tail.tail.head === "]") {
                                                                                                                                                                                             if (instrline.tail.tail.tail.tail.tail.tail.tail != null) {
-                                                                                                                                                                                                const activePatternResult646 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
+                                                                                                                                                                                                const activePatternResult655 = (0, _Cast.$7C$IsReg$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.head);
 
-                                                                                                                                                                                                if (activePatternResult646 != null) {
-                                                                                                                                                                                                    const activePatternResult647 = (0, _Cast.$7C$IsRegList$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail);
+                                                                                                                                                                                                if (activePatternResult655 != null) {
+                                                                                                                                                                                                    const activePatternResult656 = (0, _Cast.$7C$IsRegList$7C$_$7C$)(instrline.tail.tail.tail.tail.tail.tail.tail);
 
-                                                                                                                                                                                                    if (activePatternResult647 != null) {
-                                                                                                                                                                                                        $var33 = [0, activePatternResult645, activePatternResult644, activePatternResult647, activePatternResult646];
+                                                                                                                                                                                                    if (activePatternResult656 != null) {
+                                                                                                                                                                                                        $var33 = [0, activePatternResult654, activePatternResult653, activePatternResult656, activePatternResult655];
                                                                                                                                                                                                     } else {
                                                                                                                                                                                                         $var33 = [1];
                                                                                                                                                                                                     }
