@@ -130,14 +130,11 @@ module UserInterface =
         currentBase <- toBase
         console.info(timeNow(), "\tChanged register display base to", (toJson toBase));
 
-    //get input source code
-    let sourceDOMElement = document.getElementById "source-code" :?>HTMLTextAreaElement
-  
     //button functions
     let execute() =
         console.info(timeNow(), "\tExecuting Source Code...")
         //get values from input elements
-        let sourceCode = sourceDOMElement.value
+        let sourceCode = window?getEditorContent() |> string
         currentState <- execute sourceCode
 
         showRegisters currentState currentBase

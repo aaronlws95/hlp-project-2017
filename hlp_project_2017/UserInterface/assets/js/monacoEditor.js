@@ -1,6 +1,3 @@
-let getEditorContent
-let setEditorContent
-
 requirejs.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
 requirejs(['vs/editor/editor.main'], function () {
     //register a new language
@@ -69,11 +66,11 @@ requirejs(['vs/editor/editor.main'], function () {
 
     });
 
-    getEditorContent = function () {
+    window.getEditorContent = function () {
         return editor.getValue();
     }
 
-    setEditorContent = function (string) {
+    window.setEditorContent = function (string) {
         editor.setValue(string);
     }
 });
