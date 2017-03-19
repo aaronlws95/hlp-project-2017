@@ -11,17 +11,17 @@ const sourceCodeEditor = document.getElementById("source-code");
 
 let fileName = "";
 
-function updateEditor(string) {
-    document.getElementById("source-code").value = string;
-}
+// function setEditorContent(string) {
+//     document.getElementById("source-code").value = string;
+// }
 
-function getEditorContent(){
-    return sourceCodeEditor.value
-}
+// function getEditorContent(){
+//     return sourceCodeEditor.value
+// }
 
 function newFile() {
     if (confirm("Discard the current file?")) {
-        updateEditor("");
+        setEditorContent("");
         log("New file is created.");
     }
 }
@@ -64,7 +64,7 @@ function readFile(filepath) {
             return;
         }
         fileName = path.basename(filepath);
-        updateEditor(data);
+        setEditorContent(data);
         document.title = fileName + " - " + appName;
         log(fileName, "is openned successfully.");
     });
