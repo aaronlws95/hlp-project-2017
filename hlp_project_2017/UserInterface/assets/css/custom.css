@@ -1,4 +1,4 @@
-html, body, .col-xs-8,{
+html, body, .col-xs-10,{
     height: 100%;
     -webkit-app-region: drag;
 }

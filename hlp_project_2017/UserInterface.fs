@@ -11,7 +11,6 @@ module UserInterfaceController =
     open MachineState
     open InstructionType
 
-    //environment values for GUI
     type DisplayBase = Bin | Dec | Hex
 
     //parse MachineState for output
@@ -50,7 +49,6 @@ module UserInterfaceController =
                 | 14 -> "E"
                 | 15 -> "F"
                 | _ -> "ErrorBit"
-
         let rec convert dec = 
             match dec with
             | dec when dec <= 9 -> string dec
@@ -76,15 +74,15 @@ module UserInterfaceController =
             DOMElement.textContent <- diplayValue
             //console.log(timeNow(), "\tR" + (string i) + "=" + diplayValue);
         [0..15] |> List.map (fun i -> updateRegister i currentBase) |> ignore
-        console.info(timeNow(), "\tRegister Values Update Complete.");
+        console.info(timeNow(), "\tRegister values update successful.");
     
     let showFlags (state: MachineState) =
         let flags = getFlags state
         let updateFlag i = 
             let flag = document.getElementById (("CSPR" + (string i))) :?>HTMLSpanElement
             flag.textContent <- flags.[i] |> string
-        console.info(timeNow(), "\tCSPR Bits Values are", flags);
-        console.info(timeNow(), "\tCSPR Bits Values Update Complete.");
+        console.info(timeNow(), "\tCSPR Bits are", flags);
+        console.info(timeNow(), "\tCSPR Bits update successful.");
     
     let showStatus (msg: string) = 
         //display message in status footbar
@@ -114,6 +112,12 @@ module UserInterface =
     let mutable currentBase = Hex
     let mutable currentState = execute "MOV R0, #0"
 
+    console.info(timeNow(), "\tFable Application Loaded")
+    console.log("%c ARM Emulator - HLP Project 2017", "background: #222; color: #bada55");
+    console.log("%c Parser:\t Rubio, Santiago P L ", "background: #222; color: #bada55");
+    console.log("%c Emulator:\t Low, Aaron S \t Chan, Jun S", "background: #222; color: #bada55");
+    console.log("%c Front-end:\t Wang, Tianyou", "background: #222; color: #bada55");
+
     let changeBase (state: MachineState) (toBase: DisplayBase) = 
         showRegisters state toBase
         let baseValue = 
@@ -126,13 +130,7 @@ module UserInterface =
         currentBase <- toBase
         console.info(timeNow(), "\tChanged register display base to", (toJson toBase));
 
-    console.info(timeNow(), "\tFable Application Loaded")
-    console.log("%c ARM Emulator - HLP Project 2017", "background: #222; color: #bada55");
-    console.log("%c Parser:\t Rubio, Santiago P L ", "background: #222; color: #bada55");
-    console.log("%c Emulator:\t Low, Aaron S \t Chan, Jun S", "background: #222; color: #bada55");
-    console.log("%c Front-end:\t Wang, Tianyou", "background: #222; color: #bada55");
-
-    //get input elements
+    //get input source code
     let sourceDOMElement = document.getElementById "source-code" :?>HTMLTextAreaElement
   
     //button functions
@@ -142,7 +140,6 @@ module UserInterface =
         let sourceCode = sourceDOMElement.value
         currentState <- execute sourceCode
 
-        console.info(timeNow(), "\tDisplaying Register Values...")
         showRegisters currentState currentBase
         showFlags currentState
         showState currentState

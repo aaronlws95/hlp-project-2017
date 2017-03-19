@@ -22,18 +22,21 @@ function getEditorContent(){
 function newFile() {
     if (confirm("Discard the current file?")) {
         updateEditor("");
+        log("New file is created.");
     }
 }
 
 function log(...args) {
-    console.info(new Date().toLocaleTimeString(),"\tOpenning", ...args);
-    document.getElementById("status-msg").textContent = args.join(" ");
+    msg = args.join(" ");
+    console.info(new Date().toLocaleTimeString(),"\t" + msg);
+    document.getElementById("status-msg").textContent = msg;
 }
 
 function error(...args) {
-    console.error(new Date().toLocaleTimeString(),"\tOpenning", ...args);
-    document.getElementById("status-msg").textContent = args.join(" ");
-    alert(args.join(" "));
+    msg = args.join(" ");
+    console.error(new Date().toLocaleTimeString(),"\t" + msg);
+    document.getElementById("status-msg").textContent = msg;
+    alert(msg);
 }
 
 function openFile() {
@@ -43,7 +46,7 @@ function openFile() {
         }, function (newFileNames) {
             // fileNames is an array that contains all the selected
             if (newFileNames === undefined) {
-                log("", "No file is selected.");
+                log("No file is selected.");
             } else {
                 log("Openning", newFileNames[0]);
                 readFile(newFileNames[0]);
@@ -63,7 +66,7 @@ function readFile(filepath) {
         fileName = path.basename(filepath);
         updateEditor(data);
         document.title = fileName + " - " + appName;
-        log(fileName, "is read successfully.");
+        log(fileName, "is openned successfully.");
     });
 }
 
@@ -74,7 +77,7 @@ function writeFile(filepath, content) {
             console.log(err);
             return;
         }
-
+        log("File saved to",filepath);
 
     });
 }
@@ -100,3 +103,15 @@ function saveFileAs() {
         document.title = fileName + " - " + appName;
     });
 }
+
+function getButton(string){
+    return document.getElementById(string);
+}
+
+const newFileButton = getButton("new-file");
+const openFileButton = getButton("open-file");
+const saveFileButton = getButton("save-file");
+
+newFileButton.addEventListener("click",newFile);
+openFileButton.addEventListener("click",openFile);
+saveFileButton.addEventListener("click",saveFile);
