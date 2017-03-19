@@ -65,12 +65,14 @@
     <Compile Include="ALUInstruction.fs" />
     <Compile Include="MEMInstruction.fs" />
     <Compile Include="SHIFTInstruction.fs" />
+    <Compile Include="BRANCHInstruction.fs" />
     <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Program.fs" />
     <Compile Include="UserInterface.fs" />
     <Content Include="packages.config" />
+    <Compile Include="File1.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Argu">
