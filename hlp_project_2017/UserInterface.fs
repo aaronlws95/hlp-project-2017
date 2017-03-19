@@ -113,7 +113,7 @@ module UserInterface =
     let mutable currentState = execute "MOV R0, #0"
 
     console.info(timeNow(), "\tFable Application Loaded")
-    console.log("%c ARM Emulator - HLP Project 2017", "background: #222; color: #bada55");
+    console.log("%c ARMadillo - HLP Project 2017", "background: #222; color: #bada55");
     console.log("%c Parser:\t Rubio, Santiago P L ", "background: #222; color: #bada55");
     console.log("%c Emulator:\t Low, Aaron S \t Chan, Jun S", "background: #222; color: #bada55");
     console.log("%c Front-end:\t Wang, Tianyou", "background: #222; color: #bada55");
