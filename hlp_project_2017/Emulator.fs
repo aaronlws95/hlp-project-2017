@@ -8,7 +8,9 @@ module Emulator =
     open SFInstruction
     open MEMInstruction
     open SHIFTInstruction
+    open BRANCHInstruction
     open EmulatorHelper
+
     /// ===========================================
     /// Emulator functions
     /// ===========================================
@@ -20,6 +22,7 @@ module Emulator =
             | SF(sfi) -> SFInstruction.executeInstruction state sfi 
             | MEM(mi) -> MEMInstruction.executeInstruction state mi 
             | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s 
+            | BRANCH(bi) -> BRANCHInstruction.executeInstruction state bi 
         let executeLine state = 
             let programCounter = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
             let checkCondition cond = 
@@ -39,6 +42,7 @@ module Emulator =
                 | GT -> state.Flags.Z = false && state.Flags.N = state.Flags.V
                 | LE -> state.Flags.Z = true && not (state.Flags.N = state.Flags.V)
                 | AL -> true
+                | NoCond -> true 
             let instLine = state.MemMap.TryFind( Addr(programCounter) )
             let outputState = 
                 match instLine with
