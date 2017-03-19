@@ -18,6 +18,7 @@ gulp.task("run", () => {
 gulp.task("clean", () => {
     return gulp.src([
         "./*.js",
+        "./*.js.map",
         "!./gulpfile.js",
         "!./main.js"
     ]).pipe(clean())
