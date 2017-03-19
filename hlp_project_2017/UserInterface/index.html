@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ARM SIMULATOR</title>
+    <title>ARM Emulator</title>
 
     <link href="assets/css/paper/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/custom.css" rel="stylesheet">
@@ -14,7 +14,6 @@
 <body>
     <div class="navbar navbar-default">
         <div class="container-fluid">
-
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
                     <li>
@@ -22,7 +21,7 @@
                             <a href="#" id="new-file" class="btn btn-default">New</a>
                             <a href="#" id="open-file" class="btn btn-default">Open</a>
                             <a href="#" id="save-file" class="btn btn-default">Save</a>
-                            <a href="#"id="memory-lookup" class="btn btn-default">Momory</a>
+                            <a href="#" id="memory-lookup" class="btn btn-default">Momory</a>
                         </p>
                     </li>
 
@@ -52,121 +51,119 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-8">
-                <textarea id="source-code" class="text-editor" rows="20" placeholder="Enter your ARM code here...">MOV R0, #10</textarea>
-            </div>
-            <div class="col-xs-4">
-                <table class="table table-striped table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Register</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>R0</td>
-                            <td><span id="R0" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R1</td>
-                            <td><span id="R1" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R2</td>
-                            <td><span id="R2" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R3</td>
-                            <td><span id="R3" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R4</td>
-                            <td><span id="R4" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R5</td>
-                            <td><span id="R5" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R6</td>
-                            <td><span id="R6" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R7</td>
-                            <td><span id="R7" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R8</td>
-                            <td><span id="R8" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R9</td>
-                            <td><span id="R9" class="label label-primary">0x0</span></td>
+    <div class="container-fluid flex">
+        <div class="col-xs-8">
+            <textarea id="source-code" class="text-editor" rows="20" placeholder="Enter your ARM code here...">MOV R0, #10</textarea>
+        </div>
+        <div class="col-xs-4">
+            <table class="table table-striped table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Register</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R0</td>
+                        <td><span id="R0" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R1</td>
+                        <td><span id="R1" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R2</td>
+                        <td><span id="R2" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R3</td>
+                        <td><span id="R3" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R4</td>
+                        <td><span id="R4" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R5</td>
+                        <td><span id="R5" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R6</td>
+                        <td><span id="R6" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R7</td>
+                        <td><span id="R7" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R8</td>
+                        <td><span id="R8" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R9</td>
+                        <td><span id="R9" class="label label-primary">0x0</span></td>
 
-                        </tr>
-                        <tr>
-                            <td>R10</td>
-                            <td><span id="R10" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R11</td>
-                            <td><span id="R11" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R12</td>
-                            <td><span id="R12" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>R13</td>
-                            <td><span id="R13" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>LR</td>
-                            <td><span id="R14" class="label label-primary">0x0</span></td>
-                        </tr>
-                        <tr>
-                            <td>PC</td>
-                            <td><span id="R15" class="label label-primary">0x0</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </tr>
+                    <tr>
+                        <td>R10</td>
+                        <td><span id="R10" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R11</td>
+                        <td><span id="R11" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R12</td>
+                        <td><span id="R12" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>R13</td>
+                        <td><span id="R13" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>LR</td>
+                        <td><span id="R14" class="label label-primary">0x0</span></td>
+                    </tr>
+                    <tr>
+                        <td>PC</td>
+                        <td><span id="R15" class="label label-primary">0x0</span></td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <table class="table table-striped table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>N</th>
-                            <th>Z</th>
-                            <th>C</th>
-                            <th>V</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>CSPR Status Bits</td>
-                            <td><span id="CSPR1" class="label label-primary">0</span></td>
-                            <td><span id="CSPR2" class="label label-primary">0</span></td>
-                            <td><span id="CSPR3" class="label label-primary">0</span></td>
-                            <td><span id="CSPR4" class="label label-primary">0</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-striped table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>N</th>
+                        <th>Z</th>
+                        <th>C</th>
+                        <th>V</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CSPR Status Bits</td>
+                        <td><span id="CSPR1" class="label label-primary">0</span></td>
+                        <td><span id="CSPR2" class="label label-primary">0</span></td>
+                        <td><span id="CSPR3" class="label label-primary">0</span></td>
+                        <td><span id="CSPR4" class="label label-primary">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
 
     <footer class="footer">
         <div class="container-fluid">
-            <p>Status: <span id="status-msg">Application Initialised.</span></p>
+            <p><span id="status-msg">Application Initialised.</span></p>
         </div>
     </footer>
 
     <!--For jQuery Workaround-->
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
     <!--3rd Party Library-->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -174,20 +171,21 @@
     <script src="./node_modules/requirejs/require.js"></script>
     <!--File System-->
     <script src="./assets/js/fileSystem.js"></script>
+    <script src="./assets/js/menuBar.js"></script>
     <script>if (window.module) module = window.module;</script>
-    
+
     <!--Load Fsharp Project-->
     <script>
-        requirejs.config({
-            // Set the baseUrl to the path of the compiled JS code
-            baseUrl: '.',
-            paths: {
-                // Explicit path to core lib (relative to baseUrl, omit .js)
-                'fable-core': './node_modules/fable-core'
-            }
-        });
-        // Load the entry file of the app (use array, omit .js)
-        requirejs(["UserInterface"]);
+            requirejs.config({
+                // Set the baseUrl to the path of the compiled JS code
+                baseUrl: '.',
+                paths: {
+                    // Explicit path to core lib (relative to baseUrl, omit .js)
+                    'fable-core': './node_modules/fable-core'
+                }
+            });
+            // Load the entry file of the app (use array, omit .js)
+            requirejs(["UserInterface"]);
     </script>
 </body>
 
