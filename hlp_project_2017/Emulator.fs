@@ -53,14 +53,17 @@ module Emulator =
                 // Shift:None/Some, Condition:False
                 | Some (Inst(Line(inst, _, Some(c) ))) when checkCondition c = false -> state 
                 // Error cases
-                | None -> failwithf "run time error: no instruction line found at address %A" (state.RegMap.TryFind(R 15)) 
-                | x -> failwithf "run time error: instruction line not defined %A" x 
+                | None -> {state with State = RunTimeErr("run time error: no instruction line found at address "+(state.RegMap.TryFind(R 15)).ToString())}
+                | Some(Inst(Failed_Parsing(error_msg))) -> {state with State = SyntaxErr(error_msg)}
+                | x -> {state with State = RunTimeErr("run time error: instruction line not defined: "+x.ToString())}
             // Update PC 
             let newRegMap = 
                 match outputState.RegMap.[R 15] with
                 | pc when pc = state.RegMap.[R 15] -> Map.add (R 15) (pc+4) outputState.RegMap
                 | _ -> outputState.RegMap // If PC has been changed, it means a branching operation has taken care of PC for us so no need +4
+
             // Check if we have reached the end
             match Addr(newRegMap.[R 15]) with
+            | _ when outputState.State <> RunOK -> outputState
             | pc when pc >= outputState.END -> {outputState with RegMap = newRegMap; State = RunEND}
             | _ -> {outputState with RegMap = newRegMap}
