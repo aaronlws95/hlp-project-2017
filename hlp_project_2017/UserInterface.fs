@@ -26,7 +26,8 @@ module UserInterfaceController =
         [flags.N; flags.Z; flags.C; flags.V] |> List.map (fun x -> match x with | true -> 1 | _ -> 0) |> List.toArray
 
     //base conversion for registers
-    let toBin dec = 
+    let toBin (dec: int) = 
+        //Convert.ToString(dec, 2)
         let rec convert dec = 
             match dec with
             | 0 | 1 -> string dec
@@ -35,7 +36,8 @@ module UserInterfaceController =
                 convert (dec/2) + bit
         convert dec
 
-    let toHex dec = 
+    let toHex (dec: int) = 
+        //Convert.ToString(dec, 16)
         let toArray byte = [|byte|]
         let toBit (remainder: int) = 
             match remainder with
@@ -72,7 +74,7 @@ module UserInterfaceController =
                     | Hex -> value |> toHex |> string |> (+) "0x"
                     | _ -> value |> string
             DOMElement.textContent <- diplayValue
-            console.log(timeNow(), "\tR" + (string i) + "=" + diplayValue);
+            //console.log(timeNow(), "\tR" + (string i) + "=" + diplayValue);
         [0..15] |> List.map (fun i -> updateRegister i currentBase) |> ignore
         console.info(timeNow(), "\tRegister Values Update Complete.");
     
@@ -88,7 +90,7 @@ module UserInterfaceController =
         //display message in status footbar
         let DOMElement = document.getElementById ("status-msg") :?>HTMLSpanElement
         DOMElement.textContent <- msg
-        console.info(timeNow(), "\tStatus Bar message:", msg);
+        console.info(timeNow(), "\t" + msg);
     
     let showState (state: MachineState) = 
         let runState = getState state
@@ -99,6 +101,18 @@ module UserInterfaceController =
                 | SyntaxErr _ -> ("Syntax Error: " + (toJson runState))
                 | RunEND -> "Execution was successful. The final instruction is reached."                
         showStatus StateMsg    
+    
+module UserInterface =
+    open Fable.Core
+    open Fable.Import
+    open Fable.Import.Browser
+    open Fable.Core.JsInterop
+    open UserInterfaceController
+    open MachineState
+    open Program
+
+    let mutable currentBase = Hex
+    let mutable currentState = execute "MOV R0, #0"
 
     let changeBase (state: MachineState) (toBase: DisplayBase) = 
         showRegisters state toBase
@@ -109,33 +123,26 @@ module UserInterfaceController =
                 | _ -> "10"
         let DOMElement = document.getElementById ("base") :?>HTMLSpanElement
         DOMElement.textContent <- baseValue
+        currentBase <- toBase
         console.info(timeNow(), "\tChanged register display base to", (toJson toBase));
-    
-module UserInterface = 
-    open Fable.Core
-    open Fable.Import
-    open Fable.Import.Browser
-    //open Parser
-    open UserInterfaceController
-    open MachineState
-    open Program
 
-    console.log("Initialising Application...")
+    console.info(timeNow(), "\tFable Application Loaded")
+    console.log("%c ARM Emulator - HLP Project 2017", "background: #222; color: #bada55");
+    console.log("%c Parser:\t Rubio, Santiago P L ", "background: #222; color: #bada55");
+    console.log("%c Emulator:\t Low, Aaron S \t Chan, Jun S", "background: #222; color: #bada55");
+    console.log("%c Front-end:\t Wang, Tianyou", "background: #222; color: #bada55");
 
     //get input elements
     let sourceDOMElement = document.getElementById "source-code" :?>HTMLTextAreaElement
-    //let outputDOMElement = document.getElementById "output" :?>HTMLParagraphElement
-       
-    let mutable currentBase = Hex
-    let mutable currentState = execute "MOV R0, #0"
-    //controller functions
+  
+    //button functions
     let execute() =
-        console.info("Executing Source Code...")
+        console.info(timeNow(), "\tExecuting Source Code...")
         //get values from input elements
         let sourceCode = sourceDOMElement.value
         currentState <- execute sourceCode
 
-        console.info("Displaying Register Values...")
+        console.info(timeNow(), "\tDisplaying Register Values...")
         showRegisters currentState currentBase
         showFlags currentState
         showState currentState
@@ -148,16 +155,6 @@ module UserInterface =
     let changeBaseToHex() =
         changeBase currentState Hex
 
-    let newFile() = 
-        //new file confirmation
-        console.log("User created a new file.");
-        sourceDOMElement.value <- ""
-        showStatus "Text area cleared."
-    let openFile() = 
-        console.log("Opening file...");
-    let saveFile(saveAs: bool) = 
-        console.log("Saving file...");
-
     //get button elements
     let getButton buttonId= 
         document.getElementById (buttonId) :?>HTMLButtonElement
@@ -166,13 +163,9 @@ module UserInterface =
     let toBinButton = getButton("toBin")
     let toDecButton = getButton ("toDec")
     let toHexButton = getButton ("toHex")
-    let newFileButton = getButton ("new-file")
-    let openFileButton = getButton ("open-file")
-    let saveFileButton = getButton ("save-file")
     
     //register events to buttons
     executeButton.addEventListener_click(fun _ ->(execute());null)
     toBinButton.addEventListener_click(fun _ ->(changeBaseToBin());null)
     toDecButton.addEventListener_click(fun _ ->(changeBaseToDec());null)
     toHexButton.addEventListener_click(fun _ ->(changeBaseToHex());null)
-    newFileButton.addEventListener_click(fun _ ->(newFile());null)
