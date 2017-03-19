@@ -10,7 +10,7 @@ let mainWindow
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 1024, height: 840 })
+    mainWindow = new BrowserWindow({ width: 1024, height: 860 })
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -41,6 +41,10 @@ app.on('ready', () => {
     globalShortcut.register('F1', () => {
         mainWindow.webContents.openDevTools();
     })
+
+    mainWindow.webContents.on('did-finish-load', function() {
+    mainWindow.webContents.executeJavaScript("log('Electron Application Loaded')");
+  });
 })
 
 // Quit when all windows are closed.
