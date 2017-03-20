@@ -24,6 +24,9 @@ module Program =
 //    MOV R2 #20
 //    ADD R3 R1 R2"
 
+    let initMachineState (s:string) = 
+        readAsm s
+
     // Execute recursively until program end
     let rec executeInstructions (state:MachineState) = 
         let newState = Emulator.Instruction.executeLine state 
@@ -37,12 +40,8 @@ module Program =
 
     // Execute one line at a time 
     let stepForward (s:string) (state:MachineState) =
-        printfn "RegMap 15 is %A" state.RegMap.[R 15]
-        match state.RegMap.[R 15] with
-        | 0 -> printfn "First time stepping, loading in instructions from editor" |> ignore
-               readAsm s
-        | _ -> printfn "Running line %A" state.RegMap.[R 15] |> ignore
-               Emulator.Instruction.executeLine state 
+        printfn "Running line %A" state.RegMap.[R 15] |> ignore
+        Emulator.Instruction.executeLine state 
 
     //[<EntryPoint>]
     let main argv = 
