@@ -47,7 +47,7 @@ module InstructionType =
     type LABELInst =
         | FILL of memStart:Address*length:Value
         | DCD of memStart:Address*valList:int list
-        | EQU of value:Value
+        | EQU of memLoc:Address*value:Value
 
     type BRANCHInst = 
         | B of target:Address
