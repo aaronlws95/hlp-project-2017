@@ -4,7 +4,6 @@ module Cast=
     open InstructionType
     open MachineState
 
-
     /// matches string (X -> X) returning integer
     let (|IsInt|_|) (s:string) = 
         try 

@@ -160,11 +160,12 @@ module UserInterface =
         showState currentState
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
 
-    let stepForward() =
+    let stepForward() = 
         console.info(timeNow(), "\tStepping forward...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
-        currentState <- stepForward sourceCode currentState
+        let prevState = currentState
+        currentState <- stepForward sourceCode prevState
         // Display
         showRegisters currentState currentBase
         showFlags currentState

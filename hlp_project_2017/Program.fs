@@ -37,15 +37,18 @@ module Program =
 
     // Execute one line at a time 
     let stepForward (s:string) (state:MachineState) =
+        printfn "RegMap 15 is %A" state.RegMap.[R 15]
         match state.RegMap.[R 15] with
-        | 0 -> readAsm s 
-        | _ -> Emulator.Instruction.executeLine state 
+        | 0 -> printfn "First time stepping, loading in instructions from editor" |> ignore
+               readAsm s
+        | _ -> printfn "Running line %A" state.RegMap.[R 15] |> ignore
+               Emulator.Instruction.executeLine state 
 
     //[<EntryPoint>]
     let main argv = 
         // Recursively execute the instructions of subsequent states
         
-        printfn "%A" (execute test)
+        //printfn "%A" (execute test)
 
         //System.Console.ReadKey() |> ignore
         0 // return an integer exit code
