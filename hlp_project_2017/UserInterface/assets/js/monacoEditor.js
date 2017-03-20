@@ -59,10 +59,26 @@ requirejs(['vs/editor/editor.main'], function () {
     }
 
     let decorations = [];
-    window.setLineDecoration = function (line) {
+    window.setLineDecoration = function (instrLineToFind) {
+
+        let codeLine = 0;
+        let instrLine = 0;
+        let code = window.getEditorContent().split("\n")
+
+        for (var i = 0; i<code.length; i++){
+            if (instrLine == instrLineToFind) break;
+            if (!code[i]) {
+                codeLine++
+            } 
+            else{
+                codeLine++;
+                instrLine++
+            }
+        }
+
         decorations = editor.deltaDecorations(decorations, [
             {
-                range: new monaco.Range(line, 1, line, 1),
+                range: new monaco.Range(codeLine, 1, codeLine, 1),
                 options: {
                     isWholeLine: true,
                     className: 'line-decoration'
@@ -70,4 +86,9 @@ requirejs(['vs/editor/editor.main'], function () {
             }
         ]);
     }
+
+    window.clearLineDecoration = function () {
+        decorations = editor.deltaDecorations(decorations, []);
+    }
+
 });
