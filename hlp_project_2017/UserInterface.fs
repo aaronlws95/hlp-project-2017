@@ -159,6 +159,16 @@ module UserInterface =
         showFlags currentState
         showState currentState
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
+
+    let stepForward() =
+        console.info(timeNow(), "\tStepping forward...")
+        //get values from input elements
+        let sourceCode = window?getEditorContent() |> string
+        currentState <- stepForward sourceCode currentState
+        // Display
+        showRegisters currentState currentBase
+        showFlags currentState
+        showState currentState
     
     let memoryLookup() = 
         let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string
@@ -209,12 +219,14 @@ module UserInterface =
         document.getElementById (buttonId) :?>HTMLButtonElement
 
     let executeButton = getButton ("execute")
+    let stepForwardButton = getButton ("step-forward")
     let toBinButton = getButton("toBin")
     let toDecButton = getButton ("toDec")
     let toHexButton = getButton ("toHex")
     
     //register events to buttons
     executeButton.addEventListener_click(fun _ ->(execute());null)
+    stepForwardButton.addEventListener_click(fun _ ->(stepForward());null)
     toBinButton.addEventListener_click(fun _ ->(changeBaseToBin());null)
     toDecButton.addEventListener_click(fun _ ->(changeBaseToDec());null)
     toHexButton.addEventListener_click(fun _ ->(changeBaseToHex());null)
