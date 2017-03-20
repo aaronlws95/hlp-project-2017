@@ -77,7 +77,8 @@ module CreateRandomMemTest =
             let strDir,dir = 
                 let dirArray = [|ED;IB;FD;IA;EA;DB;FA;DA|]
                 let dirArrayStr = [|"ED";"IB";"FD";"IA";"EA";"DB";"FA";"DA"|]
-                (dirArrayStr.[rand.Next(0,Array.length dirArrayStr)],dirArray.[rand.Next(0,Array.length dirArray)])
+                let randNum = rand.Next(0,Array.length dirArrayStr)
+                (dirArrayStr.[randNum],dirArray.[randNum])
 
             let strWriteBack,writeBack =           
                 match isWriteBack.ToUpper() with
