@@ -137,6 +137,33 @@ process and return new flags
  ===========================================
 </summary>
 </member>
+<member name="M:ARM7TDMI.LABELInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LABELInst)">
+<summary>
+ execute a set label instruction
+</summary>
+</member>
+<member name="M:ARM7TDMI.LABELInstruction.equ(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Address,System.Int32)">
+<summary>
+ EQU: Set a constant in memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.LABELInstruction.fill(ARM7TDMI.MachineState.MachineState,System.Int32,System.Int32)">
+<summary>
+ FILL: Allocate space in memory
+</summary>
+</member>
+<member name="M:ARM7TDMI.LABELInstruction.dcd(ARM7TDMI.MachineState.MachineState,System.Int32,Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+<summary>
+ DCD: Set values in memory  
+</summary>
+</member>
+<member name="T:ARM7TDMI.LABELInstruction">
+<summary>
+ ===========================================
+ LABEL functions
+ ===========================================
+</summary>
+</member>
 <member name="M:ARM7TDMI.MEMInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.MEMInst)">
 <summary>
  execute memory instruction 

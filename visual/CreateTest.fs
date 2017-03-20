@@ -230,14 +230,16 @@ module CreateTest =
     //TEST LDMEA 1
     let testLDMEA1 = 
         let testText = "
-            LDR R0, =TEST
-            ADD R0, R0, #12
-            LDMEA R0!, {R1,R2,R3}
+		LDR		R0 , =TEST
+		
+		ADD		R0 ,R0, #4
+		
+		LDMEA	R0 , {R7}
             "
         let testInstruction = 
             [ MEM(ADR(R 0, Addr 0x10000))
-              ALU(ADD(R 0,R 0,Lit 12),false)
-              MEM(LDM(EA,R 0,[R 1;R 2;R 3],true)) ]
+              ALU(ADD(R 0,R 0,Lit 4),false)
+              MEM(LDM(EA,R 0,[R 7],false)) ]
         createTest "LDMEA Test" testText testInstruction
 
     //TEST LDMFA 1
@@ -342,8 +344,9 @@ module CreateTest =
 //            //SHIFT
 //            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
             //MEM
-            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
-            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
+//            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+//            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+//            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
+            testLDMEA1;
         ]
 

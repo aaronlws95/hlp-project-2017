@@ -24,7 +24,7 @@ module LABELInstruction =
         match instruction with
         | DCD(startMem,intList) -> dcd state (ga startMem) intList //DCD
         | FILL(startMem,length) -> fill state (ga startMem) length //FILL
-        | EQU(memLoc,value) -> equ state memLoc value
+        | EQU(memLoc,value) -> equ state memLoc value //EQU
 
 
 
