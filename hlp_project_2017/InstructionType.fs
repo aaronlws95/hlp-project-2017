@@ -59,7 +59,9 @@ module InstructionType =
 
     //type ConditionType = Condition of ConditionCode
 
-    type InstructionLine = Line of InstructionType * SHIFTInst option * ConditionCode option
+    type InstructionLine = 
+        | Line of InstructionType * SHIFTInst option * ConditionCode option
+        | Failed_Parsing of string
 
     type Memory = 
         | Inst of InstructionLine

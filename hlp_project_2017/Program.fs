@@ -29,8 +29,8 @@ module Program =
         match newState.State with
         | RunOK -> executeInstructions newState
         | RunEND -> newState
-        | RunTimeErr s-> state
-        | SyntaxErr s -> state
+        | RunTimeErr s-> newState
+        | SyntaxErr s -> newState
 
     let execute (s:string)=
         readAsm s |> executeInstructions

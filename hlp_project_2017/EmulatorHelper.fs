@@ -88,6 +88,12 @@ module EmulatorHelper =
                 match rol with
                 | Reg r -> state.RegMap.[r]
                 | Lit l -> l
+            /// extract value from memory
+        let isValidAddress (state:MachineState) (addr:Address) =
+                match state.MemMap.TryFind addr with
+                | Some (Val v) -> true
+                | Some (Inst i) -> false
+                | None -> false
         /// extract value from memory
         let extractMemory (state:MachineState) (addr:Address) =
                 let checkValidAddr =
@@ -98,4 +104,3 @@ module EmulatorHelper =
                 |> checkValidAddr
         /// get value of address
         let getAddressValue (Addr a:Address) = a
-

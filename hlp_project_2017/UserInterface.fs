@@ -11,20 +11,20 @@ module UserInterfaceController =
     open MachineState
     open InstructionType
 
-    type DisplayBase = Bin | Dec | Hex
+    type Base = Bin | Dec | Hex
 
     //parse MachineState for output
     let getRegister (state:MachineState) i = state.RegMap.TryFind(R i) |> string |> int
-    let getMemory (state:MachineState) address = 
-        let head = address - (address % 4)
-        toJson (state.MemMap.TryFind(Addr head))
+    let getMemory (state:MachineState) address = state.MemMap.TryFind(Addr address)
     let getState (state:MachineState) = state.State
     let getFlags (state:MachineState) = 
         let flags = state.Flags
         //fable ignores System.Convert.ToInt32(boolean)
         [flags.N; flags.Z; flags.C; flags.V] |> List.map (fun x -> match x with | true -> 1 | _ -> 0) |> List.toArray
 
-    //base conversion for registers
+(* 
+    //base conversion for registers 
+    //discarded due to unable to conver negative numbers
     let toBin (dec: int) = 
         //Convert.ToString(dec, 2)
         let rec convert dec = 
@@ -33,7 +33,7 @@ module UserInterfaceController =
             | _ -> 
                 let bit = string (dec % 2)
                 convert (dec/2) + bit
-        convert dec
+        convert dec 
 
     let toHex (dec: int) = 
         //Convert.ToString(dec, 16)
@@ -56,20 +56,36 @@ module UserInterfaceController =
             | _ -> 
                 let bit = dec % 16 |> toBit
                 convert (dec/16) + bit
-        convert dec
-
+        convert dec        *)
     
+
+    // using javascript native base conversion method
+    let toBaseOf (targetBase:int) (dec: int)  = 
+        (uint32 dec)?toString(targetBase) |>string
+
+    let toDec (sourceBase: int) (numberString: string) =
+        window?parseInt(numberString, sourceBase) |> string |> int
+
+    // reformat the output
+    let toBin (dec: int) = 
+        let bin = dec |> toBaseOf 2
+        [0..7] |> List.map (fun x -> bin.[(x*4)..(x*4+3)]) |> String.concat " "
+        
+    let toHex (dec: int) = 
+        let hex = (dec |> toBaseOf 16).ToUpper();
+        [0..3] |> List.map (fun x -> hex.[(x*2)..(x*2+1)]) |> String.concat " "
+
     //one-way update
     let timeNow() = System.DateTime.Now.ToLongTimeString()
-    let showRegisters (state:MachineState) (currentBase: DisplayBase) = 
+    let showRegisters (state:MachineState) (currentBase: Base) = 
         console.info(timeNow(), "\tUpdating Register Values ...");
         let updateRegister i currentBase=
             let value = getRegister state i
             let DOMElement = document.getElementById (("R" + (string i))) :?>HTMLSpanElement
             let diplayValue = 
                 match currentBase with
-                    | Bin -> value |> toBin |> string |> (+) "0b"
-                    | Hex -> value |> toHex |> string |> (+) "0x"
+                    | Bin -> value |> toBin |> (+) "0b"
+                    | Hex -> value |> toHex |> (+) "0x"
                     | _ -> value |> string
             DOMElement.textContent <- diplayValue
             //console.log(timeNow(), "\tR" + (string i) + "=" + diplayValue);
@@ -80,8 +96,9 @@ module UserInterfaceController =
         let flags = getFlags state
         let updateFlag i = 
             let flag = document.getElementById (("CSPR" + (string i))) :?>HTMLSpanElement
-            flag.textContent <- flags.[i] |> string
+            flag.textContent <- flags.[i-1] |> string
         console.info(timeNow(), "\tCSPR Bits are", flags);
+        [1..4] |> List.map (fun i -> updateFlag i) |> ignore
         console.info(timeNow(), "\tCSPR Bits update successful.");
     
     let showStatus (msg: string) = 
@@ -107,6 +124,7 @@ module UserInterface =
     open Fable.Core.JsInterop
     open UserInterfaceController
     open MachineState
+    open InstructionType
     open Program
 
     let mutable currentBase = Hex
@@ -118,7 +136,7 @@ module UserInterface =
     console.log("%c Emulator:\t Low, Aaron S \t Chan, Jun S", "background: #222; color: #bada55");
     console.log("%c Front-end:\t Wang, Tianyou", "background: #222; color: #bada55");
 
-    let changeBase (state: MachineState) (toBase: DisplayBase) = 
+    let changeBase (state: MachineState) (toBase: Base) = 
         showRegisters state toBase
         let baseValue = 
             match toBase with
@@ -142,6 +160,43 @@ module UserInterface =
         showState currentState
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
     
+    let memoryLookup() = 
+        let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string
+        let endAddr = (document.getElementById ("memory-end") :?>HTMLInputElement).value |>string
+        console.info(timeNow(), "\tLooking up memory content for query Addr: 0x" + startAddr, "- 0x" + endAddr);
+
+        // the result should cover user query range (word addr)
+        let wordStartAddr = (toDec 16 startAddr) / 32 
+        let wordEndAddr = (toDec 16 endAddr) / 32
+
+        let byteStartAddr = wordStartAddr * 4
+        let byteEndAddr = (wordEndAddr + 1) * 4
+
+        //[byteStartAddr..byteEndAddr] |> List.map (fun x -> console.log(x,":",getMemory currentState x)) |> ignore
+        
+        let toTable = 
+            let wordHeadBytes = [byteStartAddr..4..byteEndAddr] 
+            let renderInst headByte (inst) = 
+                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-success'>Instr</span>", (toJson inst)) 
+                
+            let renderVal headByte = 
+                let wordValue = [3..0] |> List.map (fun x -> getMemory currentState (headByte + x))
+                //wordValue = (getMemory currentState (headByte+3),getMemory currentState (headByte+2),getMemory currentState (headByte+1),getMemory currentState headByte)
+                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-warning'>Value</span>", (toJson wordValue))
+
+            let combineWord wordHeadByte= 
+                let firstByteContent = getMemory currentState wordHeadByte
+                match firstByteContent with
+                    | Some x -> match x with
+                                    | Inst _ -> renderInst wordHeadByte firstByteContent
+                                    | Val _ -> renderVal wordHeadByte
+                    | None -> ("<span class='label label-primary'>0x" + (toBaseOf 16 (wordHeadByte*8)).ToUpper() + ("</span>"), "<span class='label label-default'>Null</span>", "0")
+            let dataSet = [byteStartAddr..4..byteEndAddr] |>List.map combineWord |>toJson
+            window?data <- dataSet
+            window?displayMemoryQuery(dataSet);
+        //do not remove: return false to prevent refresh on form submit
+        false
+
     let changeBaseToBin() =
         changeBase currentState Bin
     let changeBaseToDec() =
@@ -163,3 +218,7 @@ module UserInterface =
     toBinButton.addEventListener_click(fun _ ->(changeBaseToBin());null)
     toDecButton.addEventListener_click(fun _ ->(changeBaseToDec());null)
     toHexButton.addEventListener_click(fun _ ->(changeBaseToHex());null)
+
+    // get memory lookup tool element
+    let memoryToolFormElement = document.getElementById ("memory-tool") :?>HTMLFormElement
+    memoryToolFormElement?onsubmit <- ( fun _ ->memoryLookup())
