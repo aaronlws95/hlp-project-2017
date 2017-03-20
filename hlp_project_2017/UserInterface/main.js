@@ -12,9 +12,9 @@ function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
          width: 1024, 
-         height: 860,
+         height: 760,
          minWidth : 1024,
-         minHeight: 860,
+         minHeight: 760,
          center: true,
         })
 
@@ -24,11 +24,6 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }))
-
-    // Open the DevTools.
-
-
-    //mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
