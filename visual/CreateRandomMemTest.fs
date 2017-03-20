@@ -68,11 +68,10 @@ module CreateRandomMemTest =
         [1..n] |> List.map getTestParam |> List.map (fun (n,(t,il)) -> createTest n t il)
 
     ///create random test string for Visual and Instruction for Emulator for memory instructions
-    let createRandomMultMemTest (instName:string) (isWriteBack:string) =      
-            let reg = rand.Next(0,13) //first register      
+    let createRandomMultMemTest (instName:string) (isWriteBack:string) =        
             let strRegList,regList = 
                 let length = rand.Next(1,5)
-                let randList = List.init length (fun _ -> rand.Next ()) 
+                let randList = List.init length (fun _ -> rand.Next (1, 13)) 
                 let strRandList = (randList |> List.map (fun x -> "R" + string(x)) |> List.fold (fun acc elem -> acc + "," + elem) "")
                 (strRandList.[1..],randList |> List.map (fun x -> R x))
             let strDir,dir = 
@@ -82,17 +81,17 @@ module CreateRandomMemTest =
 
             let strWriteBack,writeBack =           
                 match isWriteBack.ToUpper() with
-                | "WB" -> "!", true
-                | "NOWB" -> "", false
-                | "RAND" -> if rand.Next(0,2) = 0 then ("!",true) else ("",false)
+                | "WB" -> "! ", true
+                | "NOWB" -> " ", false
+                | "RAND" -> if rand.Next(0,2) = 0 then ("! ",true) else (" ",false)
                 | _ -> failwithf "invalid setting"
 
             match instName.ToUpper() with 
-                | "LDM" ->  let initial = 
+                | "LDM" ->  let initialStr,initialInst = 
                                 match dir with
-                                | ED | IB | FD | IA -> "LDR R" + string(reg) + ", =TEST\n" 
-                                | EA | DB | FA | DA ->  "LDR R" + string(reg) + ", =TEST\nADD R" + string(reg) + ",R" + string(reg) + ",#" + string(4*(List.length regList)) + "\n" 
-                            (initial + ("LDM R" + string(reg) + strDir + strWriteBack + ", {" + strRegList + "}")), [MEM(LDM(dir,R reg,regList,writeBack))])
+                                | ED | IB | FD | IA -> "LDR R0 , =TEST\n" ,[MEM(ADR(R 0, Addr 0x10000))]
+                                | EA | DB | FA | DA ->  "LDR R0 , =TEST\nADD R0 ,R0, #" + string(4*(List.length regList)) + "\n",[MEM(ADR(R 0, Addr 0x10000));ALU(ADD(R 0,R 0,Lit (4*(List.length regList))),false)]
+                            (initialStr + ("LDM" + strDir + " R0" + strWriteBack + ", {" + strRegList + "}")), initialInst@[MEM(LDM(dir,R 0,regList,writeBack))]
                 | _ -> failwithf "instruction name not valid"
 
     /// get random instruction name 
@@ -102,7 +101,7 @@ module CreateRandomMemTest =
 
     /// create list of tests, each a random memory instruction
     /// Use RAND for random instructions
-    let createdRandMemTestList n (instName:string) isWriteBack = 
+    let createdRandMultMemTestList n (instName:string) isWriteBack = 
         let getTestParam num = 
             match instName.ToUpper() with 
             | "RAND" -> let instName = getRandInstMultName()

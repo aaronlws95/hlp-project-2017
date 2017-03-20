@@ -4,11 +4,10 @@ module InstructionType =
     type Register = R of int
     type Address = Addr of int
     type Value = int
-
     type RegOrLit = 
         | Reg of Register 
         | Lit of Value
-
+    
     type ALUInst = 
         | MOV of dest:Register*op1:RegOrLit
         | ADD of dest:Register*op1:Register*op2:RegOrLit

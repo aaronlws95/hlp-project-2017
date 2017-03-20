@@ -54,7 +54,7 @@ module CreateTest =
             [   ALU(MVN(R 1, Lit -1677721597),false)
                 SHIFT(ASR(R 1,R 1,Lit 68),true)]
         createTest "DEBUG Test" testText testInstruction
-    let createdManualTestList = [testDEBUG1]
+//    let createdManualTestList = [testDEBUG1]
 
     //ALU INSTRUCTION TESTS
     let testMOV1 = createTest "MOV Test" "MOV R0, #2" [ ALU(MOV(R 0, Lit 2), false) ] //TEST MOV 1
@@ -207,12 +207,12 @@ module CreateTest =
     let testLDMFD1 = 
         let testText = "
             LDR R0, =TEST
-            LDMFD R0!, {R1,R2,R3}
+            LDMFD R0!, {R6,R1}
             "
         
         let testInstruction = 
             [ MEM(ADR(R 0, Addr 0x10000))
-              MEM(LDM(FD,R 0,[R 1;R 2;R 3],true)) ]
+              MEM(LDM(FD,R 0,[R 6;R 1],true)) ]
         createTest "LDMFD Test" testText testInstruction
 
     //TEST LDMED 1
@@ -244,13 +244,13 @@ module CreateTest =
     let testLDMFA1 = 
         let testText = "
             LDR R0, =TEST
-            ADD R0, R0, #12
-            LDMFA R0!, {R1,R2,R3}
+            ADD R0, R0, #8
+            LDMFA R0!, {R10,R7}
             "
         let testInstruction = 
             [ MEM(ADR(R 0, Addr 0x10000))
-              ALU(ADD(R 0,R 0,Lit 12),false)
-              MEM(LDM(FA,R 0,[R 1;R 2;R 3],true)) ]
+              ALU(ADD(R 0,R 0,Lit 8),false)
+              MEM(LDM(FA,R 0,[R 10;R 7],true)) ]
         createTest "LDMFA Test" testText testInstruction
 
     //TEST STMEA 1
@@ -331,9 +331,9 @@ module CreateTest =
         createTest "STMFD Test" testText testInstruction
 
 
-//    let createdManualTestList = 
-//        [ 
-//            //ALU
+    let createdManualTestList = 
+        [ 
+            //ALU
 //            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
 //            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
 //            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
@@ -341,9 +341,9 @@ module CreateTest =
 //            testTST1; testTEQ1; testCMP1; testCMN1; 
 //            //SHIFT
 //            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
-//            //MEM
-//            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-//            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
-//            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
-//        ]
+            //MEM
+            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
+        ]
 

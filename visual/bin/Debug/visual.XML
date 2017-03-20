@@ -2,6 +2,22 @@
 <doc>
 <assembly><name>visual</name></assembly>
 <members>
+<member name="M:VisualInterface.CreateRandomMemTest.createdRandMultMemTestList(System.Int32,System.String,System.String)">
+<summary>
+ create list of tests, each a random memory instruction
+ Use RAND for random instructions
+</summary>
+</member>
+<member name="P:VisualInterface.CreateRandomMemTest.getRandInstMultName">
+<summary>
+ get random instruction name 
+</summary>
+</member>
+<member name="M:VisualInterface.CreateRandomMemTest.createRandomMultMemTest(System.String,System.String)">
+<summary>
+create random test string for Visual and Instruction for Emulator for memory instructions
+</summary>
+</member>
 <member name="M:VisualInterface.CreateRandomMemTest.createdRandMemTestList(System.Int32,System.String,System.String,System.String)">
 <summary>
  create list of tests, each a random memory instruction

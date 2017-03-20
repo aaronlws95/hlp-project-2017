@@ -19,7 +19,6 @@ module MEMInstruction =
                 let loadRegMap = Map.add dest (em (Addr (state.RegMap.[source] + offset))) state.RegMap
                 Map.add source (loadRegMap.[source] + autoIndex) loadRegMap 
             if (dest = source && autoIndex>0) then {state with State = SyntaxErr "destination cannot equal source"}
-            elif (autoIndex > 0 && offset <= 0) then {state with State = SyntaxErr "source address must have offset"}
             else {state with RegMap = newRegMap} 
         if (Extractor.isValidAddress state (Addr (state.RegMap.[source] + offset))) then doLDR else {state with State = RunTimeErr "Address not allocated"}
     /// LDM: load multiple register with memory content
@@ -29,10 +28,10 @@ module MEMInstruction =
             let em = Extractor.extractMemory state
             let newRegMap,offset = 
                 match dir with
-                | ED | IB -> regList |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset+4))) acc),(offset+4)) (state.RegMap,0)
-                | FD | IA -> regList |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset))) acc),(offset+4)) (state.RegMap,0)
-                | EA | DB -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset-4))) acc),(offset-4)) (state.RegMap,0)
-                | FA | DA -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset))) acc),(offset-4)) (state.RegMap,0)
+                | ED | IB -> regList |> Seq.distinct |> List.ofSeq |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset+4))) acc),(offset+4)) (state.RegMap,0)
+                | FD | IA -> regList |> Seq.distinct |> List.ofSeq |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset))) acc),(offset+4)) (state.RegMap,0)
+                | EA | DB -> regList |> Seq.distinct |> List.ofSeq |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset-4))) acc),(offset-4)) (state.RegMap,0)
+                | FA | DA -> regList |> Seq.distinct |> List.ofSeq |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset))) acc),(offset-4)) (state.RegMap,0)
             if writeBack then {state with RegMap = (Map.add source (state.RegMap.[source]+offset) newRegMap)}
             else {state with RegMap = newRegMap}
         //check if the addresses being read have been written

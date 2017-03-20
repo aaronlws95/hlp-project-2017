@@ -526,3 +526,169 @@ LDR R12, [R3]
   <syntax-error line="18">Invalid source address specification.</syntax-error>
 </VisUAL>
 ----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                LDR R7, =TEST
+LDM R7EA, {R1669057931}
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="17">Multiple labels on the same line.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                LDR R7, =TEST
+ADD R7,R7,#4
+LDMDAR7, {R1889896315}
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="18">This instruction is not a valid ARM UAL instruction.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                LDR R6, =TEST
+LDMEDR6 , {R94186513}
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="17">This instruction is not a valid ARM UAL instruction.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                LDR R9, =TEST
+LDMFD R9 , {R790407021,R836093679,R2011182457,R1945652337}
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="17">Invalid list of registers to load.</syntax-error>
+</VisUAL>
+----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                LDR R0 , =TEST
+LDMIB R0! , {R3,R3,R0,R9}
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="17">Stack pointer for LDM instruction cannot be in list of registers to load.</syntax-error>
+</VisUAL>
+----------------------
