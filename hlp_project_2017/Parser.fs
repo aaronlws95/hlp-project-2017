@@ -66,8 +66,8 @@ module Parser=
             //LDR STR
             | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; "]" ] ->  Line(MEM(inst(dest,source,Lit 0,Lit 0,b)),None,CondCast cond)
             | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; IsRegOrLit offset; "]" ] ->  Line(MEM(inst(dest,source,offset,Lit 0,b)),None,CondCast cond)
-            | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; IsRegOrLit offset; "]"; "!" ] ->  Line(MEM(inst(dest,source,offset,Lit 0,b)),None,CondCast cond)
-            | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; "]";  IsRegOrLit offset ] ->  Line(MEM(inst(dest,source,offset,Lit 0,b)),None,CondCast cond)
+            | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; IsRegOrLit offset; "]"; "!" ] ->  Line(MEM(inst(dest,source,offset,offset,b)),None,CondCast cond)
+            | [ IsMEMRInst inst; IsByteMode b; IsCondition cond; IsReg dest; "[" ; IsReg source; "]";  IsRegOrLit offset ] ->  Line(MEM(inst(dest,source,Lit 0,offset,b)),None,CondCast cond)
             //LDM STM
             | [ IsMEMMInst inst; _ ; _ ; "[" ; IsLDMdir dir; "]"; IsCondition cond; IsReg source ] ->  Line(MEM(inst(dir,source,[],false)),None,CondCast cond)
             | [ IsMEMMInst inst; _ ; _ ; "[" ; IsLDMdir dir; "]"; IsReg source ] ->  Line(MEM(inst(dir,source,[],false)),None,None)

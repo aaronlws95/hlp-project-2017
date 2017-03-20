@@ -9,6 +9,7 @@
       "../ALUInstruction.fs"
       "../MEMInstruction.fs"
       "../SHIFTInstruction.fs"
+      "../BRANCHInstruction.fs"
       "../Cast.fs"
       "../Emulator.fs"
       "../Parser.fs"

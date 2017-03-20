@@ -14,9 +14,16 @@
                 MOV R11, #0
                 MOV R12, #0
                 MOV R0, #0
-MVNS R1, #196608
-BIC R0, R0, R1
-SBC R0, R0, #103
+MVNS R0, #173056
+SBC R1, R0, R0
+LSRS R1, R0, #150
+ADD R1, R0, #25856
+RSC R1, R1, R0
+MVNS R1, R1
+SBC R1, R0, R1
+RORS R0, R1, #206
+RSC R1, R1, #1476395011
+ORR R1, R1, #8064
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

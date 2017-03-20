@@ -8,9 +8,9 @@ module SHIFTInstruction =
     open EmulatorHelper
     /// logical shit left
     let private lshl state dest op1 op2 s =  
-        let newRes = if op2 >= 31 then 0 else (op1 <<< op2) //if op2 >= 31 then all bits shifted
-        let newRegMap = Map.add dest newRes state.RegMap
-        let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.LSL(op1,op2,newRes)) else state.Flags
+        let res = if op2 >= 31 then 0 else (op1 <<< op2) //if op2 >= 31 then all bits shifted
+        let newRegMap = Map.add dest res state.RegMap
+        let newFlags = if s then ProcessFlag.processFlags state (ProcessFlag.ProcessFlagType.LSL(op1,op2,res)) else state.Flags
         {state with RegMap = newRegMap;Flags = newFlags}
         /// logical shift right
     let private lshr state dest op1 op2 s = 

@@ -121,12 +121,23 @@ module VIProgram=
                    let numInst = System.Console.ReadLine()
                    let numTest =  System.Console.ReadLine()
                    createdRandTestListLong (int(numInst)) (int(numTest))
-            | 4 -> printf "Enter: Number of tests,Instruction name/RAND, Set offset: OFFSET/NOOFFSET/RAND, Set autoindex: AI/NOAI/RAND \n"
-                   let numTest = System.Console.ReadLine()
-                   let name = System.Console.ReadLine()
-                   let io = System.Console.ReadLine()
-                   let ai = System.Console.ReadLine()
-                   createdRandMemTestList (int(numTest)) name io ai
+            | 4 -> printf "1. LDM/STM \n2. Other\n"
+                   let input3 = System.Console.ReadLine()
+                   match int(input3) with
+                   | 1 -> printf "Enter: Number of tests,Instruction name/RAND, Writeback: WB/NOWB/RAND \n"
+                          let numTest = System.Console.ReadLine()
+                          let name = System.Console.ReadLine()
+                          let wb = System.Console.ReadLine()
+                          createdRandMultMemTestList (int(numTest)) name wb
+                   | 2 -> printf "Number of tests,Instruction name/RAND, Set offset: OFFSET/NOOFFSET/RAND, Set autoindex: AI/NOAI/RAND \n"
+                          let numTest = System.Console.ReadLine()
+                          let name = System.Console.ReadLine()
+                          let io = System.Console.ReadLine()
+                          let ai = System.Console.ReadLine()
+                          createdRandMemTestList (int(numTest)) name io ai
+                   | _ -> failwithf "invalid number"
+                   
+
             | _ -> failwithf "invalid number"
 
         let tests = testList "Visual tests" (createdTestList |> List.map VisualUnitTest)

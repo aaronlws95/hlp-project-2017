@@ -48,6 +48,7 @@ module CreateRandomTest =
             match instName.ToUpper() with 
                 | "MOV" -> ((strsf + string(reg) + strop2), ALU(MOV(R reg,op2),sf))
                 | "MVN" -> ((strsf + string(reg) + strop2), ALU(MVN(R reg,op2),sf))
+                | "AND" -> ((strsf + string(reg) + strop2), ALU(AND(R reg,R reg2,op2),sf))
                 | "TST" -> (("TST R" + string(reg) + strop2), SF(TST(R reg,op2)))
                 | "TEQ" -> (("TEQ R" + string(reg) + strop2), SF(TEQ(R reg,op2)))
                 | "CMP" -> (("CMP R" + string(reg) + strop2), SF(CMP(R reg,op2)))
