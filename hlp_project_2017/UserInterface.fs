@@ -129,6 +129,7 @@ module UserInterface =
 
     let mutable currentBase = Hex
     let mutable currentState = execute "MOV R0, #0"
+    let mutable debuggingMode = false // True when stepping, False when not 
 
     console.info(timeNow(), "\tFable Application Loaded")
     console.log("%c ARMadillo - HLP Project 2017", "background: #222; color: #bada55");
@@ -161,6 +162,7 @@ module UserInterface =
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
 
     let reset() = 
+        debuggingMode <- false
         console.info(timeNow(), "\tResetting Machine State...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
@@ -171,6 +173,7 @@ module UserInterface =
         showState currentState
 
     let stepForward() = 
+        debuggingMode <- true
         console.info(timeNow(), "\tStepping forward...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
