@@ -20,10 +20,11 @@ module Program =
 //    ADDSEQ R3 R13 #15
 //    ADDLO R3 R13 #15" 
 
-    let test = "MOV R1 #10
-    MOV R2 #20
-    ADD R3 R1 R2"
+//    let test = "MOV R1 #10
+//    MOV R2 #20
+//    ADD R3 R1 R2"
 
+    // Execute recursively until program end
     let rec executeInstructions (state:MachineState) = 
         let newState = Emulator.Instruction.executeLine state 
         match newState.State with
@@ -31,9 +32,14 @@ module Program =
         | RunEND -> newState
         | RunTimeErr s-> newState
         | SyntaxErr s -> newState
-
     let execute (s:string)=
         readAsm s |> executeInstructions
+
+    // Execute one line at a time 
+    let stepForward (s:string) (state:MachineState) =
+        match state.RegMap.[R 15] with
+        | 0 -> readAsm s 
+        | _ -> Emulator.Instruction.executeLine state 
 
     //[<EntryPoint>]
     let main argv = 
