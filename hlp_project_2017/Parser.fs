@@ -89,7 +89,7 @@ module Parser=
             | [IsAddr label_map addr; ""; ""; "FILL"; IsInt value] -> Line(LABEL(FILL(addr,value/4)),None,None)
             | [ "FILL";"";""; IsInt value] when label_map.TryFind("DEFAULT_FILL")<>None-> Line(LABEL(FILL(label_map.["DEFAULT_FILL"],value/4)),None,None)
             | IsAddr label_map addr::""::""::"DCD"::IsIntList valueLst -> Line(LABEL(DCD(addr,valueLst)),None,None)
-            | [IsAddr label_map addr;"";""; "EQU"; IsInt value] -> Line(LABEL(EQU(value)),None,None)
+            | [IsAddr label_map addr;"";""; "EQU"; IsInt value] -> Line(LABEL(EQU(addr,value)),None,None)
             //END
             | ["END"; IsCondition cond] -> Line(END,None,CondCast cond)
             //Syntax Error
