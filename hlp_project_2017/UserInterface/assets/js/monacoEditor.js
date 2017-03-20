@@ -40,25 +40,12 @@ requirejs(['vs/editor/editor.main'], function () {
     });
 
     let editor = monaco.editor.create(document.getElementById('text-editor-container'), {
-        value: [
-            "MOV r1 R2",
-            "ADD R2 R3 #3",
-            "MYBRANCH MVN R2 #2",
-            "CMP R13 R2 , LSL #10",
-            "LSL R6 R7 #10",
-            "ASR R8 R9 R10",
-            "ADDS R3 R13 #15",
-            "ADDSEQ R3 R13 #15",
-            "ADDLO R3 R13 #15",
-            "PC SP Lr",
-        ].join("\n"),
         language: 'ARM',
         theme: 'ARMTheme',
         automaticLayout: true,
         scrollbar: {
             // Subtle shadows to the left & top. Defaults to true.
             useShadows: false,
-
             verticalScrollbarSize: 17,
         }
 
