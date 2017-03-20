@@ -84,7 +84,7 @@ module UserInterfaceController =
             let DOMElement = document.getElementById (("R" + (string i))) :?>HTMLSpanElement
             let diplayValue = 
                 match currentBase with
-                    | Bin -> value |> toBin |> (+) "0x"
+                    | Bin -> value |> toBin |> (+) "0b"
                     | Hex -> value |> toHex |> (+) "0x"
                     | _ -> value |> string
             DOMElement.textContent <- diplayValue
