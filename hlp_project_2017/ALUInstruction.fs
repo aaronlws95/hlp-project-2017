@@ -31,14 +31,15 @@ module ALUInstruction =
         let er = Extractor.extractRegister state
         match instruction with
         | MOV(r,rol) -> updateRegister state r (er rol) s  // R:=ROL
-        | ADD(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol))  s // R1:=R2+ROL
-        | SUB(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)) s // R1:=R2-ROL
         | MVN(r, rol) -> updateRegister state r ~~~(er rol) s //R:=NOT(ROL) 
         | EOR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]^^^(er rol)) s // R1:=R2 EOR ROL
-        | RSB(r1,r2,rol) -> sub state r1 (er rol) state.RegMap.[r2] ((er rol)-state.RegMap.[r2]) s //R1:=ROL-R2 
-        | RSC(r1,r2,rol) -> sub state r1 (er rol) (state.RegMap.[r2]-System.Convert.ToInt32(state.Flags.C)+1) ((er rol)-state.RegMap.[r2]+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=ROL-R2+C-1
-        | ADC(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol)+System.Convert.ToInt32(state.Flags.C)) s //R1:=R2+ROl+C
-        | SBC(r1,r2,rol) -> sub state r1 (state.RegMap.[r2]) ((er rol)-System.Convert.ToInt32(state.Flags.C)+1) (state.RegMap.[r2]-(er rol)+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=R2-ROL+C-1
         | BIC(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]&&&(~~~(er rol))) s //R1:=R2 AND NOT(ROL)
         | ORR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]|||(er rol)) s //R1:= R2 OR ROL
+        | ADD(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol))  s // R1:=R2+ROL
+        | ADC(r1,r2,rol) -> add state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]+(er rol)+System.Convert.ToInt32(state.Flags.C)) s //R1:=R2+ROl+C
+        | SUB(r1,r2,rol) -> sub state r1 state.RegMap.[r2] (er rol) (state.RegMap.[r2]-(er rol)) s // R1:=R2-ROL
+        | RSB(r1,r2,rol) -> sub state r1 (er rol) state.RegMap.[r2] ((er rol)-state.RegMap.[r2]) s //R1:=ROL-R2 
+        | RSC(r1,r2,rol) -> sub state r1 (er rol) (state.RegMap.[r2]-System.Convert.ToInt32(state.Flags.C)+1) ((er rol)-state.RegMap.[r2]+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=ROL-R2+C-1
+        | SBC(r1,r2,rol) -> sub state r1 (state.RegMap.[r2]) ((er rol)-System.Convert.ToInt32(state.Flags.C)+1) (state.RegMap.[r2]-(er rol)+System.Convert.ToInt32(state.Flags.C)-1) s //R1:=R2-ROL+C-1
+
 

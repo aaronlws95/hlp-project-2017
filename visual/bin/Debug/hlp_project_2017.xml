@@ -34,6 +34,18 @@
  ===========================================
 </summary>
 </member>
+<member name="M:ARM7TDMI.BRANCHInstruction.executeInstruction(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.BRANCHInst)">
+<summary>
+ execute set flag instruction
+</summary>
+</member>
+<member name="T:ARM7TDMI.BRANCHInstruction">
+<summary>
+ ===========================================
+ Branching functions
+ ===========================================
+</summary>
+</member>
 <member name="M:ARM7TDMI.Cast.|IsAddr|_|(Microsoft.FSharp.Collections.FSharpMap{System.String,ARM7TDMI.InstructionType.Address},System.String)">
 <summary>
 matches Addr label or addr literal
@@ -127,27 +139,27 @@ process and return new flags
 </member>
 <member name="M:ARM7TDMI.MEMInstruction.stm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
 <summary>
- load multiple register with memory content
+ STM: load multiple register with memory content
 </summary>
 </member>
 <member name="M:ARM7TDMI.MEMInstruction.str``1(ARM7TDMI.MachineState.MachineState,System.Int32,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
 <summary>
- store register contents into memory
+ STR: store register contents into memory
 </summary>
 </member>
 <member name="M:ARM7TDMI.MEMInstruction.ldm(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.LDMdir,ARM7TDMI.InstructionType.Register,Microsoft.FSharp.Collections.FSharpList{ARM7TDMI.InstructionType.Register},System.Boolean)">
 <summary>
- load multiple register with memory content
+ LDM: load multiple register with memory content
 </summary>
 </member>
 <member name="M:ARM7TDMI.MEMInstruction.ldr``1(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,ARM7TDMI.InstructionType.Register,System.Int32,System.Int32,``0)">
 <summary>
- load register with memory content
+ LDR: load register with memory content
 </summary>
 </member>
 <member name="M:ARM7TDMI.MEMInstruction.adr(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Register,System.Int32)">
 <summary>
- update register with address value
+ ADR: update register with address value
 </summary>
 </member>
 <member name="T:ARM7TDMI.MEMInstruction">

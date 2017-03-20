@@ -32,7 +32,7 @@ module CreateRandomMemTest =
                 match isAutoIndex.ToUpper() with
                 | "AI" -> if isOff then ("!",off) else ("",0)
                 | "NOAI" -> ("",0)
-                | "RAND" -> if rand.Next(0,2) = 0 then ("!",off) else ("",0)
+                | "RAND" -> if rand.Next(0,2) = 0 then (if isOff then ("!",off) else ("",0)) else ("",0)
                 | _ -> failwithf "invalid setting"
 
             match instName.ToUpper() with 

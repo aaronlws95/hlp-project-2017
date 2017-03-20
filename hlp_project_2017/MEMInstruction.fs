@@ -6,18 +6,18 @@ module MEMInstruction =
     open InstructionType 
     open MachineState
     open EmulatorHelper
-    /// update register with address value
+    /// ADR: update register with address value
     let private adr state dest exp=  
         let newRegMap = Map.add dest exp state.RegMap
         {state with RegMap = newRegMap}
-    /// load register with memory content
+    /// LDR: load register with memory content
     let private ldr state dest source offset autoIndex s  = 
         let em = Extractor.extractMemory state
         let newRegMap = 
             let loadRegMap = Map.add dest (em (Addr (state.RegMap.[source] + offset))) state.RegMap
             if dest <> source then Map.add source (loadRegMap.[source] + autoIndex) loadRegMap else loadRegMap
         {state with RegMap = newRegMap}
-    /// load multiple register with memory content
+    /// LDM: load multiple register with memory content
     let private ldm state dir source regList writeBack  = 
         let em = Extractor.extractMemory state
         let newRegMap,offset = 
@@ -28,12 +28,12 @@ module MEMInstruction =
             | FA | DA -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add elem (em (Addr (state.RegMap.[source]+offset))) acc),(offset-4)) (state.RegMap,0)
         if writeBack then {state with RegMap = (Map.add source (state.RegMap.[source]+offset) newRegMap)}
         else {state with RegMap = newRegMap}
-    /// store register contents into memory
+    /// STR: store register contents into memory
     let private str state source dest offset autoIndex s =  
         let newMemMap = Map.add (Addr (state.RegMap.[dest]+offset)) (Val source) state.MemMap
         let newRegMap = Map.add dest (state.RegMap.[dest]+autoIndex) state.RegMap 
         {state with MemMap = newMemMap;RegMap = newRegMap}
-    /// load multiple register with memory content
+    /// STM: load multiple register with memory content
     let private stm state dir dest regList writeBack = 
         let newMemMap,offset = 
             match dir with
