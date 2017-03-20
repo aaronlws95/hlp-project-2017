@@ -6,6 +6,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "datatables.net": "^1.10.13",
+    "datatables.net-bs": "^1.10.13",
     "electron": "^1.6.1",
     "fable-core": "^0.7.29",
     "font-awesome": "^4.7.0",
