@@ -116,7 +116,17 @@ module UserInterfaceController =
                 | SyntaxErr _ -> ("Syntax Error: " + (toJson runState))
                 | RunEND -> "Execution was successful. The final instruction is reached."                
         showStatus StateMsg    
-    
+
+    let showError (state: MachineState) =
+        let runState = getState state
+        let lineNumber = (getRegister state 15)/4 + 1
+        let showLineDecoration() = window?setLineDecoration(lineNumber,true) |>ignore
+        match runState with
+            | RunTimeErr _ -> showLineDecoration()
+            | SyntaxErr _ -> showLineDecoration()
+            | _ -> ()
+        
+
 module UserInterface =
     open Fable.Core
     open Fable.Import
@@ -128,8 +138,8 @@ module UserInterface =
     open Program
 
     let mutable currentBase = Hex
-    let mutable currentState = execute "MOV R0, #0"
-    let mutable debuggingMode = false // True when stepping, False when not 
+    let mutable currentState = initMachineState ""
+    let mutable debuggingMode = false
 
     console.info(timeNow(), "\tFable Application Loaded")
     console.log("%c ARMadillo - HLP Project 2017", "background: #222; color: #bada55");
@@ -149,6 +159,27 @@ module UserInterface =
         currentBase <- toBase
         console.info(timeNow(), "\tChanged register display base to", (toJson toBase));
 
+
+    let showRunResult() = 
+         showRegisters currentState currentBase
+         showFlags currentState
+         showState currentState
+         showError currentState
+
+    let debugMode(on: bool) = 
+        let debugIconElement = document.getElementById ("debug")
+        match on with
+            | true -> 
+                debugIconElement.className <- ""
+                debuggingMode <- true
+                console.warn(timeNow(), "\tEntered Debugging Mode.")
+                window?lockEditor()
+            | _ -> 
+                debugIconElement.className <- "hidden"
+                debuggingMode <- false
+                console.warn(timeNow(), "\tExited Debugging Mode.")
+                window?unlockEditor()
+
     //button functions
     let execute() =
         console.info(timeNow(), "\tExecuting Source Code...")
@@ -156,9 +187,7 @@ module UserInterface =
         let sourceCode = window?getEditorContent() |> string
         currentState <- execute sourceCode
 
-        showRegisters currentState currentBase
-        showFlags currentState
-        showState currentState
+        showRunResult()
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
 
     let reset() = 
@@ -167,13 +196,12 @@ module UserInterface =
         let sourceCode = window?getEditorContent() |> string
         currentState <- initMachineState sourceCode
 
-        showRegisters currentState currentBase
-        showFlags currentState
-        showState currentState
-        debuggingMode <- false
-        window?clearLineDecoration((getRegister currentState 15)/4) |>ignore
+        showRunResult()
+        debugMode(false)
+        window?clearLineDecoration() |>ignore
 
     let stepForward() = 
+        window?setLineDecoration((getRegister currentState 15)/4+1) |>ignore
         console.info(timeNow(), "\tStepping forward...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
@@ -183,11 +211,11 @@ module UserInterface =
         | false -> currentState <- stepForward sourceCode (initMachineState sourceCode)
         
         // Display
-        showRegisters currentState currentBase
-        showFlags currentState
-        showState currentState
+        showRunResult()
         debuggingMode <- true
-        window?setLineDecoration((getRegister currentState 15)/4) |>ignore
+        match currentState.State with
+            | RunEND _ -> debugMode(false); 
+            | _ -> debugMode(true)
     
     let memoryLookup() = 
         let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string

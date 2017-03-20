@@ -61,3 +61,7 @@ body {
 .line-decoration {
 	background:lightcyan;
 }
+
+.line-decoration-error {
+	background:lightpink;
+}

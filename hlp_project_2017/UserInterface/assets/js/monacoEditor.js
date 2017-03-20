@@ -50,27 +50,28 @@ requirejs(['vs/editor/editor.main'], function () {
         }
     });
 
-    window.getEditorContent = function () {
+    function getEditorContent() {
         return editor.getValue();
     }
 
-    window.setEditorContent = function (string) {
+    function setEditorContent(string) {
         editor.setValue(string);
     }
 
+
     let decorations = [];
-    window.setLineDecoration = function (instrLineToFind) {
+    function setLineDecoration(instrLineToFind,error) {
 
         let codeLine = 0;
         let instrLine = 0;
         let code = window.getEditorContent().split("\n")
 
-        for (var i = 0; i<code.length; i++){
+        for (var i = 0; i < code.length; i++) {
             if (instrLine == instrLineToFind) break;
             if (!code[i]) {
                 codeLine++
-            } 
-            else{
+            }
+            else {
                 codeLine++;
                 instrLine++
             }
@@ -81,14 +82,29 @@ requirejs(['vs/editor/editor.main'], function () {
                 range: new monaco.Range(codeLine, 1, codeLine, 1),
                 options: {
                     isWholeLine: true,
-                    className: 'line-decoration'
+                    className: (error)?'line-decoration-error':'line-decoration'
                 }
             }
         ]);
     }
 
-    window.clearLineDecoration = function () {
+    function clearLineDecoration() {
         decorations = editor.deltaDecorations(decorations, []);
     }
 
+    function lockEditor(){
+        editor.updateOptions({"readOnly":true})
+    }
+    function unlockEditor(){
+        editor.updateOptions({"readOnly":false})
+    }
+
+    //set global for calling from fsharp
+    //window.editor = editor
+    window.setEditorContent = setEditorContent;
+    window.getEditorContent = getEditorContent;
+    window.setLineDecoration = setLineDecoration;
+    window.clearLineDecoration = clearLineDecoration;
+    window.lockEditor = lockEditor;
+    window.unlockEditor =unlockEditor;
 });
