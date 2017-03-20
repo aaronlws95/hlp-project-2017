@@ -1,5 +1,7 @@
 ﻿namespace ARM7TDMI
-
+/// ===========================================
+/// LABEL functions
+/// ===========================================
 module LABELInstruction =      
     open InstructionType 
     open MachineState
@@ -16,7 +18,7 @@ module LABELInstruction =
     /// EQU: Set a constant in memory
     let private equ state memLoc value = 
         {state with MemMap = (Map.add memLoc (Val value) state.MemMap)} 
-    /// execute set flag instruction
+    /// execute a set label instruction
     let executeInstruction state instruction = 
         let ga = Extractor.getAddressValue
         match instruction with

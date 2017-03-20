@@ -65,6 +65,7 @@
     <Compile Include="ALUInstruction.fs" />
     <Compile Include="MEMInstruction.fs" />
     <Compile Include="SHIFTInstruction.fs" />
+    <Compile Include="LABELInstruction.fs" />
     <Compile Include="BRANCHInstruction.fs" />
     <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
