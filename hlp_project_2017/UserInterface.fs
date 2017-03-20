@@ -162,7 +162,6 @@ module UserInterface =
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
 
     let reset() = 
-        debuggingMode <- false
         console.info(timeNow(), "\tResetting Machine State...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
@@ -171,18 +170,22 @@ module UserInterface =
         showRegisters currentState currentBase
         showFlags currentState
         showState currentState
+        debuggingMode <- false
 
     let stepForward() = 
-        debuggingMode <- true
         console.info(timeNow(), "\tStepping forward...")
         //get values from input elements
         let sourceCode = window?getEditorContent() |> string
         let prevState = currentState
-        currentState <- stepForward sourceCode prevState
+        match debuggingMode with
+        | true -> currentState <- stepForward sourceCode prevState
+        | false -> currentState <- stepForward sourceCode (initMachineState sourceCode)
+        
         // Display
         showRegisters currentState currentBase
         showFlags currentState
         showState currentState
+        debuggingMode <- true
         window?setLineDecoration((getRegister currentState 15)/4) |>ignore
     
     let memoryLookup() = 
