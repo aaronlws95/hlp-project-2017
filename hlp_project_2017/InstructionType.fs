@@ -64,8 +64,6 @@ module InstructionType =
         | LABEL of LABELInst
         | END
 
-    //type ConditionType = Condition of ConditionCode
-
     type InstructionLine = 
         | Line of InstructionType * SHIFTInst option * ConditionCode option
         | Failed_Parsing of string
