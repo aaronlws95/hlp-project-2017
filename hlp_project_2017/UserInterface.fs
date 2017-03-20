@@ -180,6 +180,7 @@ module UserInterface =
         showRegisters currentState currentBase
         showFlags currentState
         showState currentState
+        window?setLineDecoration((getRegister currentState 15)/4) |>ignore
     
     let memoryLookup() = 
         let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string
