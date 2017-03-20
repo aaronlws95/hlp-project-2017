@@ -33,6 +33,7 @@ gulp.task("monitor",["build"],()=>{
     console.log("Started monitoring *.fs file changes...");
     gulp.watch("../**/*.fs").on("change", (event) => {
         console.log(`File <${path.basename(event.path)}> was ${event.type}`);
+        gulp.start("build");
     });
 })
 

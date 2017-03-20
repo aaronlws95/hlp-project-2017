@@ -8,11 +8,9 @@ requirejs(['vs/editor/editor.main'], function () {
         tokenizer: {
             root: [
                 [/\b(r([0-9]|1[0-5])|(pc|sp|lr))\b/, "register"],
-                [/[#$=]((0x[0-9a-f]+)|(0b[01]+)|(\d+))/, "number"],
+                [/[#$=](-)?((0x[0-9a-f]+)|(0b[01]+)|(\d+))/, "number"],
                 [/\b(MOV|ADD|SUB|MVN|EOR|RSB|RSC|ADC|SBC|BIC|ORR|ADR)(S)?(EQ|NE|CS|HS|CC|LO|MI|PL|VS|VC|HI|LS|GE|LT|GT|LE|AL)?\b/, "arithmetic"],
-                [/\/\*(.|[\r\n])*?\*\//, "c-style-comment"],
-
-                //<Operation>{<cond>}{S} Rd, Operand2
+                //<Operation>{S}{<cond>} Rd, Operand2
                 [/\b(LSL|LSR|ASR|ROR|RRX)(S)?(EQ|NE|CS|HS|CC|LO|MI|PL|VS|VC|HI|LS|GE|LT|GT|LE|AL)?\b/, "shift"],
                 [/\b(CMP|CMN|TST|TEQ)(EQ|NE|CS|HS|CC|LO|MI|PL|VS|VC|HI|LS|GE|LT|GT|LE|AL)?\b/, "compare"],
                 [/\b(B|BL)(EQ|NE|CS|HS|CC|LO|MI|PL|VS|VC|HI|LS|GE|LT|GT|LE|AL)?\b/, "branch"],

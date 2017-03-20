@@ -24,7 +24,9 @@ module UserInterfaceController =
         //fable ignores System.Convert.ToInt32(boolean)
         [flags.N; flags.Z; flags.C; flags.V] |> List.map (fun x -> match x with | true -> 1 | _ -> 0) |> List.toArray
 
-    //base conversion for registers
+(* 
+    //base conversion for registers 
+    //discarded due to unable to conver negative numbers
     let toBin (dec: int) = 
         //Convert.ToString(dec, 2)
         let rec convert dec = 
@@ -33,7 +35,7 @@ module UserInterfaceController =
             | _ -> 
                 let bit = string (dec % 2)
                 convert (dec/2) + bit
-        convert dec
+        convert dec 
 
     let toHex (dec: int) = 
         //Convert.ToString(dec, 16)
@@ -56,9 +58,22 @@ module UserInterfaceController =
             | _ -> 
                 let bit = dec % 16 |> toBit
                 convert (dec/16) + bit
-        convert dec
-
+        convert dec        *)
     
+
+    // using javascript native base conversion method
+    let toBaseOf (targetBase) (dec: int)  = 
+        (uint32 dec)?toString(targetBase) |>string
+
+    // reformat the output
+    let toBin (dec: int) = 
+        let bin = dec |> toBaseOf 2
+        [0..7] |> List.map (fun x -> bin.[(x*4)..(x*4+3)]) |> String.concat " "
+        
+    let toHex (dec: int) = 
+        let hex = (dec |> toBaseOf 16).ToUpper();
+        [0..3] |> List.map (fun x -> hex.[(x*2)..(x*2+1)]) |> String.concat " "
+
     //one-way update
     let timeNow() = System.DateTime.Now.ToLongTimeString()
     let showRegisters (state:MachineState) (currentBase: DisplayBase) = 
@@ -68,8 +83,8 @@ module UserInterfaceController =
             let DOMElement = document.getElementById (("R" + (string i))) :?>HTMLSpanElement
             let diplayValue = 
                 match currentBase with
-                    | Bin -> value |> toBin |> string |> (+) "0b"
-                    | Hex -> value |> toHex |> string |> (+) "0x"
+                    | Bin -> value |> toBin |> (+) "0x"
+                    | Hex -> value |> toHex |> (+) "0x"
                     | _ -> value |> string
             DOMElement.textContent <- diplayValue
             //console.log(timeNow(), "\tR" + (string i) + "=" + diplayValue);
@@ -80,8 +95,9 @@ module UserInterfaceController =
         let flags = getFlags state
         let updateFlag i = 
             let flag = document.getElementById (("CSPR" + (string i))) :?>HTMLSpanElement
-            flag.textContent <- flags.[i] |> string
+            flag.textContent <- flags.[i-1] |> string
         console.info(timeNow(), "\tCSPR Bits are", flags);
+        [1..4] |> List.map (fun i -> updateFlag i) |> ignore
         console.info(timeNow(), "\tCSPR Bits update successful.");
     
     let showStatus (msg: string) = 

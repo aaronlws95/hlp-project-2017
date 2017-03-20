@@ -88,7 +88,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fable.Core">
-      <HintPath>packages\Fable.Core.1.0.0-narumi-8\lib\netstandard1.6\Fable.Core.dll</HintPath>
+      <HintPath>UserInterface/node_modules/fable-core/Fable.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FsCheck">
