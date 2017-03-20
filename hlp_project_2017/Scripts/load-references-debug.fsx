@@ -13,3 +13,4 @@
 #r "../packages/Mono.Cecil.0.9.6.4/lib/net45/Mono.Cecil.Mdb.dll"
 #r "../packages/Mono.Cecil.0.9.6.4/lib/net45/Mono.Cecil.Pdb.dll"
 #r "../packages/Mono.Cecil.0.9.6.4/lib/net45/Mono.Cecil.Rocks.dll"
+#r "../UserInterface/node_modules/fable-core/Fable.Core.dll"

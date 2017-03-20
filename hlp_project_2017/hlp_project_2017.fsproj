@@ -67,8 +67,11 @@
     <Compile Include="SHIFTInstruction.fs" />
     <Compile Include="LABELInstruction.fs" />
     <Compile Include="BRANCHInstruction.fs" />
-    <Compile Include="Cast.fs" />
     <Compile Include="Emulator.fs" />
+    <Compile Include="BasicActivePatterns.fs" />
+    <Compile Include="Converters.fs" />
+    <Compile Include="InstructionsActivePatterns.fs" />
+    <Compile Include="Tokenizer.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Program.fs" />
     <Compile Include="UserInterface.fs" />
