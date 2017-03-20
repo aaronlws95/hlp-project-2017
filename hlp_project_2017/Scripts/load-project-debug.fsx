@@ -15,4 +15,3 @@
       "../Parser.fs"
       "../Program.fs"
       "../UserInterface.fs"
-      "../File1.fs"

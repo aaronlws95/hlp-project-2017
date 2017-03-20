@@ -72,7 +72,6 @@
     <Compile Include="Program.fs" />
     <Compile Include="UserInterface.fs" />
     <Content Include="packages.config" />
-    <Compile Include="File1.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Argu">

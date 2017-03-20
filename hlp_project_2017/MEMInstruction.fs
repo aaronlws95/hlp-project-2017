@@ -7,17 +7,20 @@ module MEMInstruction =
     open MachineState
     open EmulatorHelper
     /// ADR: update register with address value
-    let private adr state dest exp=  
-        let newRegMap = Map.add dest exp state.RegMap
+    let private adr state dest addr =  
+        
+        let newRegMap = Map.add dest addr state.RegMap
         {state with RegMap = newRegMap}
     /// LDR: load register with memory content
     let private ldr state dest source offset autoIndex s  = 
-        let doLDR = 
+        let doLDR =  
             let em = Extractor.extractMemory state
             let newRegMap = 
                 let loadRegMap = Map.add dest (em (Addr (state.RegMap.[source] + offset))) state.RegMap
-                if dest <> source then Map.add source (loadRegMap.[source] + autoIndex) loadRegMap else loadRegMap
-            {state with RegMap = newRegMap}
+                Map.add source (loadRegMap.[source] + autoIndex) loadRegMap 
+            if (dest = source && autoIndex>0) then {state with State = SyntaxErr "destination cannot equal source"}
+            elif (autoIndex > 0 && offset <= 0) then {state with State = SyntaxErr "source address must have offset"}
+            else {state with RegMap = newRegMap} 
         if (Extractor.isValidAddress state (Addr (state.RegMap.[source] + offset))) then doLDR else {state with State = RunTimeErr "Address not allocated"}
     /// LDM: load multiple register with memory content
     let private ldm state dir source regList writeBack  = 

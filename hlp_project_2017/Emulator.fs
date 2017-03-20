@@ -23,6 +23,7 @@ module Emulator =
             | MEM(mi) -> MEMInstruction.executeInstruction state mi 
             | SHIFT(shifti,s) -> SHIFTInstruction.executeInstruction state shifti s 
             | BRANCH(bi) -> BRANCHInstruction.executeInstruction state bi 
+
         let executeLine state = 
             let programCounter = Extractor.extractRegister state (Reg(R 15)) // Program counter is R15
             let checkCondition cond = 

@@ -32,6 +32,7 @@ module ALUInstruction =
         match instruction with
         | MOV(r,rol) -> updateRegister state r (er rol) s  // R:=ROL
         | MVN(r, rol) -> updateRegister state r ~~~(er rol) s //R:=NOT(ROL) 
+        | AND(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]&&&(er rol)) s // R1:=R2 EOR ROL
         | EOR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]^^^(er rol)) s // R1:=R2 EOR ROL
         | BIC(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]&&&(~~~(er rol))) s //R1:=R2 AND NOT(ROL)
         | ORR(r1, r2, rol) -> updateRegister state r1 (state.RegMap.[r2]|||(er rol)) s //R1:= R2 OR ROL

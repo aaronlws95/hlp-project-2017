@@ -103,6 +103,11 @@ matches string (#X-&gt;X) returning integer
  extract value from memory
 </summary>
 </member>
+<member name="M:ARM7TDMI.EmulatorHelper.Extractor.isValidAddress(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.Address)">
+<summary>
+ extract value from memory
+</summary>
+</member>
 <member name="M:ARM7TDMI.EmulatorHelper.Extractor.extractRegister(ARM7TDMI.MachineState.MachineState,ARM7TDMI.InstructionType.RegOrLit)">
 <summary>
  extract value from register
