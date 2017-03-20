@@ -38,6 +38,6 @@ gulp.task("monitor",["build"],()=>{
 })
 
 gulp.task("package", ["build"], shell.task([
-    "electron-packager . --appname=ARMEmulator --asar=true --out=electron --overwrite"
+    "electron-packager . ARMadillo  --asar=true --out=electron --overwrite"
 ]));
 
