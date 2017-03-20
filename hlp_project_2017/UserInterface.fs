@@ -171,6 +171,7 @@ module UserInterface =
         showFlags currentState
         showState currentState
         debuggingMode <- false
+        window?clearLineDecoration((getRegister currentState 15)/4) |>ignore
 
     let stepForward() = 
         console.info(timeNow(), "\tStepping forward...")
