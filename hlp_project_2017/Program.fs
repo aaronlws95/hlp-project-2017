@@ -41,7 +41,11 @@ module Program =
     // Execute one line at a time 
     let stepForward (s:string) (state:MachineState) =
         printfn "Running line %A" state.RegMap.[R 15] |> ignore
-        Emulator.Instruction.executeLine state 
+        match state.State with
+        | RunOK -> Emulator.Instruction.executeLine state 
+        | RunEND -> state
+        | RunTimeErr s-> state
+        | SyntaxErr s -> state
 
     //[<EntryPoint>]
     let main argv = 
