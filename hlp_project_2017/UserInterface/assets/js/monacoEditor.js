@@ -48,7 +48,6 @@ requirejs(['vs/editor/editor.main'], function () {
             useShadows: false,
             verticalScrollbarSize: 17,
         }
-
     });
 
     window.getEditorContent = function () {
@@ -57,5 +56,18 @@ requirejs(['vs/editor/editor.main'], function () {
 
     window.setEditorContent = function (string) {
         editor.setValue(string);
+    }
+
+    let decorations = [];
+    window.setLineDecoration = function (line) {
+        decorations = editor.deltaDecorations(decorations, [
+            {
+                range: new monaco.Range(line, 1, line, 1),
+                options: {
+                    isWholeLine: true,
+                    className: 'line-decoration'
+                }
+            }
+        ]);
     }
 });
