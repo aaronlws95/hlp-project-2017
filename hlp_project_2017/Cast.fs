@@ -156,8 +156,8 @@ module Cast=
 
     let (|IsBranchInst|_|) =
         function
-        | "B" -> B |> Some
         | "BL" -> BL |> Some
+        | "B" -> B |> Some
         | _ -> None
 
     let (|IsSetFlag|_|) =
@@ -264,8 +264,8 @@ module Cast=
         | Prefix "CMN" rest -> toTuple "CMN" rest   //19
         | Prefix "TST" rest -> toTuple "TST" rest   //20
         | Prefix "TEQ" rest -> toTuple "TEQ" rest   //21
-        | Prefix "B" rest -> toTuple "B" rest       //22
-        | Prefix "BL" rest -> toTuple "BL" rest     //23
+        | Prefix "BL" rest -> toTuple "BL" rest     //22
+        | Prefix "B" rest -> toTuple "B" rest       //23
         | Prefix "ADR" rest -> toTuple "ADR" rest   //24
         | Prefix "LDR" rest -> toTuple "LDR" rest   //25 - double
         | Prefix "STR" rest -> toTuple "STR" rest   //26

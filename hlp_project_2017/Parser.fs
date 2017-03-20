@@ -4,8 +4,8 @@ module Parser=
     open InstructionType
     open MachineState
     open Cast
-   
-    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n'; ',' |]
+    
+    let whiteSpace = [| ' '; '\f'; '\t'; '\r'; '\n'; ',' |] 
 
     let readAsm textInput =
         let splitIntoLines (text:string) = 
