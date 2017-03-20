@@ -159,6 +159,27 @@ module UserInterface =
         showFlags currentState
         showState currentState
         //[0..4..32] |> List.map (fun x -> console.log((getMemory currentState x))) |> ignore
+
+    let reset() = 
+        console.info(timeNow(), "\tResetting Machine State...")
+        //get values from input elements
+        let sourceCode = window?getEditorContent() |> string
+        currentState <- initMachineState sourceCode
+
+        showRegisters currentState currentBase
+        showFlags currentState
+        showState currentState
+
+    let stepForward() = 
+        console.info(timeNow(), "\tStepping forward...")
+        //get values from input elements
+        let sourceCode = window?getEditorContent() |> string
+        let prevState = currentState
+        currentState <- stepForward sourceCode prevState
+        // Display
+        showRegisters currentState currentBase
+        showFlags currentState
+        showState currentState
     
     let memoryLookup() = 
         let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string
@@ -209,12 +230,16 @@ module UserInterface =
         document.getElementById (buttonId) :?>HTMLButtonElement
 
     let executeButton = getButton ("execute")
+    let resetButton = getButton ("reset")
+    let stepForwardButton = getButton ("step-forward")
     let toBinButton = getButton("toBin")
     let toDecButton = getButton ("toDec")
     let toHexButton = getButton ("toHex")
     
     //register events to buttons
     executeButton.addEventListener_click(fun _ ->(execute());null)
+    resetButton.addEventListener_click(fun _ ->(reset());null)
+    stepForwardButton.addEventListener_click(fun _ ->(stepForward());null)
     toBinButton.addEventListener_click(fun _ ->(changeBaseToBin());null)
     toDecButton.addEventListener_click(fun _ ->(changeBaseToDec());null)
     toHexButton.addEventListener_click(fun _ ->(changeBaseToHex());null)

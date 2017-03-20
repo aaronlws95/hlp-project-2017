@@ -58,9 +58,9 @@ module Emulator =
                 // Shift:None/Some, Condition:False
                 | Some (Inst(Line(inst, _, Some(c) ))) when checkCondition c = false -> state 
                 // Error cases
-                | None -> {state with State = RunTimeErr("run time error: no instruction line found at address "+(state.RegMap.TryFind(R 15)).ToString())}
+                | None -> {state with State = RunTimeErr("No instruction line found at address "+(state.RegMap.TryFind(R 15)).ToString())}
                 | Some(Inst(Failed_Parsing(error_msg))) -> {state with State = SyntaxErr(error_msg)}
-                | x -> {state with State = RunTimeErr("run time error: instruction line not defined: "+x.ToString())}
+                | x -> {state with State = RunTimeErr("Instruction line not defined: "+x.ToString())}
             // Update PC 
             let newRegMap = 
                 match outputState.RegMap.[R 15] with
