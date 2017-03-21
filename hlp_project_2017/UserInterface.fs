@@ -186,7 +186,7 @@ module UserInterface =
          showState currentState
          showError currentState
          match currentState.State with
-             | RunEND _ -> debugMode(false); 
+             | RunEND _ -> (); 
              | _ -> debugMode(true)
     //button functions
     let execute() =
@@ -228,8 +228,8 @@ module UserInterface =
         console.info(timeNow(), "\tLooking up memory content for query Addr: 0x" + startAddr, "- 0x" + endAddr);
 
         // the result should cover user query range (word addr)
-        let wordStartAddr = (toDec 16 startAddr) / 32 
-        let wordEndAddr = (toDec 16 endAddr) / 32
+        let wordStartAddr = (toDec 16 startAddr) / 4
+        let wordEndAddr = (toDec 16 endAddr) / 4
 
         let byteStartAddr = wordStartAddr * 4
         let byteEndAddr = (wordEndAddr + 1) * 4
@@ -239,12 +239,12 @@ module UserInterface =
         let toTable = 
             let wordHeadBytes = [byteStartAddr..4..byteEndAddr] 
             let renderInst headByte (inst) = 
-                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-success'>Instr</span>", (toJson inst)) 
+                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte)).ToUpper() + ("</span>"), "<span class='label label-success'>Instr</span>", (toJson inst)) 
                 
             let renderVal headByte (value) = 
                 //let wordValue = [3..0] |> List.map (fun x -> getMemory currentState (headByte + x))
                 //wordValue = (getMemory currentState (headByte+3),getMemory currentState (headByte+2),getMemory currentState (headByte+1),getMemory currentState headByte)
-                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-warning'>Value</span>", (toJson value))
+                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte)).ToUpper() + ("</span>"), "<span class='label label-warning'>Value</span>", (toJson value))
 
             let combineWord wordHeadByte= 
                 let firstByteContent = getMemory currentState wordHeadByte
@@ -252,7 +252,7 @@ module UserInterface =
                     | Some x -> match x with
                                     | Inst _ -> renderInst wordHeadByte firstByteContent
                                     | Val _ -> renderVal wordHeadByte firstByteContent
-                    | None -> ("<span class='label label-primary'>0x" + (toBaseOf 16 (wordHeadByte*8)).ToUpper() + ("</span>"), "<span class='label label-default'>Null</span>", "0")
+                    | None -> ("<span class='label label-primary'>0x" + (toBaseOf 16 (wordHeadByte)).ToUpper() + ("</span>"), "<span class='label label-default'>Null</span>", "0")
             let dataSet = [byteStartAddr..4..byteEndAddr] |>List.map combineWord |>toJson
             window?data <- dataSet
             window?displayMemoryQuery(dataSet);
