@@ -23,6 +23,7 @@ function newFile() {
     if (confirm("Discard the current file?")) {
         setEditorContent("");
         log("New file is created.");
+        fileName = undefined;
         document.title = "Untitled" + " - " + appName;
     }
 }

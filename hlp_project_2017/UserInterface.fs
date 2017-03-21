@@ -241,17 +241,17 @@ module UserInterface =
             let renderInst headByte (inst) = 
                 ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-success'>Instr</span>", (toJson inst)) 
                 
-            let renderVal headByte = 
-                let wordValue = [3..0] |> List.map (fun x -> getMemory currentState (headByte + x))
+            let renderVal headByte (value) = 
+                //let wordValue = [3..0] |> List.map (fun x -> getMemory currentState (headByte + x))
                 //wordValue = (getMemory currentState (headByte+3),getMemory currentState (headByte+2),getMemory currentState (headByte+1),getMemory currentState headByte)
-                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-warning'>Value</span>", (toJson wordValue))
+                ("<span class='label label-primary'>0x" + (toBaseOf 16 (headByte*8)).ToUpper() + ("</span>"), "<span class='label label-warning'>Value</span>", (toJson value))
 
             let combineWord wordHeadByte= 
                 let firstByteContent = getMemory currentState wordHeadByte
                 match firstByteContent with
                     | Some x -> match x with
                                     | Inst _ -> renderInst wordHeadByte firstByteContent
-                                    | Val _ -> renderVal wordHeadByte
+                                    | Val _ -> renderVal wordHeadByte firstByteContent
                     | None -> ("<span class='label label-primary'>0x" + (toBaseOf 16 (wordHeadByte*8)).ToUpper() + ("</span>"), "<span class='label label-default'>Null</span>", "0")
             let dataSet = [byteStartAddr..4..byteEndAddr] |>List.map combineWord |>toJson
             window?data <- dataSet
