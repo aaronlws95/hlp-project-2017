@@ -17,8 +17,8 @@
 MOV	R1, #10
 MOV R2, #20
 MOV R3, #30
-ADD R0 ,R0, #4
-STMED R0 , {R3}
+ADD R0 ,R0, #8
+STMDA R0 , {R1,R1}
 LDMFD R0, {R4,R5,R6}
           MOV R1, #0
           ADDMI R1, R1, #8

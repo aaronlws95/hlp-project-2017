@@ -58,10 +58,10 @@ module MEMInstruction =
     let private stm state dir dest regList writeBack = 
         let newMemMap,offset = 
             match dir with
-                | ED | IB -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                | FD | IA -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                | EA | DB -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
-                | FA | DA -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+                | ED | DA -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                | FD | DB -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                | EA | IA -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+                | FA | IB -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
         let newRegMap = if writeBack then (Map.add dest (state.RegMap.[dest]+offset) state.RegMap) else state.RegMap
         {state with RegMap = newRegMap;MemMap = newMemMap}
     /// execute memory instruction 

@@ -102,8 +102,8 @@ module CreateRandomMemTest =
                                 let startStr = "LDR R0, =TEST\nMOV	R1, #10\nMOV R2, #20\nMOV R3, #30\n"
                                 let startInst = [MEM(ADR(R 0, Addr 0x10000));ALU(MOV(R 1,Lit 10),false);ALU(MOV(R 2,Lit 20),false);ALU(MOV(R 3,Lit 30),false)]
                                 match dir with 
-                                | ED | IB  | FD | IA  -> startStr + "ADD R0 ,R0, #" + string(4*(List.length regListSTM)) + "\n",startInst@[ALU(ADD(R 0,R 0,Lit (4*(List.length regListSTM))),false)]
-                                | EA | DB | FA | DA -> startStr,startInst
+                                | ED | DA  | FD | DB  -> startStr + "ADD R0 ,R0, #" + string(4*(List.length regListSTM)) + "\n",startInst@[ALU(ADD(R 0,R 0,Lit (4*(List.length regListSTM))),false)]
+                                | EA | IA | FA | IB -> startStr,startInst
                             (initialStr + "STM" + strDir + " R0" + strWriteBack + ", {" + strRegListSTM + "}" + "\nLDMFD R0, {R4,R5,R6}",initialInst@[MEM(STM(dir,R 0,regListSTM,writeBack));MEM(LDM(FD,R 0,[R 4;R 5;R 6],false))]) 
                 | _ -> failwithf "instruction name not valid"
 
