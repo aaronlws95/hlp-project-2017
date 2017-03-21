@@ -109,7 +109,7 @@ module CreateRandomMemTest =
 
     /// get random instruction name 
     let getRandInstMultName = 
-        let instNameArr = [|"LDM"|]
+        let instNameArr = [|"LDM";"STM"|]
         fun() -> instNameArr.[rand.Next(0,Array.length instNameArr)]
 
     /// create list of tests, each a random memory instruction
