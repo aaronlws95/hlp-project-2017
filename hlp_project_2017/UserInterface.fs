@@ -109,11 +109,12 @@ module UserInterfaceController =
     
     let showState (state: MachineState) = 
         let runState = getState state
+        let runStateJson = toJson runState
         let StateMsg = 
             match runState with 
                 | RunOK -> "Execution was successful."
-                | RunTimeErr _ -> ("Runtime Error: " + (toJson runState))
-                | SyntaxErr _ -> ("Syntax Error: " + (toJson runState))
+                | RunTimeErr _ -> ("Runtime Error: " + ((window?JSON?parse(runStateJson))?RunTimeErr |>string)); 
+                | SyntaxErr _ -> ("Runtime Error: " + ((window?JSON?parse(runStateJson))?SyntaxErr |>string)); 
                 | RunEND -> "Execution was successful. The final instruction is reached."                
         showStatus StateMsg    
 
@@ -140,6 +141,7 @@ module UserInterface =
     let mutable currentBase = Hex
     let mutable currentState = initMachineState ""
     let mutable debuggingMode = false
+    let appTitle = document.title
 
     console.info(timeNow(), "\tFable Application Loaded")
     console.log("%c ARMadillo - HLP Project 2017", "background: #222; color: #bada55");
@@ -160,26 +162,30 @@ module UserInterface =
         console.info(timeNow(), "\tChanged register display base to", (toJson toBase));
 
 
-    let showRunResult() = 
-         showRegisters currentState currentBase
-         showFlags currentState
-         showState currentState
-         showError currentState
-
     let debugMode(on: bool) = 
         let debugIconElement = document.getElementById ("debug")
         match on with
             | true -> 
                 debugIconElement.className <- ""
                 debuggingMode <- true
-                console.warn(timeNow(), "\tEntered Debugging Mode.")
-                window?lockEditor()
+                console.warn(timeNow(), "\tEntered Debug Mode.")
+                document.title <- appTitle + " [Debug Mode]"
+                window?lockEditor() |> ignore
             | _ -> 
                 debugIconElement.className <- "hidden"
                 debuggingMode <- false
-                console.warn(timeNow(), "\tExited Debugging Mode.")
-                window?unlockEditor()
-
+                console.warn(timeNow(), "\tExited Debug Mode.")
+                document.title <- appTitle
+                window?unlockEditor() |> ignore
+        
+    let showRunResult() = 
+         showRegisters currentState currentBase
+         showFlags currentState
+         showState currentState
+         showError currentState
+         match currentState.State with
+             | RunEND _ -> debugMode(false); 
+             | _ -> debugMode(true)
     //button functions
     let execute() =
         console.info(timeNow(), "\tExecuting Source Code...")
@@ -198,6 +204,7 @@ module UserInterface =
 
         showRunResult()
         debugMode(false)
+        showStatus("Emulator state is reset.");
         window?clearLineDecoration() |>ignore
 
     let stepForward() = 
@@ -212,11 +219,7 @@ module UserInterface =
         
         // Display
         showRunResult()
-        debuggingMode <- true
-        match currentState.State with
-            | RunEND _ -> debugMode(false); 
-            | _ -> debugMode(true)
-    
+        
     let memoryLookup() = 
         let startAddr = (document.getElementById ("memory-start") :?>HTMLInputElement).value |>string
         let endAddr = (document.getElementById ("memory-end") :?>HTMLInputElement).value |>string

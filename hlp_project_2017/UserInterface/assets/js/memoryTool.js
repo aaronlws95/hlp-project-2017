@@ -27,6 +27,11 @@ let tableInit = (dataSet) => {
 window.displayMemoryQuery = function (newDataSet) {
     //parse the query result string to data array
     dataArray = JSON.parse(newDataSet.replace(/\\"/g, "'"))
+
+    console.log(dataArray);
+    for (var row=0; row<dataArray.length; row++){
+            dataArray[row][2] = dataArray[row][2].replace(/['\[\]{}]/g,"")
+    }
     if (!flag) {
         tableInit(dataArray);
         flag = true;
