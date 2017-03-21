@@ -40,12 +40,12 @@ module Parser=
         let label_map =
             let chooseAddr (l:Map_addr_counter) i =
                 match lineList.[i] with
-                | IsLabel x::"FILL"::IsInt value::_ -> { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter)) ; Counter=l.Counter+value/4+1 }
-                | "FILL"::IsInt value::_ -> { l with AddrMap=l.AddrMap.Add("DEFAULT_FILL",Addr(l.Counter)) ; Counter=l.Counter+value/4+1 }
-                | IsLabel x::"DCD"::rest ->  { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter)) ; Counter=l.Counter+rest.Length+1 }
-                | IsLabel x::"EQU"::_ -> { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter)) ; Counter=l.Counter+1 }
+                | IsLabel x::"FILL"::IsInt value::_ -> { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter*4)) ; Counter=l.Counter+value/4+1 }
+                | "FILL"::IsInt value::_ -> { l with AddrMap=l.AddrMap.Add("DEFAULT_FILL",Addr(l.Counter*4)) ; Counter=l.Counter+value/4+1 }
+                | IsLabel x::"DCD"::rest ->  { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter*4)) ; Counter=l.Counter+rest.Length+1 }
+                | IsLabel x::"EQU"::_ -> { l with AddrMap=l.AddrMap.Add(x,Addr(l.Counter*4)) ; Counter=l.Counter+1 }
                 | _ -> l   
-            (seq { 0 .. lineList.Length - 1 } |> Seq.fold chooseAddr { Counter=lineList.Length; AddrMap=Map.empty}).AddrMap
+            (seq { 0 .. lineList.Length - 1 } |> Seq.fold chooseAddr { Counter=(lineList.Length+1); AddrMap=Map.empty}).AddrMap
 
         let executeWordsAsCommand (strlist:string list)= //: InstructionLine
             let instruction = TokenizeInst strlist.[0]

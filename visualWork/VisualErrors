@@ -3789,3 +3789,40 @@ LDMFD R0, {R4,R5,R6}
   <runtime-error line="20">Attempting to set word in instruction memory space at address 0xFFFC</runtime-error>
 </VisUAL>
 ----------------------
+
+>>---SOURCE:
+
+                TEST DCD 1,2,3,4,5,6,7,8,9,10
+                MOV R0, #0
+                MOV R1, #0
+                MOV R2, #0
+                MOV R3, #0
+                MOV R4, #0
+                MOV R5, #0
+                MOV R6, #0
+                MOV R7, #0
+                MOV R8, #0
+                MOV R9, #0
+                MOV R10, #0
+                MOV R11, #0
+                MOV R12, #0
+                
+            MOV R3, 0x80000000
+            CMP R3, #0
+            MOV R0, #0xFFFFFFFF
+            SUBS R0, R0, #1
+            
+          MOV R1, #0
+          ADDMI R1, R1, #8
+          ADDEQ R1, R1, #4
+          ADDCS R1, R1, #2
+          ADDVS R1, R1, #1
+       
+-------
+
+>>>>>>>>>>>>>>>>>>>>>>
+
+<VisUAL xmlns="http://bitbucket.org/salmanarif/visual">
+  <syntax-error line="17">Invalid source.</syntax-error>
+</VisUAL>
+----------------------

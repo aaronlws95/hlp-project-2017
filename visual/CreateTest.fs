@@ -7,19 +7,24 @@ module CreateTest =
     open Emulator.Instruction
     open InstructionType
     
-    let testDEBUG1 = 
+    let testDEBUG1 = createTest "DEBUG" "MOVS R0, #0xFFFFFFFF" [ALU(MOV(R 0,Lit 0xFFFFFFFF),true)]
+
+    let testDEBUG11 = 
         let testText = "
-
-
-		MOV		R1, #11584
-		
-		RORS		R0, R1, #233
-
+            MOV R0, #0xFFFFFFFF 
+            MOV R1, #0x80000000
+            AND R3, R1, #0x80000000
+            CMP R3, #0
+            SUBS R0, R0, #1
             "
         let testInstruction = 
-            [   ALU(MOV(R 1,Lit 11584),false)
-                SHIFT(ROR(R 0,R 1,Lit 233),true) ]
+            [   ALU(MOV(R 0,Lit 0xFFFFFFFF),false)
+                ALU(MOV(R 1,Lit 0x80000000),false)
+                ALU(AND(R 3,R 1, Lit 0x80000000),false)
+                SF(CMP(R 3,Lit 0))
+                ALU(SUB(R 0,R 0, Lit 1),true)  ]
         createTest "DEBUG Test" testText testInstruction
+    let createdManualTestList = [testDEBUG1]
     let testDEBUG2 = 
         let testText = "
         SBC R0, R1, R1
@@ -333,19 +338,19 @@ module CreateTest =
         createTest "STMFD Test" testText testInstruction
 
 
-    let createdManualTestList = 
-        [ 
-            //ALU
-            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
-            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
-            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
-            //SET FLAG
-            testTST1; testTEQ1; testCMP1; testCMN1; 
-            //SHIFT
-            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
-            //MEM
-            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
-            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
-        ]
-
+//    let createdManualTestList = 
+//        [ 
+//            //ALU
+//            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
+//            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
+//            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
+//            //SET FLAG
+//            testTST1; testTEQ1; testCMP1; testCMN1; 
+//            //SHIFT
+//            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
+//            //MEM
+//            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+//            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+//            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
+//        ]
+        

@@ -8,7 +8,6 @@ module MEMInstruction =
     open EmulatorHelper
     /// ADR: update register with address value
     let private adr state dest addr =  
-        
         let newRegMap = Map.add dest addr state.RegMap
         {state with RegMap = newRegMap}
     /// LDR: load register with memory content

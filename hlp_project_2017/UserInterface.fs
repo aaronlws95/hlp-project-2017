@@ -234,7 +234,7 @@ module UserInterface =
         let byteStartAddr = wordStartAddr * 4
         let byteEndAddr = (wordEndAddr + 1) * 4
 
-        //[byteStartAddr..byteEndAddr] |> List.map (fun x -> console.log(x,":",getMemory currentState x)) |> ignore
+        [byteStartAddr..byteEndAddr] |> List.map (fun x -> console.log(x,":",getMemory currentState x)) |> ignore
         
         let toTable = 
             let wordHeadBytes = [byteStartAddr..4..byteEndAddr] 
