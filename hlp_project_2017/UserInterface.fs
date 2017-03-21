@@ -164,6 +164,7 @@ module UserInterface =
 
     let debugMode(on: bool) = 
         let debugIconElement = document.getElementById ("debug")
+        let sourceCode = window?getEditorContent() |> string
         match on with
             | true -> 
                 debugIconElement.className <- ""
@@ -177,6 +178,7 @@ module UserInterface =
                 console.warn(timeNow(), "\tExited Debug Mode.")
                 document.title <- appTitle
                 window?unlockEditor() |> ignore
+                currentState <- initMachineState sourceCode
         
     let showRunResult() = 
          showRegisters currentState currentBase

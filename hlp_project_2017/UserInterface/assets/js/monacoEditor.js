@@ -61,21 +61,18 @@ requirejs(['vs/editor/editor.main'], function () {
 
     let decorations = [];
     function setLineDecoration(instrLineToFind,error) {
-
-        let codeLine = 0;
-        let instrLine = 0;
-        let code = window.getEditorContent().replace(/^[\t ]+$/gm,'\n').split("\n");
+        let instrCount = 0;
+        let code = window.getEditorContent().replace(/^[\t ]+$/gm,'').split("\n");
+       
         for (var i = 0; i < code.length; i++) {
-            if (instrLine == instrLineToFind) break;
-            if (!code[i]) {
-                codeLine++
-            }
-            else {
-                codeLine++;
-                instrLine++
+            if (instrCount == instrLineToFind) break;
+            if (code[i].length > 1) {
+                instrCount++
             }
         }
-        
+
+        let codeLine = i;
+        console.log("inst:",instrLineToFind, "@line", i)
         decorations = editor.deltaDecorations(decorations, [
             {
                 range: new monaco.Range(codeLine, 1, codeLine, 1),
