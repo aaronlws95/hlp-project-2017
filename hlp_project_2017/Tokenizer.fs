@@ -24,7 +24,7 @@ module Tokenizer=
         match (if s.Length>0 then s.[0] else ' ') with
         | 'S' when s.Length>1 -> ["S";s.[1..]]
         | 'B' when s.Length>1 -> ["B";s.[1..]]
-        | _   when s.Length>1 -> ["";s.[1..]]
+        | _   when s.Length>1 -> ["";s.[0..]]
         | 'S' -> ["S";""]
         | 'B' -> ["B";""]
         | _   -> ["";""]

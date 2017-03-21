@@ -84,7 +84,7 @@ module Parser=
             | IsAddr label_map addr::""::""::"DCD"::IsIntList valueLst -> Line(LABEL(DCD(addr,valueLst)),None,None)
             | [IsAddr label_map addr;"";""; "EQU"; IsInt value] -> Line(LABEL(EQU(addr,value)),None,None)
             //END
-            | ["END"; IsCondition cond] -> Line(END,None,CondCast cond)
+            | ["END"; _; IsCondition cond] -> Line(END,None,CondCast cond)
             //Syntax Error
             | x -> Failed_Parsing("Unexpected match in parser: "+(x |> String.concat " "))
 
