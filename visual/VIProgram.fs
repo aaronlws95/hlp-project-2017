@@ -23,8 +23,8 @@ module VIProgram=
                                             // up future repeat simulations
             VisualPath =  @"..\..\..\visualapp\visual\" // the directory in which the downloaded VisUAL.exe can be found
             WorkFileDir = @"..\..\..\VisualWork\"      // the directory in which both temporary files and the persistent cache file are put
-            MemDataStart = 0x100            // start of VisUAL data section Memory
-            MemLocs = []                    // memory locations to be traced and data returned
+            MemDataStart = 0x10000            // start of VisUAL data section Memory
+            MemLocs = [0x10000..4..0x10190]                    // memory locations to be traced and data returned
 
         }
 

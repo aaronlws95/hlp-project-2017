@@ -336,17 +336,16 @@ module CreateTest =
     let createdManualTestList = 
         [ 
             //ALU
-//            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
-//            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
-//            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
-//            //SET FLAG
-//            testTST1; testTEQ1; testCMP1; testCMN1; 
-//            //SHIFT
-//            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
+            testMOV1; testMOV2; testADD1; testSUB1; testMOVS1; 
+            testADDS1; testADDS2; testSUBS1; testMVN1; testEOR1; 
+            testRSB1; testADC1; testSBC1; testBIC1; testORR1; 
+            //SET FLAG
+            testTST1; testTEQ1; testCMP1; testCMN1; 
+            //SHIFT
+            testLSL1; testLSR1; testASR1; testROR1; testRRX1; testLSLS1; testLSRS1
             //MEM
-//            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
-//            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
-//            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
-            testLDMEA1;
+            testADR1; testLDR1; testLDR2; testLDR3; testLDR4; testSTR1;
+            testSTR2; testLDMFD1; testLDMED1; testLDMEA1; testLDMFA1;
+            testSTMEA1; testSTMFA1; testSTMFD1; testSTMED1;
         ]
 

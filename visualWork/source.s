@@ -13,8 +13,13 @@
                 MOV R10, #0
                 MOV R11, #0
                 MOV R12, #0
-                LDR R0 , =TEST
-LDMIA R0 , {R7,R12,R11}
+                LDR R0, =TEST
+MOV	R1, #10
+MOV R2, #20
+MOV R3, #30
+ADD R0 ,R0, #4
+STMED R0 , {R3}
+LDMFD R0, {R4,R5,R6}
           MOV R1, #0
           ADDMI R1, R1, #8
           ADDEQ R1, R1, #4

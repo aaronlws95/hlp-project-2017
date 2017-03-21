@@ -48,7 +48,7 @@ module MEMInstruction =
                 | EA | DB -> initialList |> List.fold (fun (flag,offset) _ -> (isValidAddressFold (Addr (state.RegMap.[source]+offset-4)) flag,(offset-4))) (true,0)
                 | FA | DA -> initialList |> List.fold (fun (flag,offset) _ -> (isValidAddressFold (Addr (state.RegMap.[source]+offset)) flag,(offset-4))) (true,0)
             if flag then doLdm else {state with State = RunTimeErr "Address not allocated"}
-        checkAddresses dir
+        checkAddresses dir  
     /// STR: store register contents into memory
     let private str state source dest offset autoIndex s =  
         let newMemMap = Map.add (Addr (state.RegMap.[dest]+offset)) (Val source) state.MemMap
@@ -58,10 +58,10 @@ module MEMInstruction =
     let private stm state dir dest regList writeBack = 
         let newMemMap,offset = 
             match dir with
-                | ED | IB -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                | FD | IA -> regList |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
-                | EA | DB -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
-                | FA | DA -> regList |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+                | ED | IB -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                | FD | IA -> regList |> List.sort |> List.rev |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset-4)) (Val (state.RegMap.[elem])) acc),(offset-4)) (state.MemMap,0)
+                | EA | DB -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
+                | FA | DA -> regList |> List.sort |> List.fold (fun (acc,offset) elem -> (Map.add (Addr (state.RegMap.[dest]+offset+4)) (Val (state.RegMap.[elem])) acc),(offset+4)) (state.MemMap,0)
         let newRegMap = if writeBack then (Map.add dest (state.RegMap.[dest]+offset) state.RegMap) else state.RegMap
         {state with RegMap = newRegMap;MemMap = newMemMap}
     /// execute memory instruction 

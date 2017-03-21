@@ -46,37 +46,42 @@
  ===========================================
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsAddr|_|(Microsoft.FSharp.Collections.FSharpMap{System.String,ARM7TDMI.InstructionType.Address},System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsAddr|_|(Microsoft.FSharp.Collections.FSharpMap{System.String,ARM7TDMI.InstructionType.Address},System.String)">
 <summary>
 matches Addr label or addr literal
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsLabel|_|(System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsLabel|_|(System.String)">
 <summary>
- matches string returning string
+ matches label (not reg) returning string
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsRegOrLit|_|(System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsRegOrLit|_|(System.String)">
 <summary>
  matches RegOrLit string returning the RegOrLit
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsRegList|_|(Microsoft.FSharp.Collections.FSharpList{System.String})">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsRegList|_|(Microsoft.FSharp.Collections.FSharpList{System.String})">
 <summary>
  matches string list returning register list
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsReg|_|(System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsReg|_|(System.String)">
 <summary>
  matches string returning register
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsLit|_|(System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsLit|_|(System.String)">
 <summary>
 matches string (#X-&gt;X) returning integer
 </summary>
 </member>
-<member name="M:ARM7TDMI.Cast.|IsInt|_|(System.String)">
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsIntList|_|(Microsoft.FSharp.Collections.FSharpList{System.String})">
+<summary>
+ matches string list returning Int list
+</summary>
+</member>
+<member name="M:ARM7TDMI.BasicActivePatterns.|IsInt|_|(System.String)">
 <summary>
  matches string (X -&gt; X) returning integer
 </summary>
