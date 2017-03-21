@@ -64,8 +64,7 @@ requirejs(['vs/editor/editor.main'], function () {
 
         let codeLine = 0;
         let instrLine = 0;
-        let code = window.getEditorContent().split("\n")
-
+        let code = window.getEditorContent().replace(/^[\t ]+$/gm,'\n').split("\n");
         for (var i = 0; i < code.length; i++) {
             if (instrLine == instrLineToFind) break;
             if (!code[i]) {
@@ -76,7 +75,7 @@ requirejs(['vs/editor/editor.main'], function () {
                 instrLine++
             }
         }
-
+        
         decorations = editor.deltaDecorations(decorations, [
             {
                 range: new monaco.Range(codeLine, 1, codeLine, 1),
